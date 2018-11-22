@@ -10,12 +10,13 @@
 <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBLKRh7JfikPylbNdGfTiDbe6zut1yabxo&v=3.exp&libraries=places"> </script>-->
 <ion-content>
   <div id="map_canvas">
-      <ion-list>
-          <ion-item>
-            <ion-input (ionClick)="showAddressModal()" (ionFocus)="showAddressModal()" [(ngModel)]="address.place"type="text" placeholder="Pick an address">              </ion-input>
-          </ion-item>
-        </ion-list>
-<!--         
+    <ion-list>
+      <ion-item>
+        <ion-input (ionClick)="showAddressModal()" (ionFocus)="showAddressModal()" [(ngModel)]="address.place" type="text"
+          placeholder="Pick an address"> </ion-input>
+      </ion-item>
+    </ion-list>
+    <!--         
       <ion-toolbar>
           <ion-searchbar [(ngModel)]="query" (ionInput)="searchPlace()" aria-placeholder="Drop Pin"></ion-searchbar>
       </ion-toolbar>
@@ -24,13 +25,13 @@
           <ion-item *ngFor="let place of places" (touchstart)="selectPlace(place)">{{place.description}}</ion-item>
       </ion-list>
     -->
- 
+
 
   </div>
 
 
   <ion-fab bottom left>
-    <button ion-button icon-start large round color="dark" ion-fab>
+    <button ion-button icon-start large round color="dark">
       <ion-icon ios="ios-bicycle" md="md-bicycle"></ion-icon>
       Fly
     </button>
@@ -42,5 +43,6 @@
       </ion-icon>
     </button>
   </ion-fab>
-  
+
+
 </ion-content>
