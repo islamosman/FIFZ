@@ -136,5 +136,13 @@
     },
     "is_top_level": true,
     "variables": {}
+  },
+  "cordova-plugin-uniquedeviceid": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-uniquedeviceid"
+    },
+    "is_top_level": true,
+    "variables": {}
   }
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IonicPage, MenuController, NavController, NavParams, Platform } from 'ionic-angular';
 import { Sim } from '@ionic-native/sim';
+import { UniqueDeviceID } from '@ionic-native/unique-device-id';
 /**
  * Generated class for the RegisterPage page.
  *
@@ -19,14 +20,17 @@ export class RegisterPage implements OnInit {
     mobileNumber: "",
     username: "",
     password: "",
-    email: ""
+    email: "",
+    deviceId:""
   }
-  constructor(public navCtrl: NavController, public navParams: NavParams
+  constructor(public navCtrl: NavController, public navParams: NavParams,private uniqueDeviceID: UniqueDeviceID
     , private menu: MenuController, private platform: Platform, private sim: Sim) {
   }
 
   ngOnInit(): void {
     this.platform.ready().then(() => {
+      
+      console.log("ready")
       this.sim.getSimInfo().then(
         (info) => console.log('Sim info: ', JSON.stringify(info)),
         (err) => console.log('Unable to get sim info: ', err)
@@ -40,6 +44,14 @@ export class RegisterPage implements OnInit {
         () => console.log('Permission granted'),
         () => console.log('Permission denied')
       );
+
+      this.uniqueDeviceID.get()
+  .then((uuid: any) => {
+    console.log(uuid);
+    this.RegisterModel.deviceId = uuid;
+  })
+  .catch((error: any) => console.log(error));
+
     });
   }
 
@@ -52,10 +64,5 @@ export class RegisterPage implements OnInit {
 
   signIn() {
     this.navCtrl.setRoot('LoginPage');
-  }
-
-  public register() {
-
-
   }
 }

@@ -19,10 +19,25 @@
       <ion-row>
         <ion-col>
           <ion-list inset>
-            
+
+            <ion-item>
+              <ion-label floating>Device ID</ion-label>
+            <ion-input type="text"  name="deviceId" [(ngModel)]="RegisterModel.deviceId" required></ion-input>
+          </ion-item>
+
+          <ion-item>
+              <ion-label floating>Mobile No</ion-label>
+            <ion-input type="text"  name="mobileNumber" [(ngModel)]="RegisterModel.mobileNumber" required></ion-input>
+          </ion-item>
+
+          <ion-item>
+              <ion-label floating>Email</ion-label>
+            <ion-input type="text"  name="email" [(ngModel)]="RegisterModel.email" required></ion-input>
+          </ion-item>
+
             <ion-item>
                 <ion-label floating>Phone</ion-label>
-              <ion-input type="text"  name="email" [(ngModel)]="RegisterModel.username" required></ion-input>
+              <ion-input type="text"  name="username" [(ngModel)]="RegisterModel.username" required></ion-input>
             </ion-item>
             
             <ion-item>

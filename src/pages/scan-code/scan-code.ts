@@ -41,7 +41,7 @@ export class ScanCodePage implements OnInit {
               if (status.authorized) {
                 // camera permission was granted
 
-
+                this.qrScanner.show();
                 // start scanning
                 let scanSub = this.qrScanner.scan().subscribe((text: string) => {
                   alert(text);

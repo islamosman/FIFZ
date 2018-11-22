@@ -22,6 +22,9 @@ import { Diagnostic } from '@ionic-native/diagnostic';
 import { OpenNativeSettings } from '@ionic-native/open-native-settings';
 import {BackgroundGeolocation} from '@ionic-native/background-geolocation'
 import { QRScanner } from '@ionic-native/qr-scanner';
+import { Sim } from '@ionic-native/sim';
+import {UniqueDeviceID} from '@ionic-native/unique-device-id';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -55,6 +58,8 @@ import { QRScanner } from '@ionic-native/qr-scanner';
     BackgroundGeolocation,
     LocationsProvider,
     QRScanner,
+    Sim,
+    UniqueDeviceID ,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })

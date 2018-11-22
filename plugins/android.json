@@ -63,6 +63,9 @@
       "ACCOUNT_TYPE": "$PACKAGE_NAME.account",
       "CONTENT_AUTHORITY": "$PACKAGE_NAME",
       "PACKAGE_NAME": "fly.zapp.com"
+    },
+    "cordova-plugin-uniquedeviceid": {
+      "PACKAGE_NAME": "fly.zapp.com"
     }
   },
   "dependent_plugins": {}

@@ -54,6 +54,9 @@
     },
     "cordova-plugin-mauron85-background-geolocation": {
       "PACKAGE_NAME": "fly.zapp.com"
+    },
+    "cordova-plugin-uniquedeviceid": {
+      "PACKAGE_NAME": "fly.zapp.com"
     }
   },
   "dependent_plugins": {}
