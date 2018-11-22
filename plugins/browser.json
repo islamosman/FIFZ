@@ -1,0 +1,60 @@
+{
+  "prepare_queue": {
+    "installed": [],
+    "uninstalled": []
+  },
+  "config_munge": {
+    "files": {}
+  },
+  "installed_plugins": {
+    "cordova-android-play-services-gradle-release": {
+      "PACKAGE_NAME": "io.ionic.starter"
+    },
+    "cordova-plugin-device": {
+      "PACKAGE_NAME": "io.ionic.starter"
+    },
+    "cordova-plugin-googlemaps": {
+      "PACKAGE_NAME": "io.ionic.starter"
+    },
+    "cordova-plugin-ionic-keyboard": {
+      "PACKAGE_NAME": "io.ionic.starter"
+    },
+    "cordova-plugin-ionic-webview": {
+      "PACKAGE_NAME": "io.ionic.starter"
+    },
+    "cordova-plugin-splashscreen": {
+      "PACKAGE_NAME": "io.ionic.starter"
+    },
+    "cordova-plugin-statusbar": {
+      "PACKAGE_NAME": "io.ionic.starter"
+    },
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "io.ionic.starter"
+    },
+    "cordova-sqlite-storage": {
+      "PACKAGE_NAME": "io.ionic.starter"
+    },
+    "cordova-plugin-request-location-accuracy": {
+      "PACKAGE_NAME": "io.ionic.starter"
+    },
+    "cordova-plugin-sim": {
+      "PACKAGE_NAME": "io.ionic.starter"
+    },
+    "cordova-plugin-qrscanner": {
+      "PACKAGE_NAME": "io.ionic.starter"
+    },
+    "cordova.plugins.diagnostic": {
+      "PACKAGE_NAME": "fly.zapp.com"
+    },
+    "cordova-open-native-settings": {
+      "PACKAGE_NAME": "fly.zapp.com"
+    },
+    "cordova-plugin-geolocation": {
+      "PACKAGE_NAME": "fly.zapp.com"
+    },
+    "cordova-plugin-mauron85-background-geolocation": {
+      "PACKAGE_NAME": "fly.zapp.com"
+    }
+  },
+  "dependent_plugins": {}
+}
