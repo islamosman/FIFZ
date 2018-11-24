@@ -24,8 +24,8 @@ export class MyApp {
     this.initializeApp();
 
     this.pages = [
-      { title: 'Maps', component: 'MapsPage' },
-      { title: 'Maps 2', component: 'MapsapiPage' },
+      { title: 'Fly', component: 'MapsPage' },
+    //  { title: 'Maps 2', component: 'MapsapiPage' },
       { title: 'Scan QR', component: 'ScanCodePage' },
       {title: 'Logout', component: ''}
     ];
