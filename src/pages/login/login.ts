@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { IonicPage, LoadingController,MenuController,  NavController, ToastController} from 'ionic-angular';
+import { IonicPage, LoadingController, MenuController, NavController, ToastController, ToastOptions, NavParams } from 'ionic-angular';
 //import { MapsPage } from '../maps/maps';
-import {NgForm} from "@angular/forms";
-import {Storage} from '@ionic/storage';
-import {AuthProvider} from "../../providers/auth/auth";
-import {UserStateProvider} from "../../providers/userstate/user-state";
-import {GenericProvider} from "../../providers/generic/GenericProvider";
- import { MyApp } from '../../app/app.component';
+import { NgForm } from "@angular/forms";
+import { Storage } from '@ionic/storage';
+import { AuthProvider } from "../../providers/auth/auth";
+import { UserStateProvider } from "../../providers/userstate/user-state";
+import { MyApp } from '../../app/app.component';
+import { LoginModel } from '../../models/usermodel';
 
 /**
  * Generated class for the LoginPage page.
@@ -20,22 +20,17 @@ import {GenericProvider} from "../../providers/generic/GenericProvider";
   selector: 'page-login',
   templateUrl: 'login.html',
 })
-export class LoginPage implements OnInit  {
-  
-  loginCredentials = {
-    username: "",
-    password: ""
-  }
-  constructor(public navCtrl: NavController,
-    public loadingCtrl: LoadingController,
-    public toastCtrl: ToastController,
-     private menu: MenuController,
-    private storage: Storage,
-    private _app: MyApp,
-   public _auth: AuthProvider,
-    private userState:UserStateProvider,
-    private _genericService: GenericProvider
-    ) {
+export class LoginPage implements OnInit {
+  loginModel: LoginModel;
+  tosterOption: ToastOptions;
+  messageStr:string;
+  constructor(public navCtrl: NavController, public loadingCtrl: LoadingController,
+    public toastCtrl: ToastController, private menu: MenuController,
+    private storage: Storage, private _app: MyApp,public navParams: NavParams,
+    public _auth: AuthProvider, private userState: UserStateProvider
+  ) {
+    this.messageStr = navParams.get('messageStr');
+    this.loginModel = new LoginModel();
   }
 
   ngOnInit() {
@@ -44,16 +39,24 @@ export class LoginPage implements OnInit  {
     this.menu.swipeEnable(false);
   }
   public login() {
-
-    this.navCtrl.setRoot('MapsPage');
-
+    this._auth.scoterList().then(data => {
+      console.log(data);
+    });
+    
+    // //this._auth.loginUser(this.loginModel).then(data => {
+    //   this.navCtrl.setRoot('MapsPage');
+    // //});
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
   }
 
-  createAccount(){
+  createAccount() {
     this.navCtrl.push('RegisterPage');
+  }
+
+  verifyPassCode(){
+    this.navCtrl.push('VerfiypassPage');
   }
 }

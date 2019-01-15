@@ -123,10 +123,13 @@ export class MapsPage implements OnInit {
   }
 
   loadMap() {
-    // Environment.setEnv({
-    //   'API_KEY_FOR_BROWSER_DEBUG': 'AIzaSyBLKRh7JfikPylbNdGfTiDbe6zut1yabxo',
-    //   'API_KEY_FOR_BROWSER_RELEASE': 'AIzaSyBLKRh7JfikPylbNdGfTiDbe6zut1yabxo'
-    // });
+    Environment.setEnv({
+      'API_KEY_FOR_BROWSER_DEBUG': 'AIzaSyBLKRh7JfikPylbNdGfTiDbe6zut1yabxo',
+      'API_KEY_FOR_BROWSER_RELEASE': 'AIzaSyBLKRh7JfikPylbNdGfTiDbe6zut1yabxo'
+    });
+
+ 
+
     // this.map = new GoogleMap('map_canvas');
     //  this.map=GoogleMaps.create('map_canvas');
     let mapOptions: GoogleMapOptions = {
@@ -149,6 +152,7 @@ export class MapsPage implements OnInit {
     };
 
     this.map = GoogleMaps.create('map_canvas', mapOptions);
+console.log(JSON.stringify(this.map.getVisibleRegion()));
 
     var htmlInfoWindow = new HtmlInfoWindow();
     var html = [

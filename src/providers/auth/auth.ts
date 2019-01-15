@@ -1,13 +1,16 @@
-import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import 'rxjs/add/observable/of';
-import {UserStateProvider} from "../userstate/user-state";
-import {apiConfig} from "../../globalconfig";
-import {Storage} from '@ionic/storage';
-import {LoadingController, NavController} from "ionic-angular";
-
+import { UserStateProvider } from "../userstate/user-state";
+import { apiConfig } from "../../globalconfig";
+import { Storage } from '@ionic/storage';
+import { LoadingController, NavController } from "ionic-angular";
+import { RegisterModel, LoginModel, VerifyModel } from '../../models/usermodel';
+import { AlertsProvider } from "../../providers/generic/AlertsProvider";
+import { Observable } from 'rxjs/Observable';
 // import {Observable} from "rxjs/Observable";
-
+import 'rxjs/add/operator/map';
+import { ResponseModel } from '../../models/ResponseModel';
 @Injectable()
 export class AuthProvider {
 
@@ -16,58 +19,62 @@ export class AuthProvider {
     content: 'Logging out and clearing data Please Wait...',
   });
 
-  constructor(public http: HttpClient,
-              public userState:UserStateProvider,
-              private httpClient: HttpClient,
-              private storage:Storage,
-              private loadingCtrl: LoadingController,
-              ) {
+  constructor(public http: HttpClient, private _alertsService: AlertsProvider,
+    public userState: UserStateProvider,
+    private httpClient: HttpClient,
+    private storage: Storage,
+    private loadingCtrl: LoadingController,
+  ) {
     console.log('Hello AuthProvider Provider');
   }
 
-  logOut(navCtrl: NavController){
+  logOut(navCtrl: NavController) {
     this.userState.clearState();
     //this.loading.present();
-      this.storage.clear().then(data=>{
-        // debugger;
-        console.log('AuthProvider Logout Success',data);
-        //this.loading.dismiss().then(()=>{
-          navCtrl.setRoot('LoginPage');
-        //});
-      }).catch(err=>{
-        console.log('AuthProvider Logout Error',err);
-        this.loading.dismiss();
-       // navCtrl.setRoot('LoginPage');
-      })
+    this.storage.clear().then(data => {
+      // debugger;
+      console.log('AuthProvider Logout Success', data);
+      //this.loading.dismiss().then(()=>{
+      navCtrl.setRoot('LoginPage');
+      //});
+    }).catch(err => {
+      console.log('AuthProvider Logout Error', err);
+      this.loading.dismiss();
+      // navCtrl.setRoot('LoginPage');
+    })
 
   }
+  registerUser(user: RegisterModel): Observable<ResponseModel> {
+    let URI = `${apiConfig.apiUrl}/FlyAuth/Register`;
+    return this.http.post<ResponseModel>(URI, user);
+  }
 
-  getUser(user) {
-    if (user !== null && user.username.toLowerCase() != "" && user.password.toLowerCase() != "") {
+  verifyPassCode(passCodeModel: VerifyModel): Observable<ResponseModel> {
+    let URI = `${apiConfig.apiUrl}/FlyAuth/VerfiyPass`;
+    return this.http.post<ResponseModel>(URI,passCodeModel);
+  }
 
+  loginUser(data: LoginModel) {
+    return new Promise((resolve, reject) => {
+      this.http.post(`${apiConfig.apiUrl}/login`, data)
+        .subscribe(res => {
+          resolve(res);
+        }, (err) => {
+          this._alertsService.showErrorToaster(err.error);
+          //reject(err);
+        });
+    });
+  }
 
-      let url=`${apiConfig.apiUrl}/CustomerLogin?username=${user.username.toLowerCase()}&password=${user.password}`;
-      console.log('hit url',url);
-      return this.httpClient.get(url);
-      // return Observable.of({
-      //   "Candidate_Coupone": [],
-      //   "Id": 1,
-      //   "FullName": "ahmed sabry",
-      //   "Customer_CategoryId": 1,
-      //   "UserName": "admin",
-      //   "Password": "123",
-      //   "Address": "fff",
-      //   "Telephone1": "312323",
-      //   "Telephone2": "3213",
-      //   "Telephone3": "1323",
-      //   "Email": "ahmed@yahoo.com",
-      //   "Notes": "dfd",
-      //   "AddedBy": 1,
-      //   "DateAdded": "2018-01-01T00:00:00",
-      //   "DateModified": null,
-      //   "ModifiedBy": null
-      // });
-
-    }
+  scoterList() {
+    return new Promise((resolve, reject) => {
+      this.http.post('http://localhost:30823/GetVehicls', '')
+        .subscribe(res => {
+          resolve(res);
+        }, (err) => {
+          this._alertsService.showErrorToaster(err.error);
+          //reject(err);
+        });
+    });
   }
 }

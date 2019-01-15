@@ -22,27 +22,27 @@
 
             <ion-item>
               <ion-label floating>Device ID</ion-label>
-            <ion-input type="text"  name="deviceId" [(ngModel)]="RegisterModel.deviceId" required></ion-input>
+            <ion-input type="text"  name="device_unique_id" [(ngModel)]="registerModel.device_unique_id" required></ion-input>
           </ion-item>
 
           <ion-item>
               <ion-label floating>Mobile No</ion-label>
-            <ion-input type="text"  name="mobileNumber" [(ngModel)]="RegisterModel.mobileNumber" required></ion-input>
+            <ion-input  type="phone_number"  name="phone_number" [(ngModel)]="registerModel.phone_number" required></ion-input>
           </ion-item>
 
           <ion-item>
               <ion-label floating>Email</ion-label>
-            <ion-input type="text"  name="email" [(ngModel)]="RegisterModel.email" required></ion-input>
+            <ion-input type="email"  name="email" [(ngModel)]="registerModel.email" required></ion-input>
           </ion-item>
 
             <ion-item>
-                <ion-label floating>Phone</ion-label>
-              <ion-input type="text"  name="username" [(ngModel)]="RegisterModel.username" required></ion-input>
+                <ion-label floating>Name</ion-label>
+              <ion-input type="text"  name="first_name" [(ngModel)]="registerModel.first_name" required></ion-input>
             </ion-item>
             
             <ion-item>
                 <ion-label floating>Password</ion-label>
-              <ion-input type="password"  name="password" [(ngModel)]="RegisterModel.password" required></ion-input>
+              <ion-input type="password"  name="password" [(ngModel)]="registerModel.password" required></ion-input>
             </ion-item>
             
           </ion-list>

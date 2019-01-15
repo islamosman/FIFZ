@@ -1,5 +1,5 @@
 export const apiConfig={
-    apiUrl:"api url"
+    apiUrl:"http://localhost:30823/api"
   }
   export const shareMessages={
    

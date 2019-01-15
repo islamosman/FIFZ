@@ -12,7 +12,7 @@ import { GoogleMaps } from "@ionic-native/google-maps";
 
 import {AuthProvider} from '../providers/auth/auth';
 import {UserStateProvider} from "../providers/userstate/user-state";
-import { GenericProvider } from '../providers/generic/GenericProvider';
+import { AlertsProvider } from '../providers/generic/AlertsProvider';
 import {HttpClientModule} from "@angular/common/http";
 import { Geolocation} from '@ionic-native/geolocation'
 import { autocompletePageModule } from '../pages/autocomplete/autocomplete.module';
@@ -50,7 +50,7 @@ import {UniqueDeviceID} from '@ionic-native/unique-device-id';
     GoogleMaps,
     AuthProvider,
     UserStateProvider,
-    GenericProvider,
+    AlertsProvider,
     Geolocation,
     LocationAccuracy,
     Diagnostic,

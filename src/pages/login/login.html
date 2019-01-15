@@ -23,19 +23,20 @@
       <ion-col></ion-col>
     </ion-row>
     <div class="login-box">
+        <ion-title>Verfification Code {{messageStr}}</ion-title>
       <form (ngSubmit)="login()" #loginForm="ngForm">
         <ion-row>
           <ion-col>
             <ion-list inset>
               
               <ion-item>
-                  <ion-label floating>Phone</ion-label>
-                <ion-input type="text"  name="email" [(ngModel)]="loginCredentials.username" required></ion-input>
+                  <ion-label floating>Email or Phone</ion-label>
+                <ion-input type="text"  name="email" [(ngModel)]="loginModel.username" required></ion-input>
               </ion-item>
               
               <ion-item>
                   <ion-label floating>Password</ion-label>
-                <ion-input type="password"  name="password" [(ngModel)]="loginCredentials.password" required></ion-input>
+                <ion-input type="password"  name="password" [(ngModel)]="loginModel.password" required></ion-input>
               </ion-item>
               
             </ion-list>
@@ -46,6 +47,7 @@
           <ion-col class="signup-col">
             <button ion-button class="submit-btn" full type="submit" [disabled]="!loginForm.form.valid">SIGN IN</button>
             <button ion-button class="register-btn" block clear type="button" (click)="createAccount()">New Account</button>
+            <button ion-button class="register-btn" block clear type="button" (click)="verifyPassCode()">Verification Code</button>
           </ion-col>
         </ion-row>
         
