@@ -63,7 +63,7 @@ export class LoginPage implements OnInit {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad LoginPage');
+    //console.log('ionViewDidLoad LoginPage');
   }
 
   createAccount() {

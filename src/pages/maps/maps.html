@@ -9,17 +9,17 @@
 
 <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBLKRh7JfikPylbNdGfTiDbe6zut1yabxo&v=3.exp&libraries=places"> </script>-->
 <ion-content>
-  <!-- <div id="map_canvas">
+  <div id="map_canvas">
     <ion-list>
       <ion-item>
         <ion-input (ionClick)="showAddressModal()" (ionFocus)="showAddressModal()" [(ngModel)]="address.place" type="text"
           placeholder="Pick an address"> </ion-input>
       </ion-item>
     </ion-list>
-  </div> -->
+  </div>
 
 
-  <!-- <ion-fab bottom left>
+  <ion-fab bottom left>
     <button ion-button icon-start large round color="dark">
       <ion-icon ios="ios-bicycle" md="md-bicycle"></ion-icon>
       Fly
@@ -31,7 +31,7 @@
       <ion-icon ios="ios-locate-outline" md="md-locate">
       </ion-icon>
     </button>
-  </ion-fab> -->
+  </ion-fab>
 
 
    <!--  <ion-slides pager>
@@ -57,7 +57,7 @@
     </ion-slide> 
   </ion-slides>-->
 
-  <ion-slides pager (ionSlideDidChange)="slideChanged()" (ionSlideDrag)="slideMoved()">
+  <!-- <ion-slides pager (ionSlideDidChange)="slideChanged()" (ionSlideDrag)="slideMoved()">
     <ion-slide>
       <div class="diag" style="background: url('assets/img/whitebg.svg') no-repeat">
         <ion-icon ios="ios-analytics" md="md-analytics" color="primary" [@bounce]='state' (@bounce.done)="animationDone()"></ion-icon>
@@ -86,5 +86,5 @@
       </div>
     </ion-slide>
   </ion-slides>
-  <button (click)="skip()" id="skip">{{ skipMsg }}</button>
+  <button (click)="skip()" id="skip">{{ skipMsg }}</button> -->
 </ion-content>
