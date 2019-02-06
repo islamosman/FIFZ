@@ -10,7 +10,7 @@ import { AlertsProvider } from "../../providers/generic/AlertsProvider";
 import { Observable } from 'rxjs/Observable';
 // import {Observable} from "rxjs/Observable";
 import 'rxjs/add/operator/map';
-import { ResponseModel } from '../../models/ResponseModel';
+import { ResponseModel, LoginResponseModel } from '../../models/ResponseModel';
 @Injectable()
 export class AuthProvider {
 
@@ -54,9 +54,14 @@ export class AuthProvider {
     return this.http.post<ResponseModel>(URI,passCodeModel);
   }
 
-  loginUser(data: LoginModel) {
+  loginUser(data: LoginModel): Observable<LoginResponseModel> {
+    let URI = `${apiConfig.apiUrl}/FlyAuth/login`;
+    return this.http.post<LoginResponseModel>(URI,data);
+  }
+
+  loginUser2(data: LoginModel) {
     return new Promise((resolve, reject) => {
-      this.http.post(`${apiConfig.apiUrl}/login`, data)
+      this.http.post(`${apiConfig.apiUrl}/FlyAuth/login`, data)
         .subscribe(res => {
           resolve(res);
         }, (err) => {

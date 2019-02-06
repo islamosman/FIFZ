@@ -53,53 +53,72 @@ export class MapsPage implements OnInit {
 
   }
 
+  slides = [
+    {
+      title: "Welcome to the Docs!",
+      description: "The <b>Ionic Component Documentation</b> showcases a number of useful components that are included out of the box with Ionic.",
+      image: "assets/img/scoter1.png",
+    },
+    {
+      title: "What is Ionic?",
+      description: "<b>Ionic Framework</b> is an open source SDK that enables developers to build high quality mobile apps with web technologies like HTML, CSS, and JavaScript.",
+      image: "assets/img/scoter1.png",
+    },
+    {
+      title: "What is Ionic Cloud?",
+      description: "The <b>Ionic Cloud</b> is a cloud platform for managing and scaling Ionic apps with integrated services like push notifications, native builds, user auth, and live updating.",
+      image: "assets/img/scoter1.png",
+    }
+  ];
+  
+
   ngOnInit() {
 
-    this.address = {
-      place: ''
-    };
+    // this.address = {
+    //   place: ''
+    // };
 
-    let successCallback = (isAvailable) => { console.log('Is available? ' + isAvailable); };
-    let errorCallback = (e) => console.error(e);
+    // let successCallback = (isAvailable) => { console.log('Is available? ' + isAvailable); };
+    // let errorCallback = (e) => console.error(e);
 
-    this.diagnostic.isGpsLocationAvailable().then(successCallback).catch(errorCallback);
+    // this.diagnostic.isGpsLocationAvailable().then(successCallback).catch(errorCallback);
 
-    //this.diagnostic.isCameraAvailable().then(successCallback, errorCallback);
-
-
+    // //this.diagnostic.isCameraAvailable().then(successCallback, errorCallback);
 
 
-    this.platform.ready().then(() => {
 
-      this.locationAccuracy.canRequest().then((canRequest: boolean) => {
-        console.log("Can req : " + canRequest)
-        if (canRequest) {
-          // the accuracy option will be ignored by iOS
-          this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
-            () => console.log('Request successful'),
-            error => console.log('Error requesting location permissions', error)
-          );
-        }
 
-      });
+    // this.platform.ready().then(() => {
 
-      this.diagnostic.requestLocationAuthorization("always")
-        .then((state) => {
-          console.log(JSON.stringify(state));
-        }).catch(e => console.error(e));
+    //   this.locationAccuracy.canRequest().then((canRequest: boolean) => {
+    //     console.log("Can req : " + canRequest)
+    //     if (canRequest) {
+    //       // the accuracy option will be ignored by iOS
+    //       this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
+    //         () => console.log('Request successful'),
+    //         error => console.log('Error requesting location permissions', error)
+    //       );
+    //     }
 
-      // this.openNativeSettings.open("location").then((data)=>{
-      //   console.log(JSON.stringify(data));
-      // })
-      // this.requestLocationAccuracy();
-      this.geoModelVar.lat = 41.799240000000005;
-      this.geoModelVar.lng = 140.75875000000002;
-      //this._location.GetCurrent().then(((resp) => {
-      // this.geoModelVar.lat = resp.coords.latitude;
-      // this.geoModelVar.lng = resp.coords.longitude;
-      this.loadMap();
-      //}));
-    });
+    //   });
+
+    //   this.diagnostic.requestLocationAuthorization("always")
+    //     .then((state) => {
+    //       console.log(JSON.stringify(state));
+    //     }).catch(e => console.error(e));
+
+    //   // this.openNativeSettings.open("location").then((data)=>{
+    //   //   console.log(JSON.stringify(data));
+    //   // })
+    //   // this.requestLocationAccuracy();
+    //   this.geoModelVar.lat = 41.799240000000005;
+    //   this.geoModelVar.lng = 140.75875000000002;
+    //   //this._location.GetCurrent().then(((resp) => {
+    //   // this.geoModelVar.lat = resp.coords.latitude;
+    //   // this.geoModelVar.lng = resp.coords.longitude;
+    //   this.loadMap();
+    //   //}));
+    // });
   }
 
   showAddressModal() {

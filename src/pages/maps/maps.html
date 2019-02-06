@@ -9,28 +9,17 @@
 
 <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBLKRh7JfikPylbNdGfTiDbe6zut1yabxo&v=3.exp&libraries=places"> </script>-->
 <ion-content>
-  <div id="map_canvas">
+  <!-- <div id="map_canvas">
     <ion-list>
       <ion-item>
         <ion-input (ionClick)="showAddressModal()" (ionFocus)="showAddressModal()" [(ngModel)]="address.place" type="text"
           placeholder="Pick an address"> </ion-input>
       </ion-item>
     </ion-list>
-    <!--         
-      <ion-toolbar>
-          <ion-searchbar [(ngModel)]="query" (ionInput)="searchPlace()" aria-placeholder="Drop Pin"></ion-searchbar>
-      </ion-toolbar>
-   
-      <ion-list>
-          <ion-item *ngFor="let place of places" (touchstart)="selectPlace(place)">{{place.description}}</ion-item>
-      </ion-list>
-    -->
+  </div> -->
 
 
-  </div>
-
-
-  <ion-fab bottom left>
+  <!-- <ion-fab bottom left>
     <button ion-button icon-start large round color="dark">
       <ion-icon ios="ios-bicycle" md="md-bicycle"></ion-icon>
       Fly
@@ -42,7 +31,60 @@
       <ion-icon ios="ios-locate-outline" md="md-locate">
       </ion-icon>
     </button>
-  </ion-fab>
+  </ion-fab> -->
 
 
+   <!--  <ion-slides pager>
+    <ion-slide *ngFor="let slide of slides">
+      <ion-toolbar>
+        <ion-buttons end>
+          <button ion-button color="primary">Skip</button>
+        </ion-buttons>
+      </ion-toolbar>
+      <img [src]="slide.image" class="slide-image"/>
+      <h2 class="slide-title" [innerHTML]="slide.title"></h2>
+      <p [innerHTML]="slide.description"></p>
+    </ion-slide>
+  <ion-slide>
+      <ion-toolbar>
+      </ion-toolbar>
+      <img src="assets/img/ica-slidebox-img-4.png" class="slide-image"/>
+      <h2 class="slide-title">Ready to Play?</h2>
+      <button ion-button large clear icon-end color="primary">
+        Continue
+        <ion-icon name="arrow-forward"></ion-icon>
+      </button>
+    </ion-slide> 
+  </ion-slides>-->
+
+  <ion-slides pager (ionSlideDidChange)="slideChanged()" (ionSlideDrag)="slideMoved()">
+    <ion-slide>
+      <div class="diag" style="background: url('assets/img/whitebg.svg') no-repeat">
+        <ion-icon ios="ios-analytics" md="md-analytics" color="primary" [@bounce]='state' (@bounce.done)="animationDone()"></ion-icon>
+      </div>
+      <div [@bounce]='state'>
+        <h2>track your routine</h2>
+        <p>whether it's sets, reps, weight used, you can track it all with our intuitive interface.</p>
+      </div>
+    </ion-slide>
+    <ion-slide>
+      <div class="diag" style="background: url('assets/img/whitebg.svg') no-repeat">
+        <ion-icon ios="ios-trophy" md="md-trophy" color="primary" [@bounce]='state'></ion-icon>
+      </div>
+      <div [@bounce]='state'>
+        <h2>set personal goals</h2>
+        <p>we're all in the gym for a reason: goals. set goals for diet and fitness.</p>
+      </div>
+    </ion-slide>
+    <ion-slide>
+      <div class="diag" style="background: url('assets/img/whitebg.svg') no-repeat">
+        <ion-icon ios="ios-chatboxes" md="md-chatboxes" color="primary" [@bounce]='state'></ion-icon>
+      </div>
+      <div [@bounce]='state'>
+        <h2>chat with others</h2>
+        <p>inspire and help each other reach fitness and diet goals.</p>
+      </div>
+    </ion-slide>
+  </ion-slides>
+  <button (click)="skip()" id="skip">{{ skipMsg }}</button>
 </ion-content>

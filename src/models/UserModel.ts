@@ -22,6 +22,7 @@ export class VerifyModel {
   passCode: string;
 }
 export class LoginModel {
+  urlStr:string ="http://localhost:30823/";
   username: string;
   password: string;
 }
