@@ -9,7 +9,8 @@ import {
   MarkerOptions,
   Marker,
   Environment,
-  HtmlInfoWindow
+  HtmlInfoWindow,
+  VisibleRegion
 } from '@ionic-native/google-maps';
 import { Diagnostic } from '@ionic-native/diagnostic';
 import { Geolocation, Geoposition } from '@ionic-native/geolocation';
@@ -21,6 +22,8 @@ import { GeoModel } from '../../models/MapModel'
 import { vehicaleModel } from '../../models/vehicaleModel';
 import { OpenNativeSettings } from '@ionic-native/open-native-settings';
 import { BackgroundGeolocation, BackgroundGeolocationConfig, BackgroundGeolocationResponse } from '@ionic-native/background-geolocation';
+import { VehiclsProvider } from '../../providers/Map/vechilsApi';
+import { ResponseModel } from '../../models/ResponseModel';
 /**
  * Generated class for the MapsPage page.
  *
@@ -47,12 +50,13 @@ export class MapsPage implements OnInit {
   constructor(public navCtrl: NavController, private platform: Platform, private diagnostic: Diagnostic,
     private menu: MenuController, private _location: LocationsProvider, private openNativeSettings: OpenNativeSettings,
     public navParams: NavParams, private geolocation: Geolocation, private backgroundGeolocation: BackgroundGeolocation,
-    private ModalCtrl: ModalController, private locationAccuracy: LocationAccuracy) {
+    private ModalCtrl: ModalController, private locationAccuracy: LocationAccuracy,
+    public _VehiclsProvider: VehiclsProvider) {
     // Begin Constractor
     this.geoModelVar = new GeoModel();
 
   }
-
+  changeLat: any;
   slides = [
     {
       title: "Welcome to the Docs!",
@@ -70,7 +74,7 @@ export class MapsPage implements OnInit {
       image: "assets/img/scoter1.png",
     }
   ];
-  
+
 
   ngOnInit() {
 
@@ -78,12 +82,12 @@ export class MapsPage implements OnInit {
       place: ''
     };
 
-    let successCallback = (isAvailable) => { console.log('Is available? ' + isAvailable); };
-    let errorCallback = (e) => console.error(e);
+    // let successCallback = (isAvailable) => { console.log('Is available? ' + isAvailable); };
+    // let errorCallback = (e) => console.error(e);
 
-    this.diagnostic.isGpsLocationAvailable().then(successCallback).catch(errorCallback);
+    //this.diagnostic.isGpsLocationAvailable().then(successCallback).catch(errorCallback);
 
-    //this.diagnostic.isCameraAvailable().then(successCallback, errorCallback);
+    ////this.diagnostic.isCameraAvailable().then(successCallback, errorCallback);
 
 
 
@@ -111,13 +115,13 @@ export class MapsPage implements OnInit {
       //   console.log(JSON.stringify(data));
       // })
       // this.requestLocationAccuracy();
-      this.geoModelVar.lat = 41.799240000000005;
-      this.geoModelVar.lng = 140.75875000000002;
-      //this._location.GetCurrent().then(((resp) => {
-      // this.geoModelVar.lat = resp.coords.latitude;
-      // this.geoModelVar.lng = resp.coords.longitude;
-      this.loadMap();
-      //}));
+      // this.geoModelVar.lat = 41.799240000000005;
+      // this.geoModelVar.lng = 140.75875000000002;
+      this._location.GetCurrent().then(((resp) => {
+        this.geoModelVar.lat = resp.coords.latitude;
+        this.geoModelVar.lng = resp.coords.longitude;
+        this.loadMap();
+      }));
     });
   }
 
@@ -147,7 +151,7 @@ export class MapsPage implements OnInit {
       'API_KEY_FOR_BROWSER_RELEASE': 'AIzaSyBLKRh7JfikPylbNdGfTiDbe6zut1yabxo'
     });
 
- 
+
 
     // this.map = new GoogleMap('map_canvas');
     //  this.map=GoogleMaps.create('map_canvas');
@@ -171,7 +175,7 @@ export class MapsPage implements OnInit {
     };
 
     this.map = GoogleMaps.create('map_canvas', mapOptions);
-console.log(JSON.stringify(this.map.getVisibleRegion()));
+
 
     var htmlInfoWindow = new HtmlInfoWindow();
     var html = [
@@ -214,12 +218,26 @@ console.log(JSON.stringify(this.map.getVisibleRegion()));
 
     this.map.one(GoogleMapsEvent.MAP_READY)
       .then((readyData) => {
-        console.log(JSON.stringify(readyData));
+        this.getVehicles(this.map.getVisibleRegion());
+
+        //console.log(" <<<  " + JSON.stringify(readyData));
         // Get area codinates
         this.map.addEventListener(GoogleMapsEvent.CAMERA_MOVE_END).subscribe((e) => {
-          // console.log("d " +JSON.stringify(e));
+          //console.log("d " + JSON.stringify(e));
+          this.getVehicles(this.map.getVisibleRegion());
         });
       });
+  }
+
+  getVehicles(data: VisibleRegion) {
+    this._VehiclsProvider.byArea(data).subscribe(returnData => {
+      let ResultData = <ResponseModel>returnData;
+      this.changeLat=ResultData.MessegesStr;
+      console.log(returnData);
+      console.log(returnData.ReturnedObject.$values);
+    });
+    
+    //console.log(data);
   }
 
   successFun(pos) {
@@ -229,7 +247,7 @@ console.log(JSON.stringify(this.map.getVisibleRegion()));
     console.log("Error is" + JSON.stringify(pos));
   }
   myLocation() {
-this.backGroundGeo();
+    this.backGroundGeo();
 
     let options = {
       maximumAge: 3000,
@@ -330,32 +348,32 @@ this.backGroundGeo();
       distanceFilter: 30,
       debug: true, //  enable this hear sounds for background-geolocation life-cycle.
       stopOnTerminate: false, // enable this to clear background location settings when the app terminates
-};
+    };
 
-this.backgroundGeolocation.configure(config)
-.subscribe((location: BackgroundGeolocationResponse) => {
+    this.backgroundGeolocation.configure(config)
+      .subscribe((location: BackgroundGeolocationResponse) => {
 
-console.log("Hero " + JSON.stringify(location));
-// IMPORTANT:  You must execute the finish method here to inform the native plugin that you're finished,
-// and the background-task may be completed.  You must do this regardless if your HTTP request is successful or not.
-// IF YOU DON'T, ios will CRASH YOUR APP for spending too much time in the background.
-this.backgroundGeolocation.finish(); // FOR IOS ONLY
+        console.log("Hero " + JSON.stringify(location));
+        // IMPORTANT:  You must execute the finish method here to inform the native plugin that you're finished,
+        // and the background-task may be completed.  You must do this regardless if your HTTP request is successful or not.
+        // IF YOU DON'T, ios will CRASH YOUR APP for spending too much time in the background.
+        this.backgroundGeolocation.finish(); // FOR IOS ONLY
 
-});
+      });
 
-// start recording location
-this.backgroundGeolocation.start();
+    // start recording location
+    this.backgroundGeolocation.start();
 
-// If you wish to turn OFF background-tracking, call the #stop method.
-//this.backgroundGeolocation.stop();
+    // If you wish to turn OFF background-tracking, call the #stop method.
+    //this.backgroundGeolocation.stop();
 
     this.backgroundGeolocation.getValidLocations().then((data) => {
       console.log("1# " + data);
     });
 
-    
-      console.log("2# " + this.backgroundGeolocation.LocationProvider);
-    
+
+    console.log("2# " + this.backgroundGeolocation.LocationProvider);
+
 
     this.backgroundGeolocation.getLocations().then((data) => {
       console.log("3# " + data);

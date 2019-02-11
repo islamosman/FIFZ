@@ -25,6 +25,7 @@ import { QRScanner } from '@ionic-native/qr-scanner';
 import { Sim } from '@ionic-native/sim';
 import { UniqueDeviceID } from '@ionic-native/unique-device-id';
 import { AppErrorHandler } from '../providers/generic/AppErrorHandler';
+import { VehiclsProvider } from '../providers/Map/vechilsApi';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { AppErrorHandler } from '../providers/generic/AppErrorHandler';
     SplashScreen,
     GoogleMaps,
     AuthProvider,
+    VehiclsProvider,
     UserStateProvider,
     AlertsProvider,
     Geolocation,
