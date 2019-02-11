@@ -1,4 +1,39 @@
 page-maps {
+
+    .map-page{
+      position: relative;
+    }
+    
+    .slides{
+      position: fixed;
+      bottom: 15%;
+      left: 0;
+      width: 100%;
+      height: auto;
+      z-index: 9999;
+    }
+
+    .slides ion-slide{
+      text-align: center;
+      height: 80px;
+      width: 42% !important;
+      margin: 5px;
+      background-color: #fff;
+      border: 2px solid #2C3E50;
+      border-radius: 5px;
+    }
+
+    .slides img{
+      width: 30px;
+      margin: 8px 0 auto;
+    }
+
+    .slides h3{
+      margin: 0;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
     #map_canvas{
     height: 100%;
     width: 100%;
