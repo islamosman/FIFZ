@@ -10,7 +10,15 @@ import {
   Marker,
   Environment,
   HtmlInfoWindow,
-  VisibleRegion
+  VisibleRegion,
+  LatLngBounds,
+  ILatLng,
+  LatLng,
+  Polygon,
+  PolylineOptions,
+  PolygonOptions,
+  BaseArrayClass,
+  Poly
 } from '@ionic-native/google-maps';
 import { Diagnostic } from '@ionic-native/diagnostic';
 import { Geolocation, Geoposition } from '@ionic-native/geolocation';
@@ -19,11 +27,15 @@ import { LocationAccuracy } from '@ionic-native/location-accuracy'
 import { fromEvent } from 'rxjs/observable/fromEvent';
 import { LocationsProvider } from '../../providers/Map/locations';
 import { GeoModel } from '../../models/MapModel'
-import { vehicaleModel } from '../../models/vehicaleModel';
+import { vehicaleModel, vehicaleReservationModel } from '../../models/vehicaleModel';
 import { OpenNativeSettings } from '@ionic-native/open-native-settings';
 import { BackgroundGeolocation, BackgroundGeolocationConfig, BackgroundGeolocationResponse } from '@ionic-native/background-geolocation';
 import { VehiclsProvider } from '../../providers/Map/vechilsApi';
 import { ResponseModel } from '../../models/ResponseModel';
+import { vehiclesIcons } from '../../providers/Enums/vehiclesIcons';
+import { AlertsProvider } from '../../providers/generic/AlertsProvider';
+import { reservationEnum } from '../../providers/Enums/reservationEnum';
+//import { ScanCodePage } from '../scan-code/scan-code';
 /**
  * Generated class for the MapsPage page.
  *
@@ -51,29 +63,13 @@ export class MapsPage implements OnInit {
     private menu: MenuController, private _location: LocationsProvider, private openNativeSettings: OpenNativeSettings,
     public navParams: NavParams, private geolocation: Geolocation, private backgroundGeolocation: BackgroundGeolocation,
     private ModalCtrl: ModalController, private locationAccuracy: LocationAccuracy,
-    public _VehiclsProvider: VehiclsProvider) {
+    public _VehiclsProvider: VehiclsProvider, private _alertsService: AlertsProvider) {
     // Begin Constractor
     this.geoModelVar = new GeoModel();
 
   }
-  changeLat: any;
-  slides = [
-    {
-      title: "Welcome to the Docs!",
-      description: "The <b>Ionic Component Documentation</b> showcases a number of useful components that are included out of the box with Ionic.",
-      image: "assets/img/scoter1.png",
-    },
-    {
-      title: "What is Ionic?",
-      description: "<b>Ionic Framework</b> is an open source SDK that enables developers to build high quality mobile apps with web technologies like HTML, CSS, and JavaScript.",
-      image: "assets/img/scoter1.png",
-    },
-    {
-      title: "What is Ionic Cloud?",
-      description: "The <b>Ionic Cloud</b> is a cloud platform for managing and scaling Ionic apps with integrated services like push notifications, native builds, user auth, and live updating.",
-      image: "assets/img/scoter1.png",
-    }
-  ];
+
+  vehicles;
 
 
   ngOnInit() {
@@ -88,9 +84,6 @@ export class MapsPage implements OnInit {
     //this.diagnostic.isGpsLocationAvailable().then(successCallback).catch(errorCallback);
 
     ////this.diagnostic.isCameraAvailable().then(successCallback, errorCallback);
-
-
-
 
     this.platform.ready().then(() => {
 
@@ -151,8 +144,6 @@ export class MapsPage implements OnInit {
       'API_KEY_FOR_BROWSER_RELEASE': 'AIzaSyBLKRh7JfikPylbNdGfTiDbe6zut1yabxo'
     });
 
-
-
     // this.map = new GoogleMap('map_canvas');
     //  this.map=GoogleMaps.create('map_canvas');
     let mapOptions: GoogleMapOptions = {
@@ -162,7 +153,7 @@ export class MapsPage implements OnInit {
           lat: this.geoModelVar.lat,
           lng: this.geoModelVar.lng
         },
-        zoom: 15,
+        zoom: 17,
         tilt: 30
       },
       controls: { zoom: false, compass: false, mapToolbar: false, myLocation: true, myLocationButton: true },
@@ -175,46 +166,6 @@ export class MapsPage implements OnInit {
     };
 
     this.map = GoogleMaps.create('map_canvas', mapOptions);
-
-
-    var htmlInfoWindow = new HtmlInfoWindow();
-    var html = [
-      'This is <b>Html</b> InfoWindow',
-      '<br>',
-      '<button onclick="javascript:alert(\'clicked!\');">click here</button>',
-    ].join("");
-    htmlInfoWindow.setContent(html)
-
-    let marker: Marker = this.map.addMarkerSync({
-      //title: '<div class="infoclass">Mohamed </div>',
-      // icon: 'blue',
-      icon: {
-        url: "./assets/imgs/scoter1.png",
-        size: {
-          width: 24,
-          height: 24
-        }
-      },
-      iconData: {
-        url: "./assets/imgs/scoter1.png",
-        size: {
-          width: 24,
-          height: 24
-        }
-      }
-      ,
-      styles: "",
-      animation: 'DROP',
-      draggable: true,
-      position: {
-        lat: this.lat,
-        lng: this.lng
-      }
-    });
-    marker.on(GoogleMapsEvent.MARKER_CLICK).subscribe((e) => {
-      console.log(JSON.stringify(e));
-      htmlInfoWindow.open(marker);
-    });
 
     this.map.one(GoogleMapsEvent.MAP_READY)
       .then((readyData) => {
@@ -230,14 +181,32 @@ export class MapsPage implements OnInit {
   }
 
   getVehicles(data: VisibleRegion) {
+    let pointsPoly: ILatLng[] = [];
+    pointsPoly.push(new LatLng(data.farLeft.lat, data.farLeft.lng));
+    pointsPoly.push(new LatLng(data.farRight.lat, data.farRight.lng));
+    pointsPoly.push(new LatLng(data.northeast.lat, data.northeast.lng));
+    // pointsPoly.push(new LatLng(data.southwest.lat, data.southwest.lng));
+    pointsPoly.push(new LatLng(data.nearRight.lat, data.nearRight.lng));
+    pointsPoly.push(new LatLng(data.nearLeft.lat, data.nearLeft.lng));
+
     this._VehiclsProvider.byArea(data).subscribe(returnData => {
       let ResultData = <ResponseModel>returnData;
-      this.changeLat=ResultData.MessegesStr;
-      console.log(returnData);
-      console.log(returnData.ReturnedObject.$values);
+      this.vehicles = [];
+      this.map.clear();
+      let tempPosition;
+      for (let item of ResultData.ReturnedObject.$values) {
+        let vechilModel: vehicaleModel = item;
+        tempPosition = new LatLng(vechilModel.Lat, vechilModel.Lng);
+
+        console.log(Poly.containsLocation(tempPosition, pointsPoly) + "    " + tempPosition);
+
+        if (Poly.containsLocation(tempPosition, pointsPoly)) {
+          item.iconImageEnum = vehiclesIcons[item.iconImageEnum];
+          this.vehicles.push(item);
+          this.addMarker(item)
+        }
+      }
     });
-    
-    //console.log(data);
   }
 
   successFun(pos) {
@@ -300,8 +269,45 @@ export class MapsPage implements OnInit {
     });
   }
 
-  addMarker(marker: Marker) {
+  addMarker(vehicaleModel: vehicaleModel) {
+    var htmlInfoWindow = new HtmlInfoWindow();
+    var html = [
+      'This is <b>Html</b> InfoWindow',
+      '<br>',
+      '<button onclick="javascript:alert(\'clicked!\');">click here</button>',
+    ].join("");
+    htmlInfoWindow.setContent(html)
 
+    let marker: Marker = this.map.addMarkerSync({
+      //title: '<div class="infoclass">Mohamed </div>',
+      // icon: 'blue',
+      icon: {
+        url: vehicaleModel.iconImageEnum,
+        size: {
+          width: 24,
+          height: 24
+        }
+      },
+      iconData: {
+        url: vehicaleModel.iconImageEnum,
+        size: {
+          width: 24,
+          height: 24
+        }
+      }
+      ,
+      styles: "",
+      animation: 'DROP',
+      draggable: false,
+      position: {
+        lat: vehicaleModel.Lat,
+        lng: vehicaleModel.Lng
+      }
+    });
+
+    marker.on(GoogleMapsEvent.MARKER_CLICK).subscribe((e) => {
+      htmlInfoWindow.open(marker);
+    });
   }
 
   query: string = '';
@@ -381,4 +387,22 @@ export class MapsPage implements OnInit {
     this.backgroundGeolocation.stop();
   }
 
+  reservationModel: vehicaleReservationModel;
+  reservVechil(id: number) {
+    //this._alertsService.showConfirmationDialog(id.toString(), "");
+
+    // this.reservationModel = new vehicaleReservationModel();
+    // this.reservationModel.vehicleId = "3";
+
+    // this.reservationModel.riderId = 1;
+    // this.reservationModel.reservationEnum = reservationEnum.Start;
+
+    // this._VehiclsProvider.reserve(this.reservationModel).subscribe(returnData => {
+    //   console.log(returnData);
+    // });
+
+
+    this.navCtrl.push("ScanCodePage", { vId: id });
+    console.log("reversation # " + id);
+  }
 }

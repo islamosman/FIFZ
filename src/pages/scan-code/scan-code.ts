@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { IonicPage, NavController, NavParams, MenuController, Platform } from 'ionic-angular';
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner';
 import { Diagnostic } from '@ionic-native/diagnostic';
+import { vehicaleReservationModel } from '../../models/vehicaleModel';
+import { reservationEnum } from '../../providers/Enums/reservationEnum';
+import { VehiclsProvider } from '../../providers/Map/vechilsApi';
 /**
  * Generated class for the ScanCodePage page.
  *
@@ -15,9 +18,15 @@ import { Diagnostic } from '@ionic-native/diagnostic';
   templateUrl: 'scan-code.html',
 })
 export class ScanCodePage implements OnInit {
-
+  reservationModel: vehicaleReservationModel;
   constructor(public navCtrl: NavController, public navParams: NavParams, private platform: Platform,
-    private diagnostic: Diagnostic, private qrScanner: QRScanner, private menu: MenuController) {
+    private diagnostic: Diagnostic, private qrScanner: QRScanner, private menu: MenuController, public _VehiclsProvider: VehiclsProvider) {
+
+    this.reservationModel = new vehicaleReservationModel();
+    this.reservationModel.vehicleId = navParams.get('vId');
+
+    this.reservationModel.riderId = 1;
+    this.reservationModel.reservationEnum = reservationEnum.Start;
   }
 
   ionViewDidEnter() {
@@ -44,10 +53,21 @@ export class ScanCodePage implements OnInit {
                 this.qrScanner.show();
                 // start scanning
                 let scanSub = this.qrScanner.scan().subscribe((text: string) => {
+                  this.reservationModel.qrStr = text;
+
+                  this._VehiclsProvider.reserve(this.reservationModel).subscribe(returnData => {
+                    console.log(returnData);
+
+                    if (returnData.IsDone) {
+                      this.qrScanner.hide(); // hide camera preview
+                      scanSub.unsubscribe(); // stop scanning
+                    }
+
+                  });
+
                   alert(text);
 
-                  this.qrScanner.hide(); // hide camera preview
-                  scanSub.unsubscribe(); // stop scanning
+
                 });
 
               } else if (status.denied) {

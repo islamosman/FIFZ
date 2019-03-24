@@ -10,14 +10,40 @@
 <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBLKRh7JfikPylbNdGfTiDbe6zut1yabxo&v=3.exp&libraries=places"> </script>-->
 <ion-content class="map-page">
   <div id="map_canvas">
-    <ion-list>
+    <!-- <ion-list>
       <ion-item>
-        <ion-input (ionClick)="showAddressModal()" (ionFocus)="showAddressModal()" [(ngModel)]="address.place" type="text"
-          placeholder="Pick an address"> </ion-input>
+        <ion-input (ionClick)="showAddressModal()" (ionFocus)="showAddressModal()" [(ngModel)]="address.place"
+          type="text" placeholder="Pick an address"> </ion-input>
       </ion-item>
-    </ion-list>
-  </div> 
+    </ion-list> -->
+  </div>
   <ion-slides class="slides" slidesPerView="2">
+    <ion-slide *ngFor="let item of vehicles">
+      <div (click)="reservVechil(item.id)">
+        <img src='{{ item.iconImageEnum }}'>
+        <h3>{{ item.Name }} ({{item.description}})</h3>
+      </div>
+    </ion-slide>
+
+  </ion-slides>
+
+  <ion-fab bottom left>
+    <button ion-button icon-start large round color="dark">
+      <ion-icon ios="ios-bicycle" md="md-bicycle"></ion-icon>
+      Fly
+    </button>
+  </ion-fab>
+
+  <ion-fab bottom right>
+    <button color="light" ion-fab (click)="myLocation()">
+      <ion-icon ios="ios-locate-outline" md="md-locate">
+      </ion-icon>
+    </button>
+  </ion-fab>
+
+
+  <!--  
+     <ion-slides class="slides" slidesPerView="2">
     <ion-slide>
       <img src="../../assets/imgs/scoter1.png">
       <h3>PHC-342</h3>
@@ -31,23 +57,8 @@
       <h3>PHC-342</h3>
     </ion-slide>
   </ion-slides>
-
-  <ion-fab bottom left>
-    <button ion-button icon-start large round color="dark">
-      <ion-icon ios="ios-bicycle" md="md-bicycle"></ion-icon>
-      Fly {{changeLat}}
-    </button>
-  </ion-fab>
-
-  <ion-fab bottom right>
-    <button color="light" ion-fab (click)="myLocation()">
-      <ion-icon ios="ios-locate-outline" md="md-locate">
-      </ion-icon>
-    </button>
-  </ion-fab>
-
-
-   <!--  <ion-slides pager>
+  
+  <ion-slides pager>
     <ion-slide *ngFor="let slide of slides">
       <ion-toolbar>
         <ion-buttons end>

@@ -51,4 +51,17 @@ export class AlertsProvider {
 
     toast.present();
   }
+
+
+  showConfirmationDialog(msg:string,func : string) {
+    
+    let alert = this.alertCtrl.create({
+      title: 'Confirmation!',
+      subTitle: msg || 'Please Confirm.',
+      buttons: ['Ok','Cancel'],
+      enableBackdropDismiss:false,
+      
+    });
+    alert.present();
+  }
 }

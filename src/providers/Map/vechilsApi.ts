@@ -10,6 +10,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import { ResponseModel } from '../../models/ResponseModel';
 import { VisibleRegion } from '@ionic-native/google-maps';
+import { vehicaleReservationModel } from '../../models/vehicaleModel';
 @Injectable()
 export class VehiclsProvider {
 
@@ -24,12 +25,18 @@ export class VehiclsProvider {
         private storage: Storage,
         private loadingCtrl: LoadingController,
     ) {
-        console.log('Hello AuthProvider Provider');
+        //console.log('Hello AuthProvider Provider');
     }
 
     byArea(data: VisibleRegion): Observable<ResponseModel> {
         let URI = `${apiConfig.apiUrl}/Vehicles/GetByArea`;
-        console.log("hit server"  + URI);
+        //console.log("hit server"  + URI);
+        return this.http.post<ResponseModel>(URI, data);
+    }
+
+    reserve(data: vehicaleReservationModel): Observable<ResponseModel> {
+        let URI = `${apiConfig.apiUrl}/Vehicles/Reservation`;
+        //console.log("hit server"  + URI);
         return this.http.post<ResponseModel>(URI, data);
     }
 }
