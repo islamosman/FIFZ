@@ -3,8 +3,8 @@ import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import {Storage} from "@ionic/storage";
- import {AuthProvider} from "../providers/auth/auth";
- import {UserStateProvider} from "../providers/userstate/user-state";
+import {AuthProvider} from "../providers/auth/auth";
+import {UserStateProvider} from "../providers/userstate/user-state";
 
 @Component({
   templateUrl: 'app.html'
@@ -17,9 +17,9 @@ export class MyApp {
   pages: Array<{ title: string, component: any }>;
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,
-     private auth: AuthProvider,
-     private storage: Storage,
-     private userState:UserStateProvider,
+    private auth: AuthProvider,
+    private storage: Storage,
+    private userState:UserStateProvider,
     ) {
     this.initializeApp();
 
@@ -46,8 +46,7 @@ export class MyApp {
       this.splashScreen.hide();
     
     
-       // used for an example of ngFor and navigation
-   
+       // used for an example of ngFor and navigation 
 
     });
   }

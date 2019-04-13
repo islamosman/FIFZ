@@ -1,3 +1,59 @@
 page-verfiypass {
+    .page-content{
 
+        .scroll-content{
+            align-items: center;
+            justify-content: center;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        form{
+            width:100%;
+        }
+
+        .list{
+            margin:0
+        }
+
+        h3{
+            text-align: center;
+            margin: 0;
+            margin-bottom: 5px;
+            color: #000;
+            font-size: 16px;
+            font-weight: normal;
+        }
+        
+        .input{
+            margin-top: 15px;
+            margin-bottom: 5px;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 1em;
+            background: #f1f1f1;
+            box-shadow: none !important;
+            text-align: center;
+        }
+        .text-input{
+            text-align: center
+        }
+
+        .signup-col {
+            padding-bottom: 20px;
+        }
+    
+        .item-inner {
+            border-bottom-color: #ffffff !important;
+            box-shadow: none !important;
+        }
+    
+        .submit-btn {
+            background: #42d08e;
+            border-radius: 30px !important;
+            color: #fff;
+            margin-bottom: 15px;
+        }
+    }
 }

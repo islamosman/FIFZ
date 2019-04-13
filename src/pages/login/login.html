@@ -1,57 +1,35 @@
-<!--
-  Generated template for the LoginPage page.
+<ion-content class="login-content" padding>
+  <ion-row class="logo-row">
+    <ion-col></ion-col>
+    <ion-col width-67>
+      <img src="../../assets/imgs/logo-green.png">
+    </ion-col>
+    <ion-col></ion-col>
+  </ion-row>
+  <div class="login-box">
+    <form (ngSubmit)="login()" #loginForm="ngForm">
+      <ion-row>
+        <ion-col>
+          <ion-input type="text" placeholder="Email or Phone" name="email" [(ngModel)]="loginModel.username" required>
+          </ion-input>
 
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
-<!-- <ion-header>
+          <ion-input type="password" placeholder="Password" name="password" [(ngModel)]="loginModel.password" required>
+          </ion-input>
 
-  <ion-navbar>
-    <ion-title>login</ion-title>
-  </ion-navbar>
+        </ion-col>
+      </ion-row>
 
-</ion-header> -->
+      <ion-row>
+        <ion-col class="signup-col">
+          <button ion-button class="submit-btn" full type="submit" [disabled]="!loginForm.form.valid">Sign In</button>
+          <button ion-button class="register-btn" block clear type="button" (click)="createAccount()">New
+            Account ? Register Now ...</button>
+          <button ion-button class="register-btn" block clear type="button" (click)="verifyPassCode()">Verification
+            Code</button>
+        </ion-col>
+      </ion-row>
 
+    </form>
+  </div>
 
-<ion-content  class="login-content" padding>
-
-    <ion-row class="logo-row">
-      <ion-col></ion-col>
-      <ion-col width-67>
-        Fly Image
-      </ion-col>
-      <ion-col></ion-col>
-    </ion-row>
-    <div class="login-box">
-        <ion-title>Verfification Code {{messageStr}}</ion-title>
-      <form (ngSubmit)="login()" #loginForm="ngForm">
-        <ion-row>
-          <ion-col>
-            <ion-list inset>
-              
-              <ion-item>
-                  <ion-label floating>Email or Phone</ion-label>
-                <ion-input type="text"  name="email" [(ngModel)]="loginModel.username" required></ion-input>
-              </ion-item>
-              
-              <ion-item>
-                  <ion-label floating>Password</ion-label>
-                <ion-input type="password"  name="password" [(ngModel)]="loginModel.password" required></ion-input>
-              </ion-item>
-              
-            </ion-list>
-          </ion-col>
-        </ion-row>
-        
-        <ion-row>
-          <ion-col class="signup-col">
-            <button ion-button class="submit-btn" full type="submit" [disabled]="!loginForm.form.valid">SIGN IN</button>
-            <button ion-button class="register-btn" block clear type="button" (click)="createAccount()">New Account</button>
-            <button ion-button class="register-btn" block clear type="button" (click)="verifyPassCode()">Verification Code</button>
-          </ion-col>
-        </ion-row>
-        
-      </form>
-    </div>
-  
 </ion-content>

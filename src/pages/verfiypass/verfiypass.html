@@ -1,29 +1,23 @@
-<!--
-  Generated template for the VerfiypassPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
-
-
-
-<ion-content padding>
-    <ion-title>Verfification Code {{verifyModel.messageStr}}</ion-title>
+<ion-content class="page-content" padding>
+  <ion-row class="logo-row">
+    <ion-col></ion-col>
+    <ion-col width-67>
+      <img src="../../assets/imgs/logo-green.png">
+    </ion-col>
+    <ion-col></ion-col>
+  </ion-row>
   <form (ngSubmit)="VerifyPass()" #verfiyForm="ngForm">
     <ion-row>
       <ion-col>
         <ion-list inset>
+          <!-- <ion-input type="mobileNumber" placeholder="Phone Number" name="mobileNumber" [(ngModel)]="verifyModel.mobileNumber" required></ion-input> -->
 
-          <ion-item>
-            <ion-label floating>Phone Number</ion-label>
-            <ion-input type="mobileNumber" name="mobileNumber" [(ngModel)]="verifyModel.mobileNumber" required></ion-input>
-          </ion-item>
-
-          <ion-item>
+          <!-- <ion-item>
             <ion-label floating>Verification Code</ion-label>
-            <ion-input type="mobileNumber" name="passCode" [(ngModel)]="verifyModel.passCode" required></ion-input>
-          </ion-item>
-
+          </ion-item> -->
+          <h3>Enter the 6 digit code sent to</h3>
+          <h3>01033361934</h3>
+          <ion-input type="mobileNumber" max="6" name="passCode" [(ngModel)]="verifyModel.passCode" required></ion-input>
         </ion-list>
       </ion-col>
     </ion-row>
@@ -31,7 +25,7 @@
     <ion-row>
       <ion-col class="signup-col">
         <button ion-button class="submit-btn" full type="submit" [disabled]="!verfiyForm.form.valid">Verify</button>
-        <button ion-button class="register-btn" type="button" block clear (click)="signIn()">SIGN IN</button>
+        <!-- <button ion-button class="register-btn" type="button" block clear (click)="signIn()">SIGN IN</button> -->
       </ion-col>
     </ion-row>
   </form>
