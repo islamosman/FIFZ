@@ -1,34 +1,32 @@
-
 <ion-content padding>
-    <button ion-button icon-start large round color="dark" (click)="closeModal()">
-        Close
-      </button>
+  <button ion-button icon-start large round color="dark" class="closeBTN" (click)="closeModal()">
+    <ion-icon name="close"></ion-icon>
+  </button>
 
-#{{scoterId}}
-<br>
-{{distanceSpace}} Walking distance
-<br>
-{{distanceDuration}}
-<br>
-5 EGP TO UNLOCK
-<br>
-1.25EGP/min
+  <div class="clearfix">
+      <p class="scooterNum">#{{scoterId}}</p>
+      <p class="scooterDis">{{distanceSpace}} Walking distance</p>
+      <p class="scooterDuration">{{distanceDuration}} Remaining</p>
+    
+      <p class="scooterPrice">5 EGP TO UNLOCK</p>
+      <p class="scooterTime">1.25EGP/min</p>
+  </div>
+  
 
-<br>
- <ion-fab bottom left>
-    <button ion-button icon-start large round color="dark">
+  <div class="buttons">
+    <!-- <button ion-button icon-start large round color="dark">
       <ion-icon ios="ios-bicycle" md="md-bicycle"></ion-icon>
       Direction
     </button>
-  </ion-fab> 
+    <button ion-button icon-start large round color="dark">
+      <ion-icon ios="ios-bicycle" md="md-bicycle"></ion-icon>
+      Scan
+    </button> -->
+    <button>Direction</button>
+    <button>Scan</button>
+  </div>
 
-  <ion-fab bottom right>
-    <button color="light" ion-fab >
-     Scan
-    </button>
-  </ion-fab> 
 
-    <script async defer
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBLKRh7JfikPylbNdGfTiDbe6zut1yabxo&callback=initMap">
-</script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBLKRh7JfikPylbNdGfTiDbe6zut1yabxo&callback=initMap">
+  </script>
 </ion-content>

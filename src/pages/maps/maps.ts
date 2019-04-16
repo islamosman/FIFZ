@@ -315,13 +315,13 @@ map2:any;
       // this._VehiclsProvider.distance().subscribe(returnData => {
       //   console.log(returnData)
       // })
-      this.navCtrl.setRoot("ScanCodePage", { vId: "123" });
+      //this.navCtrl.setRoot("ScanCodePage", { vId: "123" });
 
       //mostafa remove previous line
-      // let modal = this.modalController.create(
-      //   'SelectedRabbitPage', { vId: 123 },{enableBackdropDismiss:true,cssClass:'modal-center'}
-      //   );
-      // modal.present();
+      let modal = this.modalController.create(
+        'SelectedRabbitPage', { vId: 123 },{enableBackdropDismiss:true,cssClass:'modal-center'}
+        );
+      modal.present();
       
      // htmlInfoWindow.open(marker);
     });

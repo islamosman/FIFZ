@@ -68,8 +68,20 @@
   }
 }
 page-maps {
+    .toolbar-background-md{
+        background-image: linear-gradient(to right, #42d08e , #dbe21d) !important;
+    }
+    
+    .toolbar-title{
+        color:#fff;
+        text-transform: uppercase;
+        text-align: center;
+        font-weight: normal;
+        font-size: 18px;
+    }
+
     .map-page{
-      position: relative;
+        position: relative;
     }
     
     .slides{

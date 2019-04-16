@@ -28,7 +28,7 @@ export class MyApp {
       { title: 'PAYMENT', component: 'PaymentPage' },
       { title: 'HISTORY', component: 'HistoryPage' },
       { title: 'HOW TO RIDE', component: 'HowtoridePage' },
-      { title: 'HELP', component: 'helprabbitPage' },
+      { title: 'HELP', component: 'HelprabbitPage' },
       { title: 'SETTINGS', component: 'settingsrabbitPage' },
     //  { title: 'Maps 2', component: 'MapsapiPage' },
       //{ title: 'Scan QR', component: 'ScanCodePage' },
