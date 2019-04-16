@@ -1,14 +1,15 @@
-<!-- <ion-header>
+<ion-header>
   <ion-navbar>
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Maps</ion-title>
   </ion-navbar>
-</ion-header> -->
+</ion-header>
 
 <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBLKRh7JfikPylbNdGfTiDbe6zut1yabxo&v=3.exp&libraries=places"> </script>-->
 <ion-content class="map-page">
+ 
   <div id="map_canvas">
     <!-- <ion-list>
       <ion-item>
@@ -17,7 +18,7 @@
       </ion-item>
     </ion-list> -->
   </div>
-  <ion-slides class="slides" slidesPerView="2">
+  <!-- <ion-slides class="slides" slidesPerView="2">
     <ion-slide *ngFor="let item of vehicles">
       <div (click)="reservVechil(item.id)">
         <img src='{{ item.iconImageEnum }}'>
@@ -25,90 +26,21 @@
       </div>
     </ion-slide>
 
-  </ion-slides>
+  </ion-slides> -->
 
-  <ion-fab bottom left>
+  <!-- <ion-fab bottom left>
     <button ion-button icon-start large round color="dark">
       <ion-icon ios="ios-bicycle" md="md-bicycle"></ion-icon>
       Fly
     </button>
-  </ion-fab>
+  </ion-fab> -->
 
-  <ion-fab bottom right>
+  <!-- <ion-fab bottom right>
     <button color="light" ion-fab (click)="myLocation()">
       <ion-icon ios="ios-locate-outline" md="md-locate">
       </ion-icon>
     </button>
-  </ion-fab>
+  </ion-fab> -->
 
 
-  <!--  
-     <ion-slides class="slides" slidesPerView="2">
-    <ion-slide>
-      <img src="../../assets/imgs/scoter1.png">
-      <h3>PHC-342</h3>
-    </ion-slide>
-    <ion-slide>
-      <img src="../../assets/imgs/scoter1.png">
-      <h3>PHC-342</h3>
-    </ion-slide>
-    <ion-slide>
-      <img src="../../assets/imgs/scoter1.png">
-      <h3>PHC-342</h3>
-    </ion-slide>
-  </ion-slides>
-  
-  <ion-slides pager>
-    <ion-slide *ngFor="let slide of slides">
-      <ion-toolbar>
-        <ion-buttons end>
-          <button ion-button color="primary">Skip</button>
-        </ion-buttons>
-      </ion-toolbar>
-      <img [src]="slide.image" class="slide-image"/>
-      <h2 class="slide-title" [innerHTML]="slide.title"></h2>
-      <p [innerHTML]="slide.description"></p>
-    </ion-slide>
-  <ion-slide>
-      <ion-toolbar>
-      </ion-toolbar>
-      <img src="assets/img/ica-slidebox-img-4.png" class="slide-image"/>
-      <h2 class="slide-title">Ready to Play?</h2>
-      <button ion-button large clear icon-end color="primary">
-        Continue
-        <ion-icon name="arrow-forward"></ion-icon>
-      </button>
-    </ion-slide> 
-  </ion-slides>-->
-
-  <!-- <ion-slides pager (ionSlideDidChange)="slideChanged()" (ionSlideDrag)="slideMoved()">
-    <ion-slide>
-      <div class="diag" style="background: url('assets/img/whitebg.svg') no-repeat">
-        <ion-icon ios="ios-analytics" md="md-analytics" color="primary" [@bounce]='state' (@bounce.done)="animationDone()"></ion-icon>
-      </div>
-      <div [@bounce]='state'>
-        <h2>track your routine</h2>
-        <p>whether it's sets, reps, weight used, you can track it all with our intuitive interface.</p>
-      </div>
-    </ion-slide>
-    <ion-slide>
-      <div class="diag" style="background: url('assets/img/whitebg.svg') no-repeat">
-        <ion-icon ios="ios-trophy" md="md-trophy" color="primary" [@bounce]='state'></ion-icon>
-      </div>
-      <div [@bounce]='state'>
-        <h2>set personal goals</h2>
-        <p>we're all in the gym for a reason: goals. set goals for diet and fitness.</p>
-      </div>
-    </ion-slide>
-    <ion-slide>
-      <div class="diag" style="background: url('assets/img/whitebg.svg') no-repeat">
-        <ion-icon ios="ios-chatboxes" md="md-chatboxes" color="primary" [@bounce]='state'></ion-icon>
-      </div>
-      <div [@bounce]='state'>
-        <h2>chat with others</h2>
-        <p>inspire and help each other reach fitness and diet goals.</p>
-      </div>
-    </ion-slide>
-  </ion-slides>
-  <button (click)="skip()" id="skip">{{ skipMsg }}</button> -->
 </ion-content>

@@ -24,9 +24,14 @@ export class MyApp {
     this.initializeApp();
 
     this.pages = [
-      { title: 'Fly', component: 'MapsPage' },
+      { title: 'FIND RABBIT', component: 'MapsPage' },
+      { title: 'PAYMENT', component: 'PaymentPage' },
+      { title: 'HISTORY', component: 'HistoryPage' },
+      { title: 'HOW TO RIDE', component: 'HowtoridePage' },
+      { title: 'HELP', component: 'helprabbitPage' },
+      { title: 'SETTINGS', component: 'settingsrabbitPage' },
     //  { title: 'Maps 2', component: 'MapsapiPage' },
-      { title: 'Scan QR', component: 'ScanCodePage' },
+      //{ title: 'Scan QR', component: 'ScanCodePage' },
       {title: 'Logout', component: ''}
     ];
   }

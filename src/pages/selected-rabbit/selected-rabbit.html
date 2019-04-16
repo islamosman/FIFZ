@@ -1,0 +1,34 @@
+
+<ion-content padding>
+    <button ion-button icon-start large round color="dark" (click)="closeModal()">
+        Close
+      </button>
+
+#{{scoterId}}
+<br>
+{{distanceSpace}} Walking distance
+<br>
+{{distanceDuration}}
+<br>
+5 EGP TO UNLOCK
+<br>
+1.25EGP/min
+
+<br>
+ <ion-fab bottom left>
+    <button ion-button icon-start large round color="dark">
+      <ion-icon ios="ios-bicycle" md="md-bicycle"></ion-icon>
+      Direction
+    </button>
+  </ion-fab> 
+
+  <ion-fab bottom right>
+    <button color="light" ion-fab >
+     Scan
+    </button>
+  </ion-fab> 
+
+    <script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBLKRh7JfikPylbNdGfTiDbe6zut1yabxo&callback=initMap">
+</script>
+</ion-content>

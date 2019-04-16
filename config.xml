@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="fly.zapp.com" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Fly</name>
-    <description>Fly app.</description>
-    <author email="info@fly.com" href="http://fly.com/">Fly Team</author>
+    <name>Rabbit</name>
+    <description>Rabbit app.</description>
+    <author email="info@Rabbit.com" href="http://Rabbit.com/">Rabbit Team</author>
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
