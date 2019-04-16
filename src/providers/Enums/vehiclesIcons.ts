@@ -1,3 +1,3 @@
 export  enum vehiclesIcons{
-    Moto="../../assets/imgs/scoter1.png"
+    Moto="../../assets/imgs/marker.png"
 }

@@ -1,0 +1,30 @@
+page-howtoride {
+    .toolbar-background-md{
+        background-image: linear-gradient(to right, #42d08e , #dbe21d) !important;
+    }
+    
+    .toolbar-title{
+        color:#fff;
+        text-transform: uppercase;
+        text-align: center;
+        font-weight: normal;
+        font-size: 18px;
+    }
+    h1{
+        font-weight: bold;
+    }
+
+    .swiper-slide img{
+        width: 80%;
+    }
+
+    .swiper-pagination-bullet{
+        background: #45d08c;
+        opacity: 1; 
+    }
+
+    .swiper-pagination-bullet-active {
+        background: #d9e21f;
+        opacity: 1;
+    }
+}

@@ -35,6 +35,7 @@ import { ResponseModel } from '../../models/ResponseModel';
 import { vehiclesIcons } from '../../providers/Enums/vehiclesIcons';
 import { AlertsProvider } from '../../providers/generic/AlertsProvider';
 import { reservationEnum } from '../../providers/Enums/reservationEnum';
+import { modelGroupProvider } from '@angular/forms/src/directives/ng_model_group';
 //import { ScanCodePage } from '../scan-code/scan-code';
 /**
  * Generated class for the MapsPage page.
@@ -42,7 +43,7 @@ import { reservationEnum } from '../../providers/Enums/reservationEnum';
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-
+declare var google;
 @IonicPage()
 @Component({
   selector: 'page-maps',
@@ -62,7 +63,7 @@ export class MapsPage implements OnInit {
   constructor(public navCtrl: NavController, private platform: Platform, private diagnostic: Diagnostic,
     private menu: MenuController, private _location: LocationsProvider, private openNativeSettings: OpenNativeSettings,
     public navParams: NavParams, private geolocation: Geolocation, private backgroundGeolocation: BackgroundGeolocation,
-    private ModalCtrl: ModalController, private locationAccuracy: LocationAccuracy,
+    private ModalCtrl: ModalController, private locationAccuracy: LocationAccuracy,public modalController: ModalController,
     public _VehiclsProvider: VehiclsProvider, private _alertsService: AlertsProvider) {
     // Begin Constractor
     this.geoModelVar = new GeoModel();
@@ -70,9 +71,20 @@ export class MapsPage implements OnInit {
   }
 
   vehicles;
-
-
+  
+map2:any;
   ngOnInit() {
+   
+    // mostafa css in maps.scss
+    // let modal = this.modalController.create(
+    //   'InridestatusPage', null,{enableBackdropDismiss:false,cssClass:'modal-bottom'}
+    //   );
+    // modal.present();
+    // let modal = this.modalController.create(
+    //   'EndridePage', null,{enableBackdropDismiss:false,cssClass:'modal-bottom'}
+    //   );
+    // modal.present();
+
 
     this.address = {
       place: ''
@@ -104,15 +116,10 @@ export class MapsPage implements OnInit {
           console.log(JSON.stringify(state));
         }).catch(e => console.error(e));
 
-      // this.openNativeSettings.open("location").then((data)=>{
-      //   console.log(JSON.stringify(data));
-      // })
-      // this.requestLocationAccuracy();
-      // this.geoModelVar.lat = 41.799240000000005;
-      // this.geoModelVar.lng = 140.75875000000002;
       this._location.GetCurrent().then(((resp) => {
         this.geoModelVar.lat = resp.coords.latitude;
         this.geoModelVar.lng = resp.coords.longitude;
+        console.log("longLat : > " + resp.coords);
         this.loadMap();
       }));
     });
@@ -153,7 +160,7 @@ export class MapsPage implements OnInit {
           lat: this.geoModelVar.lat,
           lng: this.geoModelVar.lng
         },
-        zoom: 17,
+        zoom: 15,
         tilt: 30
       },
       controls: { zoom: false, compass: false, mapToolbar: false, myLocation: true, myLocationButton: true },
@@ -284,15 +291,15 @@ export class MapsPage implements OnInit {
       icon: {
         url: vehicaleModel.iconImageEnum,
         size: {
-          width: 24,
-          height: 24
+          width: 40,
+          height: 62
         }
       },
       iconData: {
         url: vehicaleModel.iconImageEnum,
         size: {
-          width: 24,
-          height: 24
+          width: 40,
+          height: 62
         }
       }
       ,
@@ -306,7 +313,18 @@ export class MapsPage implements OnInit {
     });
 
     marker.on(GoogleMapsEvent.MARKER_CLICK).subscribe((e) => {
-      htmlInfoWindow.open(marker);
+      // this._VehiclsProvider.distance().subscribe(returnData => {
+      //   console.log(returnData)
+      // })
+      //this.navCtrl.setRoot("ScanCodePage", { vId: "123" });
+
+      //mostafa remove previous line
+      // let modal = this.modalController.create(
+      //   'SelectedRabbitPage', { vId: 123 },{enableBackdropDismiss:true,cssClass:'modal-center'}
+      //   );
+      // modal.present();
+      
+     // htmlInfoWindow.open(marker);
     });
   }
 
