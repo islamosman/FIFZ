@@ -119,6 +119,7 @@ map2:any;
       this._location.GetCurrent().then(((resp) => {
         this.geoModelVar.lat = resp.coords.latitude;
         this.geoModelVar.lng = resp.coords.longitude;
+        console.log("longLat : > " + resp.coords);
         this.loadMap();
       }));
     });
@@ -159,7 +160,7 @@ map2:any;
           lat: this.geoModelVar.lat,
           lng: this.geoModelVar.lng
         },
-        zoom: 17,
+        zoom: 15,
         tilt: 30
       },
       controls: { zoom: false, compass: false, mapToolbar: false, myLocation: true, myLocationButton: true },
