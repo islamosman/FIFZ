@@ -78,10 +78,10 @@ export class MapsPage implements OnInit {
   ngOnInit() {
 
     // mostafa css in maps.scss
-    // let modal = this.modalController.create(
-    //   'InridestatusPage', null,{enableBackdropDismiss:false,cssClass:'modal-bottom'}
-    //   );
-    // modal.present();
+    let modal = this.modalController.create(
+      'InridestatusPage', null,{enableBackdropDismiss:false,cssClass:'modal-bottom'}
+      );
+     modal.present();
     // let modal = this.modalController.create(
     //   'EndridePage', null,{enableBackdropDismiss:false,cssClass:'modal-bottom'}
     //   );
