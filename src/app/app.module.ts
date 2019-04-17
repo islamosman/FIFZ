@@ -7,7 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { MyApp } from './app.component';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { GoogleMaps } from "@ionic-native/google-maps";
+// import { GoogleMaps } from "@ionic-native/google-maps";
 //import { formArrayNameProvider } from '@angular/forms/src/directives/reactive_directives/form_group_name';
 
 import { AuthProvider } from '../providers/auth/auth';
@@ -19,10 +19,10 @@ import { autocompletePageModule } from '../pages/autocomplete/autocomplete.modul
 import { LocationAccuracy } from '@ionic-native/location-accuracy';
 import { LocationsProvider } from '../providers/Map/locations';
 import { Diagnostic } from '@ionic-native/diagnostic';
-import { OpenNativeSettings } from '@ionic-native/open-native-settings';
-import { BackgroundGeolocation } from '@ionic-native/background-geolocation'
+// import { OpenNativeSettings } from '@ionic-native/open-native-settings';
+// import { BackgroundGeolocation } from '@ionic-native/background-geolocation'
 import { QRScanner } from '@ionic-native/qr-scanner';
-import { Sim } from '@ionic-native/sim';
+// import { Sim } from '@ionic-native/sim';
 import { UniqueDeviceID } from '@ionic-native/unique-device-id';
 import { AppErrorHandler } from '../providers/generic/AppErrorHandler';
 import { VehiclsProvider } from '../providers/Map/vechilsApi';
@@ -49,7 +49,7 @@ import { VehiclsProvider } from '../providers/Map/vechilsApi';
   providers: [
     StatusBar,
     SplashScreen,
-    GoogleMaps,
+    //GoogleMaps,
     AuthProvider,
     VehiclsProvider,
     UserStateProvider,
@@ -57,11 +57,11 @@ import { VehiclsProvider } from '../providers/Map/vechilsApi';
     Geolocation,
     LocationAccuracy,
     Diagnostic,
-    OpenNativeSettings,
-    BackgroundGeolocation,
+    //OpenNativeSettings,
+    //BackgroundGeolocation,
     LocationsProvider,
     QRScanner,
-    Sim,
+    //Sim,
     UniqueDeviceID,
     { provide: ErrorHandler, useClass: AppErrorHandler }//IonicErrorHandler
   ]

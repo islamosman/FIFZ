@@ -34,6 +34,9 @@ export class ScanCodePage implements OnInit {
   }
 
   ionViewWillLeave() {
+    this.qrScanner.hide();
+    this.qrScanner.destroy();
+    console.log("ed")
     this.menu.swipeEnable(false);
   }
 
