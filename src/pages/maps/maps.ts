@@ -1,41 +1,41 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ɵConsole } from '@angular/core';
 import { IonicPage, ModalController, NavController, MenuController, NavParams, Platform } from 'ionic-angular';
 import {
   GoogleMaps,
   GoogleMap,
   GoogleMapsEvent,
   GoogleMapOptions,
-  CameraPosition,
-  MarkerOptions,
+  // CameraPosition,
+  // MarkerOptions,
   Marker,
   Environment,
   HtmlInfoWindow,
   VisibleRegion,
-  LatLngBounds,
+  // LatLngBounds,
   ILatLng,
   LatLng,
-  Polygon,
-  PolylineOptions,
-  PolygonOptions,
-  BaseArrayClass,
+  // Polygon,
+  // PolylineOptions,
+  // PolygonOptions,
+  // BaseArrayClass,
   Poly
 } from '@ionic-native/google-maps';
 import { Diagnostic } from '@ionic-native/diagnostic';
 import { Geolocation, Geoposition } from '@ionic-native/geolocation';
-import { AutocompletePage } from '../autocomplete/autocomplete';
+// import { AutocompletePage } from '../autocomplete/autocomplete';
 import { LocationAccuracy } from '@ionic-native/location-accuracy'
-import { fromEvent } from 'rxjs/observable/fromEvent';
+//import { fromEvent } from 'rxjs/observable/fromEvent';
 import { LocationsProvider } from '../../providers/Map/locations';
 import { GeoModel } from '../../models/MapModel'
 import { vehicaleModel, vehicaleReservationModel } from '../../models/vehicaleModel';
-import { OpenNativeSettings } from '@ionic-native/open-native-settings';
-import { BackgroundGeolocation, BackgroundGeolocationConfig, BackgroundGeolocationResponse } from '@ionic-native/background-geolocation';
+// import { OpenNativeSettings } from '@ionic-native/open-native-settings';
+// import { BackgroundGeolocation, BackgroundGeolocationConfig, BackgroundGeolocationResponse } from '@ionic-native/background-geolocation';
 import { VehiclsProvider } from '../../providers/Map/vechilsApi';
 import { ResponseModel } from '../../models/ResponseModel';
 import { vehiclesIcons } from '../../providers/Enums/vehiclesIcons';
-import { AlertsProvider } from '../../providers/generic/AlertsProvider';
-import { reservationEnum } from '../../providers/Enums/reservationEnum';
-import { modelGroupProvider } from '@angular/forms/src/directives/ng_model_group';
+// import { AlertsProvider } from '../../providers/generic/AlertsProvider';
+// import { reservationEnum } from '../../providers/Enums/reservationEnum';
+// import { modelGroupProvider } from '@angular/forms/src/directives/ng_model_group';
 //import { ScanCodePage } from '../scan-code/scan-code';
 /**
  * Generated class for the MapsPage page.
@@ -43,7 +43,7 @@ import { modelGroupProvider } from '@angular/forms/src/directives/ng_model_group
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-declare var google;
+// declare var google;
 @IonicPage()
 @Component({
   selector: 'page-maps',
@@ -61,20 +61,22 @@ export class MapsPage implements OnInit {
   address;
 
   constructor(public navCtrl: NavController, private platform: Platform, private diagnostic: Diagnostic,
-    private menu: MenuController, private _location: LocationsProvider, private openNativeSettings: OpenNativeSettings,
-    public navParams: NavParams, private geolocation: Geolocation, private backgroundGeolocation: BackgroundGeolocation,
-    private ModalCtrl: ModalController, private locationAccuracy: LocationAccuracy,public modalController: ModalController,
-    public _VehiclsProvider: VehiclsProvider, private _alertsService: AlertsProvider) {
+    private menu: MenuController, private _location: LocationsProvider,
+    public navParams: NavParams, private geolocation: Geolocation, 
+     private locationAccuracy: LocationAccuracy, public modalController: ModalController,public _VehiclsProvider: VehiclsProvider
+    //  ,private ModalCtrl: ModalController, private _alertsService: AlertsProvider,
+    //   private openNativeSettings: OpenNativeSettings,private backgroundGeolocation: BackgroundGeolocation,
+      ) {
     // Begin Constractor
     this.geoModelVar = new GeoModel();
 
   }
 
   vehicles;
-  
-map2:any;
+
+  map2: any;
   ngOnInit() {
-   
+
     // mostafa css in maps.scss
     // let modal = this.modalController.create(
     //   'InridestatusPage', null,{enableBackdropDismiss:false,cssClass:'modal-bottom'}
@@ -103,7 +105,7 @@ map2:any;
         console.log("Can req : " + canRequest)
         if (canRequest) {
           // the accuracy option will be ignored by iOS
-          this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
+          this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_LOW_POWER).then(
             () => console.log('Request successful'),
             error => console.log('Error requesting location permissions', error)
           );
@@ -121,18 +123,26 @@ map2:any;
         this.geoModelVar.lng = resp.coords.longitude;
         console.log("longLat : > " + resp.coords);
         this.loadMap();
-      }));
+      })).catch(err => {
+        console.log(err);
+        this.geoModelVar.lat = "30.783314141910544";
+        this.geoModelVar.lng = "34.94217772246134";
+        this.loadMap();
+      }
+      );
+
+
     });
   }
 
-  showAddressModal() {
-    let modal = this.ModalCtrl.create(AutocompletePage);
-    let me = this;
-    modal.onDidDismiss(data => {
-      this.address.place = data;
-    });
-    modal.present();
-  }
+  // showAddressModal() {
+  //   let modal = this.ModalCtrl.create(AutocompletePage);
+  //   let me = this;
+  //   modal.onDidDismiss(data => {
+  //     this.address.place = data;
+  //   });
+  //   modal.present();
+  // }
 
   ionViewDidEnter() {
     this.menu.swipeEnable(true);
@@ -146,6 +156,7 @@ map2:any;
   }
 
   loadMap() {
+    console.log("load map 1")
     Environment.setEnv({
       'API_KEY_FOR_BROWSER_DEBUG': 'AIzaSyBLKRh7JfikPylbNdGfTiDbe6zut1yabxo',
       'API_KEY_FOR_BROWSER_RELEASE': 'AIzaSyBLKRh7JfikPylbNdGfTiDbe6zut1yabxo'
@@ -176,6 +187,7 @@ map2:any;
 
     this.map.one(GoogleMapsEvent.MAP_READY)
       .then((readyData) => {
+        console.log("Map ready")
         this.getVehicles(this.map.getVisibleRegion());
 
         //console.log(" <<<  " + JSON.stringify(readyData));
@@ -316,15 +328,15 @@ map2:any;
       // this._VehiclsProvider.distance().subscribe(returnData => {
       //   console.log(returnData)
       // })
-      this.navCtrl.setRoot("ScanCodePage", { vId: "123" });
+      //this.navCtrl.setRoot("ScanCodePage", { vId: "123" });
 
       //mostafa remove previous line
-      // let modal = this.modalController.create(
-      //   'SelectedRabbitPage', { vId: 123 },{enableBackdropDismiss:true,cssClass:'modal-center'}
-      //   );
-      // modal.present();
-      
-     // htmlInfoWindow.open(marker);
+      let modal = this.modalController.create(
+        'SelectedRabbitPage', { vId: 123 },{enableBackdropDismiss:true,cssClass:'modal-center'}
+        );
+      modal.present();
+
+      // htmlInfoWindow.open(marker);
     });
   }
 
@@ -366,43 +378,43 @@ map2:any;
 
 
   backGroundGeo() {
-    const config: BackgroundGeolocationConfig = {
-      desiredAccuracy: 10,
-      stationaryRadius: 20,
-      distanceFilter: 30,
-      debug: true, //  enable this hear sounds for background-geolocation life-cycle.
-      stopOnTerminate: false, // enable this to clear background location settings when the app terminates
-    };
+    // const config: BackgroundGeolocationConfig = {
+    //   desiredAccuracy: 10,
+    //   stationaryRadius: 20,
+    //   distanceFilter: 30,
+    //   debug: true, //  enable this hear sounds for background-geolocation life-cycle.
+    //   stopOnTerminate: false, // enable this to clear background location settings when the app terminates
+    // };
 
-    this.backgroundGeolocation.configure(config)
-      .subscribe((location: BackgroundGeolocationResponse) => {
+    // this.backgroundGeolocation.configure(config)
+    //   .subscribe((location: BackgroundGeolocationResponse) => {
 
-        console.log("Hero " + JSON.stringify(location));
-        // IMPORTANT:  You must execute the finish method here to inform the native plugin that you're finished,
-        // and the background-task may be completed.  You must do this regardless if your HTTP request is successful or not.
-        // IF YOU DON'T, ios will CRASH YOUR APP for spending too much time in the background.
-        this.backgroundGeolocation.finish(); // FOR IOS ONLY
+    //     console.log("Hero " + JSON.stringify(location));
+    //     // IMPORTANT:  You must execute the finish method here to inform the native plugin that you're finished,
+    //     // and the background-task may be completed.  You must do this regardless if your HTTP request is successful or not.
+    //     // IF YOU DON'T, ios will CRASH YOUR APP for spending too much time in the background.
+    //     this.backgroundGeolocation.finish(); // FOR IOS ONLY
 
-      });
+    //   });
 
-    // start recording location
-    this.backgroundGeolocation.start();
+    // // start recording location
+    // this.backgroundGeolocation.start();
 
-    // If you wish to turn OFF background-tracking, call the #stop method.
-    //this.backgroundGeolocation.stop();
+    // // If you wish to turn OFF background-tracking, call the #stop method.
+    // //this.backgroundGeolocation.stop();
 
-    this.backgroundGeolocation.getValidLocations().then((data) => {
-      console.log("1# " + data);
-    });
-
-
-    console.log("2# " + this.backgroundGeolocation.LocationProvider);
+    // this.backgroundGeolocation.getValidLocations().then((data) => {
+    //   console.log("1# " + data);
+    // });
 
 
-    this.backgroundGeolocation.getLocations().then((data) => {
-      console.log("3# " + data);
-    });
-    this.backgroundGeolocation.stop();
+    // console.log("2# " + this.backgroundGeolocation.LocationProvider);
+
+
+    // this.backgroundGeolocation.getLocations().then((data) => {
+    //   console.log("3# " + data);
+    // });
+    // this.backgroundGeolocation.stop();
   }
 
   reservationModel: vehicaleReservationModel;

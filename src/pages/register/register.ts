@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { IonicPage, MenuController, NavController, NavParams, Platform, Form } from 'ionic-angular';
-import { Sim } from '@ionic-native/sim';
+// import { Sim } from '@ionic-native/sim';
 import { UniqueDeviceID } from '@ionic-native/unique-device-id';
 import { RegisterModel } from '../../models/usermodel';
 import { AuthProvider } from "../../providers/auth/auth";
 import { ResponseModel } from '../../models/ResponseModel';
 import 'rxjs/add/operator/map';
 import { HttpClient } from '@angular/common/http';
-import { apiConfig } from "../../globalconfig";
-import { Observable } from 'rxjs/Observable';
+// import { apiConfig } from "../../globalconfig";
+// import { Observable } from 'rxjs/Observable';
 import { ErrorModel } from '../../models/errorModel';
 import { AlertsProvider } from '../../providers/generic/AlertsProvider';
 import { VerfiypassPage } from '../verfiypass/verfiypass';
