@@ -14,7 +14,9 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'howtoride.html',
 })
 export class HowtoridePage {
-
+  slideOpts = {
+    effect: 'flip'
+  };
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 

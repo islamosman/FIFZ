@@ -303,15 +303,15 @@ export class MapsPage implements OnInit {
       icon: {
         url: vehicaleModel.iconImageEnum,
         size: {
-          width: 24,
-          height: 24
+          width: 40,
+          height: 62
         }
       },
       iconData: {
         url: vehicaleModel.iconImageEnum,
         size: {
-          width: 24,
-          height: 24
+          width: 40,
+          height: 62
         }
       }
       ,

@@ -1,3 +1,63 @@
 page-selected-rabbit {
+    .scroll-content{
+        top: 25% !important;
+        left: 5% !important;
+        width: 90% !important;
+        height: 350px !important;
+        border: 4px solid #66d473 !important;
+        border-radius: 45px !important;
+        
+        .closeBTN{
+            color: #000;
+            background-color: transparent;
+            padding: 0;
+            box-shadow: none;
+            float: right;
+            height: auto;
+        }
 
+        .clearfix{
+            clear: both;
+            padding: 15px 0;
+        }
+
+        p{
+            margin: 0;
+            margin-bottom: 10px;
+        }
+
+        p.scooterNum{
+            font-size: 25px;
+            font-weight: 900
+        }
+
+        p.scooterDis{
+            font-size: 17px;
+        }
+
+        p.scooterDuration{
+            font-size: 14px;
+        }
+
+        p.scooterPrice{
+            margin-top:15px;
+            font-size: 22px;
+            font-weight: 900
+        }
+
+        p.scooterTime{
+            font-size: 22px;
+            font-weight: 900
+        }
+
+        .buttons button{
+            width: 49%;
+            display: inline-block;
+            padding: 15px;
+            border-radius: 13px;
+            font-size: 18px;
+            color: #fff;
+            background-color: #42d08e;
+        }
+    }
 }

@@ -28,8 +28,8 @@ export class MyApp {
       { title: 'PAYMENT', component: 'PaymentPage' },
       { title: 'HISTORY', component: 'HistoryPage' },
       { title: 'HOW TO RIDE', component: 'HowtoridePage' },
-      { title: 'HELP', component: 'helprabbitPage' },
-      { title: 'SETTINGS', component: 'settingsrabbitPage' },
+      { title: 'HELP', component: 'HelprabbitPage' },
+      { title: 'SETTINGS', component: 'SettingsrabbitPage' },
     //  { title: 'Maps 2', component: 'MapsapiPage' },
       //{ title: 'Scan QR', component: 'ScanCodePage' },
       {title: 'Logout', component: ''}
