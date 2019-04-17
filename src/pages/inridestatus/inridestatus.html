@@ -5,18 +5,36 @@
   Ionic pages and navigation.
 -->
 
-<ion-content padding>
-{{rideDateTime}}
-<br>
-#{{vId}}
-<br>
-timer
-<br>
-{{distanceKM}}
-<br>
-{{feesValue}}
-<br>
-<button color="primary">Pause</button>
-<br>
-<button color="primary">END RIDE</button>
+<ion-content padding class="InRideModal">
+
+  <p class="RideDateTime">
+    {{rideDateTime}} 2/5/2019 , 4:20 PM
+  </p>
+  <p class="RideID">
+    #{{vId}}
+  </p>
+  <br>
+  <div class="timer">
+    <ion-icon name="time" class="clockIcon"></ion-icon>
+    <span> <label id="minutes">{{Minutes}}</label>:<label id="seconds">{{Seconds}}</label></span>
+  </div> 
+  <p class="summary">
+    <span>
+      {{distanceKM}} 17
+      <br>
+      <small> Kilo Meters </small>
+    </span>
+    <span>
+      {{feesValue}} 18.25
+      <br> 
+      <small> EGP </small>
+    </span>
+  </p>
+  <div class="buttons">
+    <button class="PauseRideBTN">
+      <ion-icon name="pause"></ion-icon>
+    </button>
+    <button class="EndRideBTN">END RIDE</button>
+  </div>
+  
 </ion-content>

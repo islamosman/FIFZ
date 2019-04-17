@@ -1,3 +1,76 @@
 page-inridestatus {
+    p{
+        margin: 0;
+        margin-bottom: 10px;
+    }
 
+    p.RideDateTime {
+        font-size: 18px;
+        color: #42d08e;
+    }
+
+    p.RideID {
+        font-size: 22px;
+        font-weight: bold;
+        color: #42d08e;
+    }
+
+    .timer{
+        text-align: center;
+
+        .clockIcon{
+            display: block;
+            font-size: 25px;
+        }
+        span{
+            font-size: 45px;
+            font-weight: bold;
+            color: #42d08e;
+            
+            label{
+                padding: 0 10px;
+            }
+        }
+    }
+
+    p.summary {
+        text-align: center;
+        margin-top: 10px;
+        border-top: 2px solid #eee;
+
+        span {
+            padding: 15px;
+            font-size: 25px;
+            font-weight: bold;
+            color: #42d08e;
+            text-align: center;
+            display: inline-block;
+            width: 40%;
+
+            small{
+                font-size: 60%;
+                display: inline-block;
+                width: 100%;
+                color: #6c6c6c;
+            }
+        }
+
+        span:first-child{
+            border-right: 2px solid #eee;
+        }
+    }
+
+    .buttons button{
+        width: 49%;
+        display: inline-block;
+        padding: 20px 15px;
+        border-radius: 13px;
+        font-size: 18px;
+        color: #fff;
+        background-color: #42d08e;
+    }
+
+    .buttons .EndRideBTN{
+        background-color: #cc0707;
+    }
 }

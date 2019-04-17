@@ -13,7 +13,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   selector: 'page-inridestatus',
   templateUrl: 'inridestatus.html',
 })
-export class InridestatusPage implements OnInit  {
+export class InridestatusPage implements OnInit {
   rideDateTime: any;
   vId: any;
   distanceKM: any;
@@ -22,8 +22,28 @@ export class InridestatusPage implements OnInit  {
   }
   ngOnInit() {
   }
+  totalSeconds = 0;
+  Minutes: any;
+  Seconds: any;
+
+  setTime() {
+    ++this.totalSeconds;
+    this.Minutes = this.pad(this.totalSeconds % 60);
+    this.Seconds = this.pad(Number(this.totalSeconds / 60));
+  }
+
+  pad(val) {
+    var valString = val + "";
+    if (valString.length < 2) {
+      return "0" + valString;
+    } else {
+      return valString;
+    }
+  }
   ionViewDidLoad() {
-    this.vId ="123";
+    this.vId = "123";
+    setInterval(this.setTime, 1000);
+
   }
 
 }
