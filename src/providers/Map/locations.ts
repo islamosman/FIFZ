@@ -13,7 +13,7 @@ export class LocationsProvider {
 
    GetCurrent(): Promise<Geoposition> {
 
-      return this.geolocation.getCurrentPosition({ enableHighAccuracy: false,timeout: 10000,maximumAge:4 });
+      return this.geolocation.getCurrentPosition({ enableHighAccuracy: false,timeout: 5000,maximumAge:4 });
    }
 
    GetCurrent2(): Observable<Geoposition> {

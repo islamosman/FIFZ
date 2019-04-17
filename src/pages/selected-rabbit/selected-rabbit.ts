@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, ViewController, Platform } from 'ionic-angular';
 
 /**
  * Generated class for the SelectedRabbitPage page.
@@ -17,14 +17,11 @@ export class SelectedRabbitPage {
   scoterId: Number = 0;
   distanceSpace: string;
   distanceDuration: string;
-  constructor(public v: ViewController, public modalController: ModalController, public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public v: ViewController,private platform: Platform,  public modalController: ModalController, public navCtrl: NavController, public navParams: NavParams) {
     this.scoterId = this.navParams.data.vId;
   }
 
   ionViewDidLoad() {
-
-  }
-  closeModal() {
     var myLatLng1 = { lat: 40.634315, lng: 14.602552 };
     var myLatLng2 = { lat: 40.04215, lng: 14.102552 };
 
@@ -47,7 +44,23 @@ export class SelectedRabbitPage {
     }
 
     );
-    
-    //this.v.dismiss();
+  }
+  closeModal() {
+    this.v.dismiss();
+  }
+
+  scan(){
+    this.v.dismiss();
+    this.navCtrl.push("ScanCodePage", { vId: this.scoterId });
+  }
+
+  direction(){
+    let direction = "30.783314141910544,34.94217772246134";
+    if(this.platform.is('ios')){
+      window.open('maps://?q=' + direction, '_system');
+    }else{
+      let label = encodeURI('Rabbit');
+	window.open('geo:0,0?q=' + direction + '(' + label + ')', '_system');
+    }
   }
 }

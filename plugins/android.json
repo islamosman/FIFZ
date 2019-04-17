@@ -66,6 +66,13 @@
     },
     "cordova-plugin-uniquedeviceid": {
       "PACKAGE_NAME": "fly.zapp.com"
+    },
+    "cordova-plugin-facebook4": {
+      "APP_ID": "415628749216489",
+      "APP_NAME": "Rabbit",
+      "FACEBOOK_HYBRID_APP_EVENTS": "false",
+      "FACEBOOK_ANDROID_SDK_VERSION": "4.40.0",
+      "PACKAGE_NAME": "fly.zapp.com"
     }
   },
   "dependent_plugins": {}

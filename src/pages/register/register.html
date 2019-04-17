@@ -2,7 +2,7 @@
   <ion-row class="logo-row">
     <ion-col></ion-col>
     <ion-col width-67>
-      <img src="../../assets/imgs/logo-green.png">
+      <img src="assets/imgs/logo-green.png">
     </ion-col>
     <ion-col></ion-col>
   </ion-row>
@@ -12,14 +12,14 @@
         <ion-col>
           <ion-list inset>
             <ion-input type="text" placeholder="Device ID" name="device_unique_id"
-              [(ngModel)]="registerModel.device_unique_id" required></ion-input>
-            <ion-input type="phone_number" placeholder="Mobile No" name="phone_number"
+              [(ngModel)]="registerModel.device_unique_id"  required></ion-input>
+            <ion-input type="tel" inputmode="tel" placeholder="Mobile No" name="phone_number"
               [(ngModel)]="registerModel.phone_number" required></ion-input>
-            <ion-input type="email" placeholder="Email" name="email" [(ngModel)]="registerModel.email" required>
+            <ion-input type="email" inputmode="email" placeholder="Email" name="email" [(ngModel)]="registerModel.email" required>
             </ion-input>
             <ion-input type="text" placeholder="Name" name="first_name" [(ngModel)]="registerModel.first_name" required>
             </ion-input>
-            <ion-input type="password" placeholder="Password" name="password" [(ngModel)]="registerModel.password"
+            <ion-input type="password" inputmode="password"  placeholder="Password" name="password" [(ngModel)]="registerModel.password"
               required></ion-input>
           </ion-list>
         </ion-col>
@@ -29,7 +29,13 @@
         <ion-col class="signup-col">
           <button ion-button class="submit-btn" full type="submit"
             [disabled]="!registerForm.form.valid">Register</button>
-            <button ion-button class="facebook-btn" type="button">Sign in With Facebook</button>
+
+            <button ion-button   type="button" (click)="loginWithFB()" class="facebook-btn" icon-end>
+              Sign in With Facebook
+              <ion-icon name="logo-facebook"></ion-icon>
+          </button>
+
+            <!-- <button ion-button class="facebook-btn" type="button">Sign in With Facebook</button> -->
             <button ion-button class="login-btn" type="button" block clear (click)="signIn()">Have Account ? Login Again ..</button>
 
           </ion-col>
