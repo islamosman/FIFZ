@@ -291,15 +291,15 @@ map2:any;
       icon: {
         url: vehicaleModel.iconImageEnum,
         size: {
-          width: 24,
-          height: 24
+          width: 40,
+          height: 62
         }
       },
       iconData: {
         url: vehicaleModel.iconImageEnum,
         size: {
-          width: 24,
-          height: 24
+          width: 40,
+          height: 62
         }
       }
       ,
@@ -319,10 +319,10 @@ map2:any;
       //this.navCtrl.setRoot("ScanCodePage", { vId: "123" });
 
       //mostafa remove previous line
-      let modal = this.modalController.create(
-        'SelectedRabbitPage', { vId: 123 },{enableBackdropDismiss:true,cssClass:'modal-center'}
-        );
-      modal.present();
+      // let modal = this.modalController.create(
+      //   'SelectedRabbitPage', { vId: 123 },{enableBackdropDismiss:true,cssClass:'modal-center'}
+      //   );
+      // modal.present();
       
      // htmlInfoWindow.open(marker);
     });
