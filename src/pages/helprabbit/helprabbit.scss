@@ -5,9 +5,40 @@ page-helprabbit {
     
     .toolbar-title{
         color:#fff;
-        text-transform: uppercase;
+        text-transform: capitalize;
         text-align: center;
         font-weight: normal;
         font-size: 18px;
+    }
+
+    .scroll-content{
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+
+        .helpContent{
+
+            h4{
+                font-weight: bold;
+                color: #66d574;
+            }
+
+            ul{
+                padding-left: 0;
+                list-style: none;
+
+                li{
+                    margin-bottom: 10px;
+                    font-size: 18px;
+                    color: #52a673;
+        
+                    .icon{
+                        padding-right: 10px;
+                        color: #9ba71f;
+                        font-weight: bold;
+                    }
+                }
+            }
+        }
     }
 }

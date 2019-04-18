@@ -12,7 +12,7 @@ page-scan-code {
 
         .toolbar-title{
             color:#fff;
-            text-transform: uppercase;
+            text-transform: capitalize;
             text-align: center;
             font-weight: normal;
             font-size: 18px;
@@ -22,6 +22,7 @@ page-scan-code {
 
     .ScanCodePage{
         background-color: #fbfbfb;
+        position: relative;
 
         .scooter-row{
             flex-direction: column;
@@ -52,6 +53,19 @@ page-scan-code {
                     height: 100%;
                 }
             }
+        }
+
+        .ScanTypeKeys{
+            position: absolute;
+            bottom: 5%;
+            left: 10%;
+            padding: 10px;
+            background-color: #000;
+            color: #5dd37a;
+            border-radius: 50px;
+            width: 70px;
+            height: 70px;
+            font-size: 18px;
         }
 
         

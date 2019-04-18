@@ -182,4 +182,12 @@ export class RegisterPage implements OnInit {
   signIn() {
     this.navCtrl.setRoot('LoginPage');
   }
+
+  Terms(){
+    this.navCtrl.setRoot('TermsconditionsPage');
+  }
+
+  Privacy(){
+    this.navCtrl.setRoot('PrivatepolicyPage');
+  }
 }

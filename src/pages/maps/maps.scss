@@ -74,7 +74,7 @@ page-maps {
     
     .toolbar-title{
         color:#fff;
-        text-transform: uppercase;
+        text-transform: capitalize;
         text-align: center;
         font-weight: normal;
         font-size: 18px;
@@ -85,33 +85,33 @@ page-maps {
     }
     
     .slides{
-      position: fixed;
-      bottom: 15%;
-      left: 0;
-      width: 100%;
-      height: auto;
-      z-index: 9999;
+        position: fixed;
+        bottom: 15%;
+        left: 0;
+        width: 100%;
+        height: auto;
+        z-index: 9999;
     }
 
     .slides ion-slide{
-      text-align: center;
-      height: 80px;
-      width: 42% !important;
-      margin: 5px;
-      background-color: #fff;
-      border: 2px solid #2C3E50;
-      border-radius: 5px;
+        text-align: center;
+        height: 80px;
+        width: 42% !important;
+        margin: 5px;
+        background-color: #fff;
+        border: 2px solid #2C3E50;
+        border-radius: 5px;
     }
 
     .slides img{
-      width: 30px;
-      margin: 8px 0 auto;
+        width: 30px;
+        margin: 8px 0 auto;
     }
 
     .slides h3{
-      margin: 0;
-      font-size: 16px;
-      font-weight: bold;
+        margin: 0;
+        font-size: 16px;
+        font-weight: bold;
     }
 
     #map_canvas{
@@ -126,34 +126,34 @@ page-maps {
         .toolbar-background {
             background: #fff;
             border-color: transparent;
-          }
+        }
         
-          .slide-zoom {
+        .slide-zoom {
             height: 100%;
-          }
+        }
         
-          .slide-title {
+        .slide-title {
             margin-top: 2.8rem;
-          }
+        }
         
-          .slide-image {
+        .slide-image {
             max-height: 50%;
             max-width: 60%;
             margin: 18px 0;
-          }
-        
-          b {
+        }
+    
+        b {
             font-weight: 500;
-          }
-        
-          p {
+        }
+    
+        p {
             padding: 0 40px;
             font-size: 14px;
             line-height: 1.5;
             color: #60646B;
-        
-            b {
-              color: #000000;
-            }
-          }
+    
+        b {
+            color: #000000;
+        }
+        }
 }

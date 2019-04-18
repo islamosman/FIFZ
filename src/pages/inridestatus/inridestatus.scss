@@ -1,4 +1,12 @@
 page-inridestatus {
+    .scroll-content{
+
+        @media screen and (max-width: 380px) {
+            top: 30% !important;
+            height: 70% !important;
+        }
+    }
+    
     p{
         margin: 0;
         margin-bottom: 10px;

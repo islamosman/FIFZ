@@ -24,7 +24,16 @@
           </ion-list>
         </ion-col>
       </ion-row>
-
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-checkbox color="green" checked="true"></ion-checkbox>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-label>I Accept <span (click)="Terms()">Terms and Condtions </span> and <span (click)="Privacy()">Privacy and Policy</span> of RABBIT</ion-label>
+        </ion-col>
+      </ion-row>
       <ion-row>
         <ion-col class="signup-col">
           <button ion-button class="submit-btn" full type="submit"
