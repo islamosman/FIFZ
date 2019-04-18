@@ -24,17 +24,19 @@ export class InridestatusPage implements OnInit {
   vId: any;
   distanceKM: any;
   feesValue: any;
+  totalSeconds:number = 0;
+  Minutes: any;
+  Seconds: any;
   constructor(private alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams,
     private _userState: UserStateProvider, private storage: Storage, public modalController: ModalController,
     private _alertsService: AlertsProvider, public _VehiclsProvider: VehiclsProvider) {
   }
   ngOnInit() {
   }
-  totalSeconds = 0;
-  Minutes: any;
-  Seconds: any;
+  
 
   setTime() {
+    debugger
     ++this.totalSeconds;
     this.Minutes = this.pad(this.totalSeconds % 60);
     this.Seconds = this.pad(Number(this.totalSeconds / 60));
@@ -49,9 +51,9 @@ export class InridestatusPage implements OnInit {
     }
   }
   ionViewDidLoad() {
+    console.log(this.totalSeconds);
     this.vId = "123";
-    //setInterval(this.setTime, 1000);
-
+    setInterval(this.setTime, 1000);
   }
 
   endTrip() {

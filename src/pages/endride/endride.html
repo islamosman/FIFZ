@@ -5,18 +5,38 @@
   Ionic pages and navigation.
 -->
 
-<ion-content padding>
-{{rideDateTime}}
-<br>
-{{rideDuration}}
-<br>
-{{rideDistance}}
-<br>
-{{rideCost}}
-<br>
-rate
-<br>
-<button color="danger">REPAIR</button>
-<br>
-<button color="danger">Done</button>
+<ion-content padding class="EndRideModal">
+  <p class="RideDateTime">
+    {{rideDateTime}} 2/5/2019 , 4:20 PM
+  </p>
+  <p class="RideID">
+    #R212345
+  </p>
+
+  <p class="RideDuration">
+      <span>Ride Time</span> {{rideDuration}} 55m
+  </p>
+
+  <p class="RideDistance">
+      <span>Distance</span>{{rideDistance}} 1.5 KM
+  </p>
+
+  <p class="RideCost">
+      <span>Cost</span>{{rideCost}} 27 LE
+  </p>
+
+  <ionic3-star-rating 
+    activeIcon = "ios-star"
+    defaultIcon = "ios-star-outline"
+    activeColor = "#42d08e" 
+    defaultColor = "#777777"
+    readonly="false"
+    [rating]="0">
+  </ionic3-star-rating>
+
+  <div class="buttons">
+      <button class="RepairBTN">REPAIR</button>
+      <button>DONE</button>
+  </div>
+  
 </ion-content>

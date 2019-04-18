@@ -1,3 +1,54 @@
 page-endride {
+    .scroll-content{
 
+        @media screen and (max-width: 380px) {
+            top: 25% !important;
+            height: 80% !important;
+        }
+    }
+
+    p{
+        margin: 0;
+        margin-bottom: 10px;
+    }
+
+    p.RideDateTime {
+        font-size: 18px;
+        color: #42d08e;
+    }
+
+    p.RideID {
+        font-size: 22px;
+        font-weight: bold;
+        color: #42d08e;
+        margin-bottom: 20px;
+    }
+
+    p.RideDuration span,
+    p.RideDistance span,
+    p.RideCost span{
+        font-weight: bold;
+        font-size: 18px;
+        color: #777777;
+        padding-right: 15px;
+    }
+
+    .buttons{
+        margin-top: 10%;
+    }
+
+    .buttons button{
+        width: 100%;
+        margin: 10px auto;
+        display: inline-block;
+        padding: 20px 15px;
+        border-radius: 13px;
+        font-size: 18px;
+        color: #fff;
+        background-color: #42d08e;
+    }
+
+    .buttons .RepairBTN{
+        background-color: #cc0707;
+    }
 }
