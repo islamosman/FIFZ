@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, ViewController, Platform } from 'ionic-angular';
+import { LocationsProvider } from '../../providers/Map/locations';
+import { GeoModel } from '../../models/MapModel';
+import { VehiclsProvider } from '../../providers/Map/vechilsApi';
+import { ResponseModel } from '../../models/ResponseModel';
 
 /**
  * Generated class for the SelectedRabbitPage page.
@@ -17,14 +21,47 @@ export class SelectedRabbitPage {
   scoterId: Number = 0;
   distanceSpace: string;
   distanceDuration: string;
-  constructor(public v: ViewController,private platform: Platform,  public modalController: ModalController, public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public v: ViewController, private platform: Platform, public modalController: ModalController,
+    public navCtrl: NavController, public navParams: NavParams, private _location: LocationsProvider,
+    public _VehiclsProvider: VehiclsProvider) {
     this.scoterId = this.navParams.data.vId;
   }
-
+  geoModelVar: GeoModel = new GeoModel();
+  geoModelScotterVar: GeoModel = new GeoModel();
   ionViewDidLoad() {
-    var myLatLng1 = { lat: 40.634315, lng: 14.602552 };
-    var myLatLng2 = { lat: 40.04215, lng: 14.102552 };
 
+    this._location.GetCurrent().then(((resp) => {
+      this.geoModelVar.lat = resp.coords.latitude;
+      this.geoModelVar.lng = resp.coords.longitude;
+      console.log("longLat : > " + resp.coords);
+      this.getVehiclsData();
+    })).catch(err => {
+      console.log(err);
+      this.geoModelVar.lat = "30.783314141910544";
+      this.geoModelVar.lng = "34.94217772246134";
+      this.getVehiclsData();
+    }
+    );
+
+
+  }
+
+  getVehiclsData() {
+    this._VehiclsProvider.byId(this.scoterId).subscribe(returnData => {
+
+      if (returnData != null && returnData != undefined) {
+        this.geoModelScotterVar.lat = Number.parseFloat(returnData.Messages.lat);
+        this.geoModelScotterVar.lng = Number.parseFloat(returnData.Messages.long);
+        this.calcDistance();
+      }
+    });
+  }
+
+  calcDistance() {
+    var myLatLng1 = { lat: this.geoModelVar.lat, lng: this.geoModelVar.lng };
+    var myLatLng2 = { lat: this.geoModelScotterVar.lat, lng: this.geoModelScotterVar.lng };
+console.table(this.geoModelVar)
+console.table(this.geoModelScotterVar)
     var service = new google.maps.DistanceMatrixService;
     service.getDistanceMatrix({
       origins: [myLatLng1],
@@ -40,27 +77,32 @@ export class SelectedRabbitPage {
         this.distanceSpace = response.rows[0].elements[0].distance.text;
         this.distanceDuration = response.rows[0].elements[0].duration.text;
         console.log(response.rows[0].elements[0].distance.text)
+        console.log("dd " + this.distanceSpace)
       }
     }
 
     );
   }
+
+
   closeModal() {
-    this.v.dismiss();
+    console.log(this.distanceSpace);
+    this.distanceSpace = "islamco"
+    //this.v.dismiss();
   }
 
-  scan(){
+  scan() {
     this.v.dismiss();
     this.navCtrl.push("ScanCodePage", { vId: this.scoterId });
   }
 
-  direction(){
+  direction() {
     let direction = "30.783314141910544,34.94217772246134";
-    if(this.platform.is('ios')){
+    if (this.platform.is('ios')) {
       window.open('maps://?q=' + direction, '_system');
-    }else{
+    } else {
       let label = encodeURI('Rabbit');
-	window.open('geo:0,0?q=' + direction + '(' + label + ')', '_system');
+      window.open('geo:0,0?q=' + direction + '(' + label + ')', '_system');
     }
   }
 }

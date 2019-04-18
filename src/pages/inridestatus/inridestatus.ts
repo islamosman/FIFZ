@@ -36,7 +36,6 @@ export class InridestatusPage implements OnInit {
   
 
   setTime() {
-    debugger
     ++this.totalSeconds;
     this.Minutes = this.pad(this.totalSeconds % 60);
     this.Seconds = this.pad(Number(this.totalSeconds / 60));
