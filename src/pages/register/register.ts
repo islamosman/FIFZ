@@ -184,10 +184,10 @@ export class RegisterPage implements OnInit {
   }
 
   Terms(){
-    this.navCtrl.setRoot('TermsconditionsPage');
+    this.navCtrl.push('TermsconditionsPage');
   }
 
   Privacy(){
-    this.navCtrl.setRoot('PrivatepolicyPage');
+    this.navCtrl.push('PrivatepolicyPage');
   }
 }

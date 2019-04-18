@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IonicPage, NavController, NavParams, MenuController, Platform, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, MenuController, Platform, LoadingController, AlertController, ViewController } from 'ionic-angular';
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner';
 import { Diagnostic } from '@ionic-native/diagnostic';
 import { vehicaleReservationModel } from '../../models/vehicaleModel';
@@ -21,8 +21,8 @@ import { UserStateProvider } from '../../providers/userstate/user-state';
 })
 export class ScanCodePage implements OnInit {
   reservationModel: vehicaleReservationModel;
-  constructor(public navCtrl: NavController, public navParams: NavParams, private platform: Platform,
-    private diagnostic: Diagnostic, private qrScanner: QRScanner, private menu: MenuController, 
+  constructor(public v: ViewController, public navCtrl: NavController, private alertCtrl: AlertController, public navParams: NavParams, private platform: Platform,
+    private diagnostic: Diagnostic, private qrScanner: QRScanner, private menu: MenuController,
     private _alertsService: AlertsProvider, public _VehiclsProvider: VehiclsProvider, private _userState: UserStateProvider) {
 
     this.reservationModel = new vehicaleReservationModel();
@@ -111,7 +111,7 @@ export class ScanCodePage implements OnInit {
 
       this._alertsService.hideLoader();
       if (returnData.IsDone) {
-        this.reservationModel.tripId=returnData.ResponseIdStr;
+        this.reservationModel.tripId = returnData.ResponseIdStr;
         this._userState.setRideStatus(this.reservationModel);
         this.navCtrl.setRoot("MapsPage");
       } else {
@@ -120,4 +120,52 @@ export class ScanCodePage implements OnInit {
     });
   }
 
+  enterCode() {
+    let alert = this.alertCtrl.create({
+      title: 'Rabbit',
+      cssClass: 'alert-class',
+      inputs: [
+        {
+          type: "text",
+          name: "vQrInput",
+          placeholder: "Scooter Code"
+          // value?: string;
+          // label?: string;
+          // checked?: boolean;
+          // disabled?: boolean;
+          // id?: string;
+          // handler?: Function;
+          // min?: string | number;
+          // max?: string | number;
+        }
+      ],
+      buttons: [
+        {
+          text: 'Yes',
+          handler: data => {
+            if (data.vQrInput != "") {
+              this.reservationModel.qrStr = data.vQrInput;
+              this.reservVechil();
+            }
+            alert.dismiss(true);
+            return false;
+          }
+        }, {
+          text: 'No',
+          handler: () => {
+            alert.dismiss(false);
+            return false;
+          }
+        }
+      ]
+    });
+
+    alert.present();
+  }
+
+
+  cancelScan(){
+    this.v.dismiss();
+    this.navCtrl.setRoot("MapsPage");
+  }
 }

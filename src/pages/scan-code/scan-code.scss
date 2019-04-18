@@ -68,7 +68,19 @@ page-scan-code {
             font-size: 18px;
         }
 
-        
+        .ScanTypeKeysCancel{
+            position: absolute;
+            bottom: 5%;
+            right: 10%;
+            padding: 10px;
+            background-color: #000;
+            color: #ff0000;
+            border-radius: 50px;
+            width: 70px;
+            height: 70px;
+            font-size: 30px;
+            font-weight: bold;
+        }
     }
 
 

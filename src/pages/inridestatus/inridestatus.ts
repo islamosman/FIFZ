@@ -57,6 +57,7 @@ export class InridestatusPage implements OnInit {
   endTrip() {
     let alert = this.alertCtrl.create({
       title: 'End Rabbit !!',
+      cssClass :'alert-class',
       buttons: [
         {
           text: 'Yes',

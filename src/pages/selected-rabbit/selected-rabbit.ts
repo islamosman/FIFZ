@@ -3,7 +3,8 @@ import { IonicPage, NavController, NavParams, ModalController, ViewController, P
 import { LocationsProvider } from '../../providers/Map/locations';
 import { GeoModel } from '../../models/MapModel';
 import { VehiclsProvider } from '../../providers/Map/vechilsApi';
-import { ResponseModel } from '../../models/ResponseModel';
+// import { ResponseModel } from '../../models/ResponseModel';
+import { Observable } from 'rxjs/Observable';
 
 /**
  * Generated class for the SelectedRabbitPage page.
@@ -52,43 +53,79 @@ export class SelectedRabbitPage {
       if (returnData != null && returnData != undefined) {
         this.geoModelScotterVar.lat = Number.parseFloat(returnData.Messages.lat);
         this.geoModelScotterVar.lng = Number.parseFloat(returnData.Messages.long);
-        this.calcDistance();
+        //this.calcDistance();
+        this.getDistanceMatrix().subscribe(response => {
+          console.log(response);
+          this.distanceSpace = response.rows[0].elements[0].distance.text;
+          this.distanceDuration = response.rows[0].elements[0].duration.text;
+         // this.changeValues();
+        });
+
       }
     });
   }
 
-  calcDistance() {
+  getDistanceMatrix(): Observable<any> {
+    var service = new google.maps.DistanceMatrixService;
     var myLatLng1 = { lat: this.geoModelVar.lat, lng: this.geoModelVar.lng };
     var myLatLng2 = { lat: this.geoModelScotterVar.lat, lng: this.geoModelScotterVar.lng };
-console.table(this.geoModelVar)
-console.table(this.geoModelScotterVar)
-    var service = new google.maps.DistanceMatrixService;
-    service.getDistanceMatrix({
-      origins: [myLatLng1],
-      destinations: [myLatLng2],
-      travelMode: 'WALKING',
-      unitSystem: google.maps.UnitSystem.METRIC,
-      avoidHighways: false,
-      avoidTolls: false
-    }, function (response, status) {
-      if (status !== 'OK') {
-        //alert('Error was: ' + status);
-      } else {
-        this.distanceSpace = response.rows[0].elements[0].distance.text;
-        this.distanceDuration = response.rows[0].elements[0].duration.text;
-        console.log(response.rows[0].elements[0].distance.text)
-        console.log("dd " + this.distanceSpace)
-      }
-    }
 
-    );
+    return Observable.create((observer) => {
+
+      service.getDistanceMatrix({
+        origins: [myLatLng1],
+        destinations: [myLatLng2],
+        travelMode: 'WALKING',
+        unitSystem: google.maps.UnitSystem.METRIC,
+        avoidHighways: false,
+        avoidTolls: false
+      }, (rsp, status) => {
+        // status checking goes here
+        observer.next(rsp);
+        observer.complete();
+      });
+    });
   }
 
+  // calcDistance() {
+  //   var myLatLng1 = { lat: this.geoModelVar.lat, lng: this.geoModelVar.lng };
+  //   var myLatLng2 = { lat: this.geoModelScotterVar.lat, lng: this.geoModelScotterVar.lng };
+  //   console.table(this.geoModelVar)
+  //   console.table(this.geoModelScotterVar)
+  //   var service = new google.maps.DistanceMatrixService;
+  //   service.getDistanceMatrix({
+  //     origins: [myLatLng1],
+  //     destinations: [myLatLng2],
+  //     travelMode: 'WALKING',
+  //     unitSystem: google.maps.UnitSystem.METRIC,
+  //     avoidHighways: false,
+  //     avoidTolls: false
+  //   }, function (response, status) {
+  //     if (status !== 'OK') {
+  //       //alert('Error was: ' + status);
+  //     } else {
+
+  //       this.distanceSpace = response.rows[0].elements[0].distance.text;
+  //       this.distanceDuration = response.rows[0].elements[0].duration.text;
+  //       this.changeValues();
+
+  //       console.log(response.rows[0].elements[0].distance.text)
+  //       console.log("dd " + this.distanceSpace)
+  //     }
+  //   }
+
+  //   );
+  // }
+
+  // changeValues() {
+  //   this.zone.run(() => {
+  //     this.distanceSpace = this.distanceSpace;
+  //     this.distanceDuration = this.distanceDuration
+  //   });
+  // }
 
   closeModal() {
-    console.log(this.distanceSpace);
-    this.distanceSpace = "islamco"
-    //this.v.dismiss();
+    this.v.dismiss();
   }
 
   scan() {
