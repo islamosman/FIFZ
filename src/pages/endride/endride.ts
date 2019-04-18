@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { vehicaleReservationModel } from '../../models/vehicaleModel';
+import { Events } from 'ionic-angular';
 
 /**
  * Generated class for the EndridePage page.
@@ -20,7 +21,12 @@ export class EndridePage {
   rideDuration: any;
   rideDistance: any;
   rideCost: any;
-  constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage) {
+  rating: number = 0;
+  constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage,public events: Events) {
+    events.subscribe('star-rating:changed', (starRating) => {
+      console.log(starRating);
+      this.rating = starRating;
+    });
   }
 
   ionViewDidLoad() {
