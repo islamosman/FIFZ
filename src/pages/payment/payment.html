@@ -7,15 +7,39 @@
 <ion-header>
 
   <ion-navbar>
-      <button ion-button menuToggle>
-          <ion-icon name="menu"></ion-icon>
-        </button>
-    <ion-title>payment</ion-title>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Add Payment Method</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+
+  <p class="Credittitle">Credit Card</p>
+  <div class="creditNum">
+    <ion-icon name="card"></ion-icon>
+    <input type="number" value="_ _ _ _">
+  </div>
+  <div class="creditInfo">
+    <div class="exp">
+      <p>Expirations</p>
+      <input type="date" value="MM/YY">
+    </div>
+    <div class="cvv">
+      <p>CVV</p>
+      <input type="number" value="_ _">
+    </div>
+  </div>
+  <div class="addPromo">
+    <p>Add Promo Code</p>
+  </div>
+  <div class="offer">
+    <p>5EGP to get started
+      <span>plus</span>
+      <br> 1.25EGP per minute</p>
+  </div>
 
 </ion-content>
