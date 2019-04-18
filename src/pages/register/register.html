@@ -30,14 +30,16 @@
           <button ion-button class="submit-btn" full type="submit"
             [disabled]="!registerForm.form.valid">Register</button>
 
-            <button ion-button   type="button" (click)="loginWithFB()" class="facebook-btn" icon-end>
+            <!-- <button ion-button   type="button" (click)="loginWithFB()" class="facebook-btn" icon-end>
               Sign in With Facebook
               <ion-icon name="logo-facebook"></ion-icon>
-          </button>
+          </button> -->
 
             <!-- <button ion-button class="facebook-btn" type="button">Sign in With Facebook</button> -->
             <button ion-button class="login-btn" type="button" block clear (click)="signIn()">Have Account ? Login Again ..</button>
 
+            <!-- for terms (click)="this.navCtrl.setRoot('TermsconditionsPage')" -->
+            <!-- for privcy (click)="this.navCtrl.setRoot('PrivatepolicyPage')" -->
           </ion-col>
       </ion-row>
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, ɵConsole } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IonicPage, ModalController, NavController, MenuController, NavParams, Platform } from 'ionic-angular';
 import {
   GoogleMaps,
@@ -33,6 +33,9 @@ import { vehicaleModel, vehicaleReservationModel } from '../../models/vehicaleMo
 import { VehiclsProvider } from '../../providers/Map/vechilsApi';
 import { ResponseModel } from '../../models/ResponseModel';
 import { vehiclesIcons } from '../../providers/Enums/vehiclesIcons';
+import { UserStateProvider } from '../../providers/userstate/user-state';
+import { reservationEnum } from '../../providers/Enums/reservationEnum';
+import { Storage } from '@ionic/storage';
 // import { AlertsProvider } from '../../providers/generic/AlertsProvider';
 // import { reservationEnum } from '../../providers/Enums/reservationEnum';
 // import { modelGroupProvider } from '@angular/forms/src/directives/ng_model_group';
@@ -61,12 +64,12 @@ export class MapsPage implements OnInit {
   address;
 
   constructor(public navCtrl: NavController, private platform: Platform, private diagnostic: Diagnostic,
-    private menu: MenuController, private _location: LocationsProvider,
-    public navParams: NavParams, private geolocation: Geolocation, 
-     private locationAccuracy: LocationAccuracy, public modalController: ModalController,public _VehiclsProvider: VehiclsProvider
+    private menu: MenuController, private _location: LocationsProvider, private storage: Storage,
+    public navParams: NavParams, private geolocation: Geolocation, private _userState: UserStateProvider,
+    private locationAccuracy: LocationAccuracy, public modalController: ModalController, public _VehiclsProvider: VehiclsProvider
     //  ,private ModalCtrl: ModalController, private _alertsService: AlertsProvider,
     //   private openNativeSettings: OpenNativeSettings,private backgroundGeolocation: BackgroundGeolocation,
-      ) {
+  ) {
     // Begin Constractor
     this.geoModelVar = new GeoModel();
 
@@ -77,15 +80,24 @@ export class MapsPage implements OnInit {
   map2: any;
   ngOnInit() {
 
+    this.storage.get("RideStatus").then(d => {
+
+      if (d != null) {
+        let reservModel = <vehicaleReservationModel>d;
+
+        if (reservModel.reservationEnum == reservationEnum.Start) {
+          let modal = this.modalController.create(
+            'InridestatusPage', null, { enableBackdropDismiss: false, cssClass: 'modal-bottom' }
+          );
+          modal.present();
+        }
+      }
+
+    });
+
     // mostafa css in maps.scss
-    let modal = this.modalController.create(
-      'InridestatusPage', null,{enableBackdropDismiss:false,cssClass:'modal-bottom'}
-      );
-     modal.present();
-    // let modal = this.modalController.create(
-    //   'EndridePage', null,{enableBackdropDismiss:false,cssClass:'modal-bottom'}
-    //   );
-    // modal.present();
+
+   
 
 
     this.address = {
@@ -289,13 +301,14 @@ export class MapsPage implements OnInit {
   }
 
   addMarker(vehicaleModel: vehicaleModel) {
-    var htmlInfoWindow = new HtmlInfoWindow();
-    var html = [
-      'This is <b>Html</b> InfoWindow',
-      '<br>',
-      '<button onclick="javascript:alert(\'clicked!\');">click here</button>',
-    ].join("");
-    htmlInfoWindow.setContent(html)
+    //var htmlInfoWindow = new HtmlInfoWindow();
+    var html =vehicaleModel.id;
+    //   [
+    //   'This is <b>Html</b> InfoWindow',
+    //   '<br>',
+    //   '<button onclick="javascript:alert(\'clicked!\');">click here</button>',
+    // ].join("");
+    //htmlInfoWindow.setContent(html)
 
     let marker: Marker = this.map.addMarkerSync({
       //title: '<div class="infoclass">Mohamed </div>',
@@ -332,8 +345,8 @@ export class MapsPage implements OnInit {
 
       //mostafa remove previous line
       let modal = this.modalController.create(
-        'SelectedRabbitPage', { vId: 123 },{enableBackdropDismiss:true,cssClass:'modal-center'}
-        );
+        'SelectedRabbitPage', { vId: html }, { enableBackdropDismiss: true, cssClass: 'modal-center' }
+      );
       modal.present();
 
       // htmlInfoWindow.open(marker);
@@ -415,24 +428,5 @@ export class MapsPage implements OnInit {
     //   console.log("3# " + data);
     // });
     // this.backgroundGeolocation.stop();
-  }
-
-  reservationModel: vehicaleReservationModel;
-  reservVechil(id: number) {
-    //this._alertsService.showConfirmationDialog(id.toString(), "");
-
-    // this.reservationModel = new vehicaleReservationModel();
-    // this.reservationModel.vehicleId = "3";
-
-    // this.reservationModel.riderId = 1;
-    // this.reservationModel.reservationEnum = reservationEnum.Start;
-
-    // this._VehiclsProvider.reserve(this.reservationModel).subscribe(returnData => {
-    //   console.log(returnData);
-    // });
-
-
-    this.navCtrl.push("ScanCodePage", { vId: id });
-    console.log("reversation # " + id);
   }
 }

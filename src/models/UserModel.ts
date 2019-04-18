@@ -1,3 +1,5 @@
+import { reservationEnum } from "../providers/Enums/reservationEnum";
+
 export class UserModel {
   userId: number;
   username: string;

@@ -18,4 +18,7 @@ export class vehicaleReservationModel {
     vehicleId: string;
     qrStr: string;
     reservationEnum: reservationEnum;
+    returnObj:any;
+    needPrepare:boolean;
+    rateValue:number;
 }

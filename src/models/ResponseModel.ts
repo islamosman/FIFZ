@@ -1,6 +1,7 @@
 export class ResponseModel {
   IsDone: any;
   ResponseId: any;
+  ResponseIdStr:any;
   MessegesStr: any;
   ErrorMessegesStr: any;
   Messages: any;

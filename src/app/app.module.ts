@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule, OnInit } from '@angular/core';
-import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { IonicApp, IonicErrorHandler, IonicModule, Navbar } from 'ionic-angular';
 import { IonicStorageModule } from '@ionic/storage';
 import { FormsModule } from '@angular/forms';
 
@@ -63,8 +63,10 @@ import {  FacebookOriginal } from '@ionic-native/facebook';
     //BackgroundGeolocation,
     LocationsProvider,
     QRScanner,
+    UserStateProvider,
     //Sim,
     UniqueDeviceID,
+    Navbar,
     { provide: ErrorHandler, useClass: AppErrorHandler }//IonicErrorHandler
   ]
 })

@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
+import { Nav, Platform} from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import {Storage} from "@ionic/storage";
@@ -50,7 +50,12 @@ export class MyApp {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     
-    
+      // if (this.platform.is('android')) {
+      //   this.navePar.hideBackButton=true;
+      // } else {
+      //   // this.config.set('mode', 'ios');
+      //   // this.config.set('backButtonIcon', 'fa-fal-angle-left');
+      // }
        // used for an example of ngFor and navigation 
 
     });

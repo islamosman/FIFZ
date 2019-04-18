@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ModalController } from 'ionic-angular';
+import { AlertsProvider } from '../../providers/generic/AlertsProvider';
+import { VehiclsProvider } from '../../providers/Map/vechilsApi';
+import { vehicaleReservationModel } from '../../models/vehicaleModel';
+import { UserStateProvider } from '../../providers/userstate/user-state';
+import { Storage } from '@ionic/storage';
+import { reservationEnum } from '../../providers/Enums/reservationEnum';
 
 /**
  * Generated class for the InridestatusPage page.
@@ -18,7 +24,9 @@ export class InridestatusPage implements OnInit {
   vId: any;
   distanceKM: any;
   feesValue: any;
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(private alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams,
+    private _userState: UserStateProvider, private storage: Storage, public modalController: ModalController,
+    private _alertsService: AlertsProvider, public _VehiclsProvider: VehiclsProvider) {
   }
   ngOnInit() {
   }
@@ -42,8 +50,73 @@ export class InridestatusPage implements OnInit {
   }
   ionViewDidLoad() {
     this.vId = "123";
-    setInterval(this.setTime, 1000);
+    //setInterval(this.setTime, 1000);
 
+  }
+
+  endTrip() {
+    let alert = this.alertCtrl.create({
+      title: 'End Rabbit !!',
+      buttons: [
+        {
+          text: 'Yes',
+          handler: () => {
+            this.endReservVechil();
+            alert.dismiss(true);
+            return false;
+          }
+        }, {
+          text: 'No',
+          handler: () => {
+            alert.dismiss(false);
+            return false;
+          }
+        }
+      ]
+    });
+
+    alert.present();
+  }
+
+
+  reservationModel: vehicaleReservationModel;
+  endReservVechil() {
+
+    this._alertsService.showConfirmationDialog
+    this.storage.get("RideStatus").then(d => {
+
+      if (d != null) {
+        this.reservationModel = <vehicaleReservationModel>d;
+
+        if (this.reservationModel.reservationEnum == reservationEnum.Start) {
+          this.reservationModel.reservationEnum = reservationEnum.End;
+
+          this._alertsService.showLoader();
+
+          this._VehiclsProvider.reserve(this.reservationModel).subscribe(returnData => {
+            console.log(returnData);
+
+            this._alertsService.hideLoader();
+            if (returnData.IsDone) {
+              this.reservationModel.tripId = returnData.ResponseIdStr;
+              this.reservationModel.returnObj = returnData.ReturnedObject;
+              this._userState.setRideStatus(this.reservationModel);
+
+              let modal = this.modalController.create(
+                'EndridePage', null, { enableBackdropDismiss: false, cssClass: 'modal-bottom' }
+              );
+              modal.present();
+
+
+              //              this.navCtrl.setRoot("MapsPage");
+            } else {
+              this._alertsService.showWarningToaster(returnData.ErrorMessegesStr);
+            }
+          });
+        }
+      }
+
+    });
   }
 
 }

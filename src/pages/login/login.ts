@@ -41,6 +41,7 @@ export class LoginPage implements OnInit {
     this.menu.swipeEnable(false);
   }
   public login() {
+    this.userState.clearRideState();
     // this._auth.loginUser(this.loginModel).subscribe(data => {
     //   let registerResult = data;
     

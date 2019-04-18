@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AlertController, ToastController } from "ionic-angular";
+import { AlertController, ToastController, LoadingController, Loading } from "ionic-angular";
 
 /*
   Generated class for the GenericProvider provider.
@@ -10,7 +10,7 @@ import { AlertController, ToastController } from "ionic-angular";
 @Injectable()
 export class AlertsProvider {
 
-  constructor(private alertCtrl: AlertController,private toastCtrl: ToastController) {
+  constructor(private alertCtrl: AlertController, private toastCtrl: ToastController, private loadingCtrl: LoadingController) {
     console.log('Hello GenericProvider Provider');
   }
 
@@ -53,15 +53,28 @@ export class AlertsProvider {
   }
 
 
-  showConfirmationDialog(msg:string,func : string) {
-    
+  showConfirmationDialog(msg: string, func: string) {
+
     let alert = this.alertCtrl.create({
       title: 'Confirmation!',
       subTitle: msg || 'Please Confirm.',
-      buttons: ['Ok','Cancel'],
-      enableBackdropDismiss:false,
-      
+      buttons: ['Ok', 'Cancel'],
+      enableBackdropDismiss: false,
+
     });
     alert.present();
+  }
+
+  loading: Loading;
+  showLoader() {
+    this.loading = this.loadingCtrl.create({
+      showBackdrop: true
+    });
+
+    this.loading.present();
+  }
+
+  hideLoader() {
+    this.loading.dismiss();
   }
 }
