@@ -84,8 +84,9 @@ export class MapsPage implements OnInit {
 
       if (d != null) {
         let reservModel = <vehicaleReservationModel>d;
-
+        console.table(reservModel)
         if (reservModel.reservationEnum == reservationEnum.Start) {
+          
           let modal = this.modalController.create(
             'InridestatusPage', null, { enableBackdropDismiss: false, cssClass: 'modal-bottom' }
           );
@@ -102,10 +103,10 @@ export class MapsPage implements OnInit {
     // );
     // modal.present();
 
-    let modal = this.modalController.create(
-      'InridestatusPage', null, { enableBackdropDismiss: false, cssClass: 'modal-bottom' }
-    );
-    modal.present();
+    // let modal = this.modalController.create(
+    //   'InridestatusPage', null, { enableBackdropDismiss: false, cssClass: 'modal-bottom' }
+    // );
+    // modal.present();
 
     //this.navCtrl.push("ScanCodePage", { vId: "this.scoterId "});
 
@@ -136,10 +137,10 @@ export class MapsPage implements OnInit {
 
       });
 
-      this.diagnostic.requestLocationAuthorization("always")
-        .then((state) => {
-          console.log(JSON.stringify(state));
-        }).catch(e => console.error(e));
+      // this.diagnostic.requestLocationAuthorization("always")
+      //   .then((state) => {
+      //     console.log(JSON.stringify(state));
+      //   }).catch(e => console.error(e));
 
       this._location.GetCurrent().then(((resp) => {
         this.geoModelVar.lat = resp.coords.latitude;
@@ -236,11 +237,12 @@ export class MapsPage implements OnInit {
       this.vehicles = [];
       this.map.clear();
       let tempPosition;
+      //console.log(ResultData.ReturnedObject.$values);
       for (let item of ResultData.ReturnedObject.$values) {
         let vechilModel: vehicaleModel = item;
         tempPosition = new LatLng(vechilModel.Lat, vechilModel.Lng);
 
-        console.log(Poly.containsLocation(tempPosition, pointsPoly) + "    " + tempPosition);
+       // console.log(Poly.containsLocation(tempPosition, pointsPoly) + "    " + tempPosition);
 
         if (Poly.containsLocation(tempPosition, pointsPoly)) {
           item.iconImageEnum = vehiclesIcons[item.iconImageEnum];

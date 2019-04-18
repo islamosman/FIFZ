@@ -7,22 +7,25 @@
 
 <ion-content padding class="EndRideModal">
   <p class="RideDateTime">
-    {{rideDateTime}} 2/5/2019 , 4:20 PM
+    {{rideDateTime}} 
+    <!-- 2/5/2019 , 4:20 PM -->
   </p>
   <p class="RideID">
-    #R212345
+    #{{vId}}
   </p>
 
   <p class="RideDuration">
-      <span>Ride Time</span> {{rideDuration}} 55m
+      <span>Ride Time</span> {{rideDuration}} 
+      <!-- 55m -->
   </p>
 
   <p class="RideDistance">
-      <span>Distance</span>{{rideDistance}} 1.5 KM
+      <span>Distance</span>{{rideDistance}} 
+      <!-- 1.5 KM -->
   </p>
 
   <p class="RideCost">
-      <span>Cost</span>{{rideCost}} 27 LE
+      <span>Cost</span>{{rideCost}} LE
   </p>
 
   <ionic3-star-rating 
@@ -35,8 +38,8 @@
   </ionic3-star-rating>
 
   <div class="buttons">
-      <button class="RepairBTN">REPAIR</button>
-      <button>DONE</button>
+      <button class="RepairBTN" (click)="repaireFunc()">REPAIR</button>
+      <button (click)="doneFunc()">DONE</button>
   </div>
   
 </ion-content>

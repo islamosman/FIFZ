@@ -6,6 +6,7 @@ import { vehicaleReservationModel } from '../../models/vehicaleModel';
 import { UserStateProvider } from '../../providers/userstate/user-state';
 import { Storage } from '@ionic/storage';
 import { reservationEnum } from '../../providers/Enums/reservationEnum';
+import { ResponseModel } from '../../models/ResponseModel';
 
 /**
  * Generated class for the InridestatusPage page.
@@ -24,41 +25,48 @@ export class InridestatusPage implements OnInit {
   vId: any;
   distanceKM: any;
   feesValue: any;
-  totalSeconds:number = 0;
+  totalSeconds: number = 0;
   Minutes: any;
-  Seconds: any;
+  hourss: any;
+  Seconds: number = 0;
   constructor(private alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams,
     private _userState: UserStateProvider, private storage: Storage, public modalController: ModalController,
     private _alertsService: AlertsProvider, public _VehiclsProvider: VehiclsProvider) {
   }
   ngOnInit() {
+
   }
-  
+
 
   setTime() {
     ++this.totalSeconds;
-    this.Minutes = this.pad(this.totalSeconds % 60);
-    this.Seconds = this.pad(Number(this.totalSeconds / 60));
+    ++this.Seconds;
+    this.hourss = Math.floor(this.totalSeconds / 60 / 60);
+    this.Minutes = Math.floor(this.totalSeconds / 60); //this.pad(this.totalSeconds % 60);
+    this.Seconds = Number(this.pad(Number(this.Seconds)));//this.pad(Number(this.totalSeconds / 60));
   }
 
   pad(val) {
-    var valString = val + "";
+    let valString = val + "";
+    if (Number(valString) > 60) {
+      this.Seconds = 1;
+      valString = "01";
+    }
+
     if (valString.length < 2) {
       return "0" + valString;
     } else {
-      return valString;
+      return valString;//.substr(0, 2);
     }
   }
   ionViewDidLoad() {
-    console.log(this.totalSeconds);
-    this.vId = "123";
-    setInterval(this.setTime, 1000);
+    this.initTripData();
   }
 
   endTrip() {
     let alert = this.alertCtrl.create({
       title: 'End Rabbit !!',
-      cssClass :'alert-class',
+      cssClass: 'alert-class',
       buttons: [
         {
           text: 'Yes',
@@ -121,4 +129,33 @@ export class InridestatusPage implements OnInit {
     });
   }
 
+
+  initTripData() {
+    console.log(this.totalSeconds);
+    setInterval(() => {
+      this.setTime();
+    }, 1000);
+
+    this.storage.get("RideStatus").then(d => {
+      if (d != null) {
+        let reservModel = <vehicaleReservationModel>d;
+        console.table(reservModel)
+        if (reservModel.reservationEnum == reservationEnum.Start) {
+
+          this._VehiclsProvider.byTripId(reservModel.tripId).subscribe(returnData => {
+            let ResultData = <ResponseModel>returnData;
+            console.log(ResultData)
+            this.rideDateTime = ResultData.ReturnedObject.StartDate;
+
+            this.rideDateTime = ResultData.ReturnedObject.StartDate;
+            this.feesValue = ResultData.ReturnedObject.Amount;
+            this.totalSeconds= ResultData.ReturnedObject.totalSecounds;
+          });
+
+          this.vId = reservModel.vehicleId;
+        }
+      }
+
+    });
+  }
 }

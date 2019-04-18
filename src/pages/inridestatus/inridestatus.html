@@ -8,7 +8,8 @@
 <ion-content padding class="InRideModal">
 
   <p class="RideDateTime">
-    {{rideDateTime}} 2/5/2019 , 4:20 PM
+    {{rideDateTime}} 
+    <!-- 2/5/2019 , 4:20 PM -->
   </p>
   <p class="RideID">
     #{{vId}}
@@ -16,16 +17,18 @@
   <br>
   <div class="timer">
     <ion-icon name="time" class="clockIcon"></ion-icon>
-    <span> <label id="minutes">{{Minutes}}</label>:<label id="seconds">{{Seconds}}</label></span>
+    <span> <label id="minutes">{{hourss}}</label>:<label id="minutes">{{Minutes}}</label>:<label id="seconds">{{Seconds}}</label></span>
   </div> 
   <p class="summary">
     <span>
-      {{distanceKM}} 17
+      {{distanceKM}}
+       <!-- 17 -->
       <br>
       <small> Kilo Meters </small>
     </span>
     <span>
-      {{feesValue}} 18.25
+      {{feesValue}} 
+      <!-- 18.25 -->
       <br> 
       <small> EGP </small>
     </span>

@@ -47,4 +47,16 @@ export class VehiclsProvider {
         //console.log("hit server"  + URI);
         return this.http.post<ResponseModel>(URI, data);
     }
+
+
+    byTripId(idVar: any): Observable<any> {
+        let URI = `${apiConfig.apiUrl}/Vehicles/GetTripById?tripId=` + idVar;
+
+        return this.http.get(URI);
+    }
+
+    doneByTripId(idVar: any, rate: number, inService: boolean): Observable<any> {
+        let URI = `${apiConfig.apiUrl}/Vehicles/RateTripById?tripId=` + idVar + '&rate=' + rate + '&isRepair=' + inService;
+        return this.http.get(URI);
+    }
 }
