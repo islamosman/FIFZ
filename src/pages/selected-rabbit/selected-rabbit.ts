@@ -38,8 +38,8 @@ export class SelectedRabbitPage {
       this.getVehiclsData();
     })).catch(err => {
       console.log(err);
-      this.geoModelVar.lat = "30.783314141910544";
-      this.geoModelVar.lng = "34.94217772246134";
+      this.geoModelVar.lat = "30.0371824";
+      this.geoModelVar.lng = "31.2145495";
       this.getVehiclsData();
     }
     );

@@ -57,18 +57,23 @@ export class RegisterPage implements OnInit {
   }
 
   register() {
+    this._alerts.showLoader();
+
     this._auth.registerUser(this.registerModel).subscribe(data => {
+      this._alerts.hideLoader();
       let registerResult = <ResponseModel>data;
       if (registerResult.IsDone) {
-        this.navCtrl.push(VerfiypassPage, {
+        this.navCtrl.push("VerfiypassPage", {
           messageStr: registerResult.MessegesStr,
-          mobileNumber: this.registerModel.phone_number
+          mobileNumber: this.registerModel.phone_number,
+          email:this.registerModel.email
         });
       } else {
         this._alerts.showWarningToaster(registerResult.ErrorMessegesStr);
       }
     },
       err => {
+        this._alerts.hideLoader();
         this.errorModel = <ErrorModel>err;
         if (this.errorModel.status == 0) {
           this._alerts.showServiceError();

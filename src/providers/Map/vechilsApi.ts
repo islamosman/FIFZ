@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import 'rxjs/add/observable/of';
 import { UserStateProvider } from "../userstate/user-state";
@@ -11,6 +11,8 @@ import 'rxjs/add/operator/map';
 import { ResponseModel } from '../../models/ResponseModel';
 import { VisibleRegion } from '@ionic-native/google-maps';
 import { vehicaleReservationModel } from '../../models/vehicaleModel';
+import { Storage } from "@ionic/storage";
+
 @Injectable()
 export class VehiclsProvider {
 
@@ -19,20 +21,30 @@ export class VehiclsProvider {
         content: 'Logging out and clearing data Please Wait...',
     });
 
-    constructor(public http: HttpClient,
+
+    headersVar: HttpHeaders = new HttpHeaders();
+    constructor(public http: HttpClient, private storage: Storage,
         //private _alertsService: AlertsProvider,
         public userState: UserStateProvider,
         //private httpClient: HttpClient,
         //private storage: Storage,
         private loadingCtrl: LoadingController,
     ) {
+        this.storage.get('UserState').then(user => {
+            console.table(user)
+            if (user != undefined && user != "") {
+                this.headersVar.append('x-auth-token', user.tocken);
+            }
+        });
+
+
         //console.log('Hello AuthProvider Provider');
     }
 
     byArea(data: VisibleRegion): Observable<ResponseModel> {
         let URI = `${apiConfig.apiUrl}/Vehicles/GetByArea`;
         //console.log("hit server"  + URI);
-        return this.http.post<ResponseModel>(URI, data);
+        return this.http.post<ResponseModel>(URI, data, { headers: this.headersVar });
     }
 
     byId(idVar: any): Observable<any> {

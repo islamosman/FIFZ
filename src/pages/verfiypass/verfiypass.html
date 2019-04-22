@@ -1,8 +1,19 @@
+<ion-header>
+
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Account Verification</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
 <ion-content class="page-content" padding>
   <ion-row class="logo-row">
     <ion-col></ion-col>
     <ion-col width-67>
-      <img src="../../assets/imgs/logo-green.png">
+      <img src="assets/imgs/logo-green.png">
     </ion-col>
     <ion-col></ion-col>
   </ion-row>
@@ -16,7 +27,7 @@
             <ion-label floating>Verification Code</ion-label>
           </ion-item> -->
           <h3>Enter the 6 digit code sent to</h3>
-          <h3>01033361934</h3>
+          <h3>{{verifyModel.email}}</h3>
           <ion-input type="mobileNumber" max="6" name="passCode" [(ngModel)]="verifyModel.passCode" required></ion-input>
         </ion-list>
       </ion-col>

@@ -27,6 +27,7 @@ export class VerfiypassPage {
     this.verifyModel = new VerifyModel();
     this.verifyModel.mobileNumber = navParams.get('mobileNumber');
     this.verifyModel.messageStr = navParams.get('messageStr');
+    this.verifyModel.email = navParams.get('email');
   }
 
   ionViewDidLoad() {
@@ -38,10 +39,12 @@ export class VerfiypassPage {
   signIn() {
     this.navCtrl.setRoot('LoginPage');
   }
-  
+
   VerifyPass() {
+    this._alerts.showLoader();
     console.log(JSON.stringify(this.verifyModel))
     this._auth.verifyPassCode(this.verifyModel).subscribe(data => {
+      this._alerts.hideLoader();
       let registerResult = <ResponseModel>data;
       if (registerResult.IsDone) {
         this.navCtrl.push(LoginPage, {
@@ -52,6 +55,7 @@ export class VerfiypassPage {
       }
     },
       err => {
+        this._alerts.hideLoader();
         this.errorModel = <ErrorModel>err;
         if (this.errorModel.status == 0) {
           this._alerts.showServiceError();

@@ -4,8 +4,8 @@
   <ion-content>
     <div class="user-menu">
       <img src="assets/imgs/logo-green.png">
-      <h4>Ahmed Yassin</h4>
-      <p>23 RIDES</p>
+      <h4>{{UserName}}</h4>
+      <!-- <p>23 RIDES</p> -->
     </div>
     <ion-list>
       <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">

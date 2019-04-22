@@ -1,4 +1,4 @@
-import { reservationEnum } from "../providers/Enums/reservationEnum";
+// import { reservationEnum } from "../providers/Enums/reservationEnum";
 
 export class UserModel {
   userId: number;
@@ -6,6 +6,7 @@ export class UserModel {
   password?: string;
   name?: string;
   userCode?: string;
+  tocken?:any;
 }
 
 export class RegisterModel {
@@ -22,6 +23,7 @@ export class VerifyModel {
   mobileNumber: Number;
   messageStr: string;
   passCode: string;
+  email:string;
 }
 export class LoginModel {
   urlStr:string ="http://localhost:30823/";

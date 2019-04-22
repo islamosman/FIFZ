@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { UserModel } from "../../models/usermodel";
+import { UserModel, LoginModel } from "../../models/usermodel";
 // import { reservationEnum } from '../Enums/reservationEnum';
 import { Storage } from '@ionic/storage';
 import { vehicaleReservationModel } from '../../models/vehicaleModel';
@@ -36,6 +36,14 @@ export class UserStateProvider {
   }
   clearRideState(){
     this.storage.remove("RideStatus");
+    this.storage.clear();
+  }
+
+  setUserStatus(loginModel: UserModel): any {
+    this.storage.set("UserState", loginModel);
+  }
+  clearUSerState(){
+    this.storage.remove("UserState");
     this.storage.clear();
   }
   // reservationModel: vehicaleReservationModel;

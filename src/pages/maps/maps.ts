@@ -9,7 +9,7 @@ import {
   // MarkerOptions,
   Marker,
   Environment,
-  HtmlInfoWindow,
+  // HtmlInfoWindow,
   VisibleRegion,
   // LatLngBounds,
   ILatLng,
@@ -137,10 +137,10 @@ export class MapsPage implements OnInit {
 
       });
 
-      // this.diagnostic.requestLocationAuthorization("always")
-      //   .then((state) => {
-      //     console.log(JSON.stringify(state));
-      //   }).catch(e => console.error(e));
+      this.diagnostic.requestLocationAuthorization("always")
+        .then((state) => {
+          console.log(JSON.stringify(state));
+        }).catch(e => console.error(e));
 
       this._location.GetCurrent().then(((resp) => {
         this.geoModelVar.lat = resp.coords.latitude;
@@ -149,8 +149,8 @@ export class MapsPage implements OnInit {
         this.loadMap();
       })).catch(err => {
         console.log(err);
-        this.geoModelVar.lat = "30.783314141910544";
-        this.geoModelVar.lng = "34.94217772246134";
+        this.geoModelVar.lat = "30.0371824";
+        this.geoModelVar.lng = "31.2145495";
         this.loadMap();
       }
       );
@@ -366,39 +366,39 @@ export class MapsPage implements OnInit {
     });
   }
 
-  query: string = '';
-  autocompleteService: any;
-  searchDisabled: boolean;
-  saveDisabled: boolean;
-  location: any;
-  places: any = [];
+  // query: string = '';
+  // autocompleteService: any;
+  // searchDisabled: boolean;
+  // saveDisabled: boolean;
+  // location: any;
+  // places: any = [];
   searchPlace() {
 
-    this.saveDisabled = true;
+    // this.saveDisabled = true;
 
-    if (this.query.length > 0 && !this.searchDisabled) {
+    // if (this.query.length > 0 && !this.searchDisabled) {
 
-      let config = {
-        types: ['geocode'],
-        input: this.query
-      }
+    //   let config = {
+    //     types: ['geocode'],
+    //     input: this.query
+    //   }
 
-      this.autocompleteService.getPlacePredictions(config, (predictions, status) => {
+    //   this.autocompleteService.getPlacePredictions(config, (predictions, status) => {
 
-        // if(status == google.maps.places.PlacesServiceStatus.OK && predictions){
+    //     // if(status == google.maps.places.PlacesServiceStatus.OK && predictions){
 
-        this.places = [];
+    //     this.places = [];
 
-        predictions.forEach((prediction) => {
-          this.places.push(prediction);
-        });
-        //}
+    //     predictions.forEach((prediction) => {
+    //       this.places.push(prediction);
+    //     });
+    //     //}
 
-      });
+    //   });
 
-    } else {
-      this.places = [];
-    }
+    // } else {
+    //   this.places = [];
+    // }
 
   }
 

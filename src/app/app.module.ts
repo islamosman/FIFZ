@@ -26,7 +26,7 @@ import { QRScanner } from '@ionic-native/qr-scanner';
 import { UniqueDeviceID } from '@ionic-native/unique-device-id';
 import { AppErrorHandler } from '../providers/generic/AppErrorHandler';
 import { VehiclsProvider } from '../providers/Map/vechilsApi';
-import {  FacebookOriginal } from '@ionic-native/facebook';
+// import {  FacebookOriginal } from '@ionic-native/facebook';
 
 @NgModule({
   declarations: [

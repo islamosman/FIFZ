@@ -149,6 +149,9 @@ export class InridestatusPage implements OnInit {
 
             this.rideDateTime = ResultData.ReturnedObject.StartDate;
             this.feesValue = ResultData.ReturnedObject.Amount;
+            if(this.feesValue.length > 5){
+              this.feesValue = this.feesValue.substr(0,5);
+            }
             this.totalSeconds= ResultData.ReturnedObject.totalSecounds;
           });
 
