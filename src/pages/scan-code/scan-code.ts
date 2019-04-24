@@ -40,6 +40,7 @@ export class ScanCodePage implements OnInit {
     this.qrScanner.hide();
     this.qrScanner.destroy();
     this.menu.swipeEnable(false);
+   // this.menu.enable(true)
   }
 
   ngOnInit(): void {
@@ -113,7 +114,7 @@ export class ScanCodePage implements OnInit {
       if (returnData.IsDone) {
         this.reservationModel.tripId = returnData.ResponseIdStr;
         this._userState.setRideStatus(this.reservationModel);
-        this.navCtrl.setRoot("MapsPage");
+        this.navCtrl.setRoot("MapsapiPage");
       } else {
         this._alertsService.showWarningToaster(returnData.ErrorMessegesStr);
       }
@@ -166,6 +167,7 @@ export class ScanCodePage implements OnInit {
 
   cancelScan(){
     this.v.dismiss();
-    this.navCtrl.setRoot("MapsPage");
+   // this.menu.enable(true);
+    //this.navCtrl.setRoot("MapsapiPage");
   }
 }

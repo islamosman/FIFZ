@@ -41,10 +41,24 @@ export class VehiclsProvider {
         //console.log('Hello AuthProvider Provider');
     }
 
-    byArea(data: VisibleRegion): Observable<ResponseModel> {
+    byArea2(): Observable<any> {
+        let data = {
+            "api_key": "ZXlKaGJHY2lPaUpJVXpVeE1pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SnVZVzFsSWpvaWFXNXBkR2xoYkNJc0luQnliMlpwYkdWZmNHc2lPak15T0RFc0ltTnNZWE56SWpvaVRXVnlZMmhoYm5RaWZRLmt6UHZFTV9pc1RINkZWWVJGWUJ2ZDBIVDFtMWlISXZoRGJ0ckZwaWJDdHF4QmduY2xvb2dUZ3dzMG1FMlJaYmM0MFdBbHJwM0lhRGk2dkZHbW1PblVB"
+        };
+
+        this.headersVar.append("Content-Type", "application/json")
+        return this.http.post<ResponseModel>("https://accept.paymobsolutions.com/api/auth/tokens"
+            , data, { headers: this.headersVar });
+        // let URI = `${apiConfig.apiUrl}/Vehicles/GetByArea`;
+        // //console.log("hit server"  + URI);
+        // return this.http.post<ResponseModel>(URI, "", { headers: this.headersVar });
+    }
+
+    //data: VisibleRegion
+    byArea(): Observable<ResponseModel> {
         let URI = `${apiConfig.apiUrl}/Vehicles/GetByArea`;
         //console.log("hit server"  + URI);
-        return this.http.post<ResponseModel>(URI, data, { headers: this.headersVar });
+        return this.http.post<ResponseModel>(URI, "", { headers: this.headersVar });
     }
 
     byId(idVar: any): Observable<any> {

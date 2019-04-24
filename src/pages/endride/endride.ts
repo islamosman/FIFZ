@@ -67,7 +67,7 @@ export class EndridePage {
       this.statusDoneApi(false);
     } else {
       this.v.dismiss();
-      this.navCtrl.setRoot("MapsPage");
+      this.navCtrl.setRoot("MapsapiPage");
     }
   }
   repaireFunc() {
@@ -80,7 +80,7 @@ export class EndridePage {
       this._VehiclsProvider.doneByTripId(this.tripId, this.rating, inService).subscribe(returnData => {
         this._alertsService.hideLoader();
         this.v.dismiss();
-        this.navCtrl.setRoot("MapsPage");
+        this.navCtrl.setRoot("MapsapiPage");
       });
     }
   }

@@ -96,22 +96,6 @@ export class MapsPage implements OnInit {
 
     });
 
-    // mostafa css in maps.scss
-
-    // let modal = this.modalController.create(
-    //   'EndridePage', null, { enableBackdropDismiss: false, cssClass: 'modal-bottom' }
-    // );
-    // modal.present();
-
-    // let modal = this.modalController.create(
-    //   'InridestatusPage', null, { enableBackdropDismiss: false, cssClass: 'modal-bottom' }
-    // );
-    // modal.present();
-
-    //this.navCtrl.push("ScanCodePage", { vId: "this.scoterId "});
-
-
-
     this.address = {
       place: ''
     };
@@ -231,8 +215,8 @@ export class MapsPage implements OnInit {
     // pointsPoly.push(new LatLng(data.southwest.lat, data.southwest.lng));
     pointsPoly.push(new LatLng(data.nearRight.lat, data.nearRight.lng));
     pointsPoly.push(new LatLng(data.nearLeft.lat, data.nearLeft.lng));
-
-    this._VehiclsProvider.byArea(data).subscribe(returnData => {
+//data
+    this._VehiclsProvider.byArea().subscribe(returnData => {
       let ResultData = <ResponseModel>returnData;
       this.vehicles = [];
       this.map.clear();

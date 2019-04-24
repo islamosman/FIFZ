@@ -58,7 +58,7 @@ export class LoginPage implements OnInit {
 
         this.events.publish('user:created', this.userModel);
 
-        this.navCtrl.setRoot('MapsPage');
+        this.navCtrl.setRoot('MapsapiPage');
 
       } else {
         this._alerts.showWarningToaster("Invalid User or password");

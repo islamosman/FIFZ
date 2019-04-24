@@ -3,7 +3,7 @@ import { reservationEnum } from "../providers/Enums/reservationEnum";
 
 export interface vehicaleModel {
     id: string,
-    name: string,
+    Name: string,
     avilable: boolean,
     description: string,
     iconImageEnum: vehiclesIcons,

@@ -30,7 +30,7 @@ export class MyApp {
     this.initializeApp();
 
     this.pages = [
-      { title: 'FIND RABBIT', component: 'MapsPage' },
+      { title: 'FIND RABBIT', component: 'MapsapiPage' },
       { title: 'PAYMENT', component: 'PaymentPage' },
       { title: 'HISTORY', component: 'HistoryPage' },
       { title: 'HOW TO RIDE', component: 'HowtoridePage' },
@@ -55,7 +55,7 @@ export class MyApp {
           this.UserName = user.name;
         }
         this.userState.setUser(user);
-        this.rootPage = user ? 'MapsPage' : 'LoginPage';
+        this.rootPage = user ? 'MapsapiPage' : 'LoginPage';
       });
 
       this.statusBar.styleDefault();
