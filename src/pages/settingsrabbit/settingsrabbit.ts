@@ -45,10 +45,14 @@ export class SettingsrabbitPage implements OnInit {
 
   images = [];
   ngOnInit() {
+    let formData: FormData = new FormData();
+    
+    //  headers.set('Content-Type','multipart/form-data');
 
-    let base64Image = 'data:image/jpeg;base64,' + 'assets/imgs/logo-green.png';
+    formData.append('image', 'assets/imgs/logo-green.png', "Name");
+    // let base64Image = 'data:image/jpeg;base64,' + 'assets/imgs/logo-green.png';
 
-    this._VehiclsProvider.uploadPic(base64Image).subscribe(returnData => {
+    this._VehiclsProvider.uploadPic(formData).subscribe(returnData => {
 
     });
 

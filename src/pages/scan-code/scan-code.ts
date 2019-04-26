@@ -39,6 +39,11 @@ export class ScanCodePage implements OnInit {
 
     let elm2 = <HTMLElement>document.querySelector("#currentBtn");
     elm2.style.display = "none";
+    window.document.querySelector('ion-app').classList.add('transparentBody')
+    window.document.querySelector('body').classList.add('transparentBody')
+
+    window.document.querySelector('body').style.background ="none transparent!important";
+    window.document.querySelector('body').style.background ="background-color: rgba(0, 0, 0, 0) !important";
 
     this.menu.swipeEnable(true);
   }
