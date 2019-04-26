@@ -14,9 +14,48 @@
   </ion-navbar>
 
 </ion-header>
-
-
 <ion-content padding>
+    <ion-item>
+    <button ion-button color="secondary" class="submit-btn" full (click)="presentActionSheet()">Get ID</button>
+    </ion-item>
+</ion-content>
+<!-- <ion-content padding>
+    <ion-item>
+      <p>{{imageURI}}</p>
+      <button ion-button color="secondary" (click)="getImage()">Get Image</button>
+    </ion-item>
+    <ion-item>
+      <h4>Image Preview</h4>
+      <img src="{{imageFileName}}" *ngIf="imageFileName" alt="Ionic File" width="300" />
+    </ion-item>
+    <ion-item>
+      <button ion-button (click)="uploadFile()">Upload</button>
+    </ion-item>
+  </ion-content>
+   -->
+<!-- <ion-content padding>
+  <h3 *ngIf="images.length == 0" text-center>Please Select Image!</h3>
+ 
+  <ion-list>
+    <ion-item *ngFor="let img of images; index as pos" text-wrap>
+      <ion-thumbnail slot="start">
+        <ion-img [src]="img.path"></ion-img>
+      </ion-thumbnail>
+      <ion-label>
+        {{ img.name }}
+      </ion-label>
+      <button ion-button class="submit-btn" full (click)="startUpload(img)">start</button>
+      <button ion-button class="submit-btn" full (click)="deleteImage(img, pos)">delete</button>
+    </ion-item>
+  </ion-list>
+</ion-content>
+ 
+<ion-footer>
+  <ion-toolbar color="primary">
+      <button ion-button class="submit-btn" full (click)="selectImage()">select</button>
+  </ion-toolbar>
+</ion-footer> -->
+<!-- <ion-content padding>
 
   <ion-item>
     <ion-label>Notifications</ion-label>
@@ -26,4 +65,4 @@
     <ion-label>Sounds</ion-label>
     <ion-toggle checked="true"></ion-toggle>
   </ion-item> 
-</ion-content>
+</ion-content> -->

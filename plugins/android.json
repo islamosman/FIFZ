@@ -47,9 +47,6 @@
     "cordova-plugin-request-location-accuracy": {
       "PACKAGE_NAME": "fly.zapp.com"
     },
-    "cordova-plugin-sim": {
-      "PACKAGE_NAME": "fly.zapp.com"
-    },
     "cordova-plugin-splashscreen": {
       "PACKAGE_NAME": "fly.zapp.com"
     },
@@ -67,11 +64,16 @@
     },
     "cordova.plugins.diagnostic": {
       "PACKAGE_NAME": "fly.zapp.com"
-    }
-  },
-  "dependent_plugins": {
+    },
+    "cordova-plugin-file": {
+      "PACKAGE_NAME": "fly.zapp.com"
+    },
+    "cordova-plugin-filepath": {
+      "PACKAGE_NAME": "fly.zapp.com"
+    },
     "cordova-plugin-camera": {
       "PACKAGE_NAME": "fly.zapp.com"
     }
-  }
+  },
+  "dependent_plugins": {}
 }

@@ -27,6 +27,10 @@ import { UniqueDeviceID } from '@ionic-native/unique-device-id';
 import { AppErrorHandler } from '../providers/generic/AppErrorHandler';
 import { VehiclsProvider } from '../providers/Map/vechilsApi';
 // import {  FacebookOriginal } from '@ionic-native/facebook';
+import { Camera } from '@ionic-native/Camera';
+import { File } from '@ionic-native/File/ngx';
+import { WebView } from '@ionic-native/ionic-webview/ngx';
+import { FilePath } from '@ionic-native/file-path/ngx';
 
 @NgModule({
   declarations: [
@@ -65,6 +69,10 @@ import { VehiclsProvider } from '../providers/Map/vechilsApi';
     QRScanner,
     UserStateProvider,
     //Sim,
+    Camera,
+    File,
+    WebView,
+    FilePath,
     UniqueDeviceID,
     Navbar,
     { provide: ErrorHandler, useClass: AppErrorHandler }//IonicErrorHandler

@@ -6,7 +6,7 @@
 
 </ion-header> -->
 
-<ion-header >
+<ion-header>
   <ion-navbar transparent>
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
@@ -15,23 +15,26 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content style="background: none transparent!important;background-color: rgba(0, 0, 0, 0) !important;" padding>
   <!-- <div #frame style="width:100%;height:100%;overflow:scroll !important;-webkit-overflow-scrolling:touch !important">
     <iframe [src]="https://accept.paymobsolutions.com/api/acceptance/iframes/8155?payment_token=ZXlKaGJHY2lPaUpJVXpVeE1pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SmhiVzkxYm5SZlkyVnVkSE1pT2pFd01Dd2lkWE5sY2w5cFpDSTZNelk0TUN3aWNHMXJYMmx3SWpvaU5ERXVORFF1TWpNeExqTTRJaXdpYkc5amExOXZjbVJsY2w5M2FHVnVYM0JoYVdRaU9tWmhiSE5sTENKcGJuUmxaM0poZEdsdmJsOXBaQ0k2TlRBME5pd2laWGh3SWpveE5UVTJNVEE1TVRVM0xDSmlhV3hzYVc1blgyUmhkR0VpT25zaVptbHljM1JmYm1GdFpTSTZJa05zYVdabWIzSmtJaXdpYkdGemRGOXVZVzFsSWpvaVRtbGpiMnhoY3lJc0luTjBjbVZsZENJNklrVjBhR0Z1SUV4aGJtUWlMQ0ppZFdsc1pHbHVaeUk2SWpnd01qZ2lMQ0ptYkc5dmNpSTZJalF5SWl3aVlYQmhjblJ0Wlc1MElqb2lPREF6SWl3aVkybDBlU0k2SWtwaGMydHZiSE5yYVdKMWNtZG9JaXdpYzNSaGRHVWlPaUpWZEdGb0lpd2lZMjkxYm5SeWVTSTZJa05TSWl3aVpXMWhhV3dpT2lKamJHRjFaR1YwZEdVd09VQmxlR0V1WTI5dElpd2ljR2h2Ym1WZmJuVnRZbVZ5SWpvaUt6ZzJLRGdwT1RFek5USXhNRFE0TnlJc0luQnZjM1JoYkY5amIyUmxJam9pTURFNE9UZ2lMQ0psZUhSeVlWOWtaWE5qY21sd2RHbHZiaUk2SWs1QkluMHNJbTl5WkdWeVgybGtJam96TURNNU9URXlMQ0pqZFhKeVpXNWplU0k2SWtWSFVDSjkudEpUcEJsd2V4VkhtXzFxVmFyYU93V19ZeDJHZVpuQUNpSVUwVXczNW9uTDFtRGVjM2NseVBfanN3cFU0YmJQUGlEcjZ3TjhfUUJaNWl2TTlEelBJU3c=" class="iframe" scrolling="yes"></iframe>
   </div> -->
-        <!-- <ion-fab bottom left>
+  <!-- <ion-fab bottom left>
           <button ion-button icon-start large round color="dark">
             <ion-icon ios="ios-bicycle" md="md-bicycle"></ion-icon>
             Fly
           </button>
         </ion-fab> -->
-        <ion-fab bottom right>
-            <button color="light" ion-fab (click)="addYourLocationButton()">
-              <ion-icon ios="ios-locate-outline" md="md-locate">
-              </ion-icon>
-            </button>
-          </ion-fab>
-  <div #map id="map">
-   
-  </div>
+
+  
+    <ion-fab bottom right id="currentBtn">
+      <button color="light" ion-fab (click)="addYourLocationButton()">
+        <ion-icon ios="ios-locate-outline" md="md-locate">
+        </ion-icon>
+      </button>
+    </ion-fab>
+    <div #map id="map" class="mapnone">
+
+    </div>
+
 </ion-content>

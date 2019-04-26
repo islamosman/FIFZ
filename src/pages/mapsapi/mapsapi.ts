@@ -27,6 +27,7 @@ declare var google;
 })
 export class MapsapiPage {
   @ViewChild('map') mapElement: ElementRef;
+
   private map: any;
   directionsService = new google.maps.DirectionsService;
   directionsDisplay = new google.maps.DirectionsRenderer;
@@ -46,7 +47,7 @@ export class MapsapiPage {
   ionViewDidEnter() {
     console.log('ionViewDidEnter HistoryPage');
     this.menu.swipeEnable(true);
-    this.menu.enable(true)
+    this.menu.enable(true);
   }
   ionViewWillEnter() { this.menu.enable(true) }
   ionViewWillLeave() {
@@ -87,18 +88,31 @@ export class MapsapiPage {
           console.log(JSON.stringify(state));
         }).catch(e => console.error(e));
 
-      this._location.GetCurrent().then(((resp) => {
-        this.geoModelVar.lat = resp.coords.latitude;
-        this.geoModelVar.lng = resp.coords.longitude;
-        console.log("longLat : > " + resp.coords);
-        this.loadMap();
-      })).catch(err => {
-        console.log(err);
-        this.geoModelVar.lat = "30.0371824";
-        this.geoModelVar.lng = "31.2145495";
-        this.loadMap();
-      }
-      );
+
+      // if (navigator.geolocation) {
+      //   navigator.geolocation.getCurrentPosition(function (position) {
+      //     this.geoModelVar.lat = position.coords.latitude;
+      //     this.geoModelVar.lng = position.coords.longitude;
+      //     this.loadMap();
+      //   });
+      // } else {
+      this.geoModelVar.lat = "30.0371824";
+      this.geoModelVar.lng = "31.2145495";
+      this.loadMap();
+      //}
+
+      // this._location.GetCurrent().then(((resp) => {
+      //   this.geoModelVar.lat = resp.coords.latitude;
+      //   this.geoModelVar.lng = resp.coords.longitude;
+
+      //   this.loadMap();
+      // })).catch(err => {
+      //   console.log(err);
+      //   this.geoModelVar.lat = "30.0371824";
+      //   this.geoModelVar.lng = "31.2145495";
+      //   this.loadMap();
+      // }
+      // );
 
 
     });
@@ -114,6 +128,7 @@ export class MapsapiPage {
 
 
   loadMap() {
+
     this.map = new google.maps.Map(this.mapElement.nativeElement, {
       zoom: 15,
       streetViewControl: false,
@@ -130,14 +145,16 @@ export class MapsapiPage {
     this.directionsDisplay.setMap(this.map);
 
     this.getVehicles();
+
+    this.addYourLocationButton();
   }
 
   getVehicles() {
-console.clear();
+    console.clear();
     this._VehiclsProvider.byArea().subscribe(returnData => {
       let ResultData = <ResponseModel>returnData;
       //this.vehicles = [];
-    //  this.map.clear();
+      //  this.map.clear();
       let tempPosition;
       //console.log(ResultData.ReturnedObject.$values);
       for (let item of ResultData.ReturnedObject.$values) {
@@ -147,8 +164,8 @@ console.clear();
         // console.log(Poly.containsLocation(tempPosition, pointsPoly) + "    " + tempPosition);
 
         // if (Poly.containsLocation(tempPosition, pointsPoly)) {
-           item.iconImageEnum = vehiclesIcons[item.iconImageEnum];
-       // this.vehicles.push(item);
+        item.iconImageEnum = vehiclesIcons[item.iconImageEnum];
+        // this.vehicles.push(item);
         console.log(vechilModel)
         this.addMarker(item)
         // }
@@ -254,14 +271,14 @@ console.clear();
     console.log("Finished")
   }
 
- // marker: any;
+  // marker: any;
   addMarker(vehicaleModel: vehicaleModel) {//location, name, plateNo, i, imagePath
     console.log(vehicaleModel.id)
     let infowindow = new google.maps.InfoWindow({
       content: vehicaleModel.id.toString()
     });
 
-    let tempPos={ lat:Number(vehicaleModel.Lat), lng:Number(vehicaleModel.Lng)};
+    let tempPos = { lat: Number(vehicaleModel.Lat), lng: Number(vehicaleModel.Lng) };
     console.log(tempPos)
 
     // if (!marker || !marker.setPosition) {
@@ -307,33 +324,33 @@ console.clear();
   //   let pointsPoly: any[] = [];
 
   //   console.log("GetVvvvvv" + infowindow)
-    // pointsPoly.push({data.farLeft.lat, data.farLeft.lng));
-    // pointsPoly.push(new LatLng(data.farRight.lat, data.farRight.lng));
-    // pointsPoly.push(new LatLng(data.northeast.lat, data.northeast.lng));
-    // // pointsPoly.push(new LatLng(data.southwest.lat, data.southwest.lng));
-    // pointsPoly.push(new LatLng(data.nearRight.lat, data.nearRight.lng));
-    // pointsPoly.push(new LatLng(data.nearLeft.lat, data.nearLeft.lng));
+  // pointsPoly.push({data.farLeft.lat, data.farLeft.lng));
+  // pointsPoly.push(new LatLng(data.farRight.lat, data.farRight.lng));
+  // pointsPoly.push(new LatLng(data.northeast.lat, data.northeast.lng));
+  // // pointsPoly.push(new LatLng(data.southwest.lat, data.southwest.lng));
+  // pointsPoly.push(new LatLng(data.nearRight.lat, data.nearRight.lng));
+  // pointsPoly.push(new LatLng(data.nearLeft.lat, data.nearLeft.lng));
 
-    // this._VehiclsProvider.byArea(pointsPoly).subscribe(returnData => {
-    //   let ResultData = <ResponseModel>returnData;
-    //   this.vehicles = [];
-    //   this.map.clear();
-    //   let tempPosition;
-    //   //console.log(ResultData.ReturnedObject.$values);
-    //   for (let item of ResultData.ReturnedObject.$values) {
-    //     let vechilModel: vehicaleModel = item;
-    //     tempPosition = new LatLng(vechilModel.Lat, vechilModel.Lng);
+  // this._VehiclsProvider.byArea(pointsPoly).subscribe(returnData => {
+  //   let ResultData = <ResponseModel>returnData;
+  //   this.vehicles = [];
+  //   this.map.clear();
+  //   let tempPosition;
+  //   //console.log(ResultData.ReturnedObject.$values);
+  //   for (let item of ResultData.ReturnedObject.$values) {
+  //     let vechilModel: vehicaleModel = item;
+  //     tempPosition = new LatLng(vechilModel.Lat, vechilModel.Lng);
 
-    //    // console.log(Poly.containsLocation(tempPosition, pointsPoly) + "    " + tempPosition);
+  //    // console.log(Poly.containsLocation(tempPosition, pointsPoly) + "    " + tempPosition);
 
-    //     if (Poly.containsLocation(tempPosition, pointsPoly)) {
-    //       item.iconImageEnum = vehiclesIcons[item.iconImageEnum];
-    //       this.vehicles.push(item);
-    //       this.addMarker(item)
-    //     }
-    //   }
-    // });
- // }
+  //     if (Poly.containsLocation(tempPosition, pointsPoly)) {
+  //       item.iconImageEnum = vehiclesIcons[item.iconImageEnum];
+  //       this.vehicles.push(item);
+  //       this.addMarker(item)
+  //     }
+  //   }
+  // });
+  // }
 
   addYourLocationButton() {
     let map = this.map;

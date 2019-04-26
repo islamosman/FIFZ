@@ -5,6 +5,7 @@ import { GeoModel } from '../../models/MapModel';
 import { VehiclsProvider } from '../../providers/Map/vechilsApi';
 // import { ResponseModel } from '../../models/ResponseModel';
 import { Observable } from 'rxjs/Observable';
+import { ScanCodePage } from '../scan-code/scan-code';
 
 /**
  * Generated class for the SelectedRabbitPage page.
@@ -30,7 +31,6 @@ export class SelectedRabbitPage {
   geoModelVar: GeoModel = new GeoModel();
   geoModelScotterVar: GeoModel = new GeoModel();
   ionViewDidLoad() {
-
     this._location.GetCurrent().then(((resp) => {
       this.geoModelVar.lat = resp.coords.latitude;
       this.geoModelVar.lng = resp.coords.longitude;
@@ -129,8 +129,17 @@ export class SelectedRabbitPage {
   }
 
   scan() {
-    this.v.dismiss();
-    this.navCtrl.push("ScanCodePage", { vId: this.scoterId });
+    this.v.dismiss().then(() => {
+      this.navCtrl.setRoot("ScanCodePage", { vId: this.scoterId });
+  });
+    // this.v.dismiss();
+    console.log(this.navParams.get('MapsapiPage'));
+    // console.clear();
+    // console.log(this.navCtrl.getActive().getZIndex());
+    // console.log(this.navCtrl.getAllChildNavs());
+    // console.log(this.navCtrl.getViews());
+    // //this.navCtrl.go({id:"ScanCodePage"})
+    //  this.navCtrl.push("ScanCodePage", { vId: this.scoterId });
   }
 
   direction() {

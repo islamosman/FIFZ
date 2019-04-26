@@ -41,7 +41,7 @@ export class VehiclsProvider {
         //console.log('Hello AuthProvider Provider');
     }
 
-    byArea2(): Observable<any> {
+    payment1(): Observable<any> {
         let data = {
             "api_key": "ZXlKaGJHY2lPaUpJVXpVeE1pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SnVZVzFsSWpvaWFXNXBkR2xoYkNJc0luQnliMlpwYkdWZmNHc2lPak15T0RFc0ltTnNZWE56SWpvaVRXVnlZMmhoYm5RaWZRLmt6UHZFTV9pc1RINkZWWVJGWUJ2ZDBIVDFtMWlISXZoRGJ0ckZwaWJDdHF4QmduY2xvb2dUZ3dzMG1FMlJaYmM0MFdBbHJwM0lhRGk2dkZHbW1PblVB"
         };
@@ -49,9 +49,77 @@ export class VehiclsProvider {
         this.headersVar.append("Content-Type", "application/json")
         return this.http.post<ResponseModel>("https://accept.paymobsolutions.com/api/auth/tokens"
             , data, { headers: this.headersVar });
-        // let URI = `${apiConfig.apiUrl}/Vehicles/GetByArea`;
-        // //console.log("hit server"  + URI);
-        // return this.http.post<ResponseModel>(URI, "", { headers: this.headersVar });
+    }
+
+    payment2(authT: string, amount: number, tripId: number): Observable<any> {
+        let data = {
+            "auth_token": authT,
+            "delivery_needed": "false",
+            "merchant_id": "3281",
+            "amount_cents": amount * 100,
+            "currency": "EGP",
+            "merchant_order_id": tripId,
+            "items": []
+        };
+
+        this.headersVar.append("Content-Type", "application/json")
+        return this.http.post<ResponseModel>("https://accept.paymobsolutions.com/api/ecommerce/orders"
+            , data, { headers: this.headersVar });
+    }
+
+    payment3(authT: string, amount: number, orderId: number): Observable<any> {
+        let data = {
+            "auth_token": authT,
+            "amount_cents": amount * 100,
+            "expiration": 3600,
+            "order_id": orderId,
+            "currency": "EGP",
+            "integration_id": 5046,
+            "lock_order_when_paid": "false",
+            "billing_data": {
+                "apartment": "803",
+                "email": "claudette09@exa.com",
+                "floor": "42",
+                "first_name": "Clifford",
+                "street": "Ethan Land",
+                "building": "8028",
+                "phone_number": "+86(8)9135210487",
+                "shipping_method": "PKG",
+                "postal_code": "01898",
+                "city": "Jaskolskiburgh",
+                "country": "CR",
+                "last_name": "Nicolas",
+                "state": "Utah"
+            },
+        };
+
+        this.headersVar.append("Content-Type", "application/json")
+        return this.http.post<ResponseModel>("https://accept.paymobsolutions.com/api/acceptance/payment_keys"
+            , data, { headers: this.headersVar });
+    }
+
+    paymentOrderSave(tripId: number, orderId: number) {
+        // let data = {
+        //     "tripId": tripId,
+        //     "orderId": orderId,
+        // };
+        let URI = `${apiConfig.apiUrl}/Vehicles/TripPaymentId`;
+        return this.http.post<ResponseModel>(URI + "?tripId=" + tripId + "&orderId=" + orderId, "", { headers: this.headersVar });
+    }
+
+    paymentIframe(authT: string): Observable<any> {
+        let data = {
+            "card_number": "4987654321098769",
+            "card_holdername": "Test Account",
+            "card_expiry_mm": "05",
+            "card_expiry_yy": "21",
+            "card_cvn": "123",
+            "subtype": "CARD"
+        };
+
+        this.headersVar.append("Content-Type", "application/json")
+        return this.http.post<ResponseModel>("https://accept.paymobsolutions.com/api/acceptance/iframes/8155?payment_token=" + authT
+            , data, { headers: this.headersVar });
     }
 
     //data: VisibleRegion
@@ -84,5 +152,14 @@ export class VehiclsProvider {
     doneByTripId(idVar: any, rate: number, inService: boolean): Observable<any> {
         let URI = `${apiConfig.apiUrl}/Vehicles/RateTripById?tripId=` + idVar + '&rate=' + rate + '&isRepair=' + inService;
         return this.http.get(URI);
+    }
+
+    uploadPic(imageBase: any): Observable<any> {
+        // let dataTo = {
+        //     "base64image": imageBase
+        // };
+
+        let URI = `${apiConfig.apiUrl}/Vehicles/UploadId`;
+        return this.http.post(URI, imageBase, { headers: this.headersVar });
     }
 }

@@ -34,9 +34,6 @@
     "cordova-plugin-request-location-accuracy": {
       "PACKAGE_NAME": "fly.zapp.com"
     },
-    "cordova-plugin-sim": {
-      "PACKAGE_NAME": "fly.zapp.com"
-    },
     "cordova-plugin-splashscreen": {
       "PACKAGE_NAME": "fly.zapp.com"
     },
@@ -60,6 +57,15 @@
       "APP_NAME": "Rabbit",
       "FACEBOOK_HYBRID_APP_EVENTS": "false",
       "FACEBOOK_ANDROID_SDK_VERSION": "4.40.0",
+      "PACKAGE_NAME": "fly.zapp.com"
+    },
+    "cordova-plugin-file": {
+      "PACKAGE_NAME": "fly.zapp.com"
+    },
+    "cordova-plugin-filepath": {
+      "PACKAGE_NAME": "fly.zapp.com"
+    },
+    "cordova-plugin-camera": {
       "PACKAGE_NAME": "fly.zapp.com"
     }
   },

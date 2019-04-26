@@ -12,6 +12,7 @@ export class AppErrorHandler implements ErrorHandler {
         if (errorModel.status == 0) {
             this._alerts.showServiceError();
         } else {
+            console.log(errorModel.message)
             this._alerts.showErrorToaster(errorModel.message);
         }
     }

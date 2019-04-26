@@ -33,6 +33,13 @@ export class ScanCodePage implements OnInit {
   }
 
   ionViewDidEnter() {
+    //     this.mapContainer.nativeElement.style.setProperty(`--display`, "none");
+    let elm = <HTMLElement>document.querySelector("#map");
+    elm.style.display = "none";
+
+    let elm2 = <HTMLElement>document.querySelector("#currentBtn");
+    elm2.style.display = "none";
+
     this.menu.swipeEnable(true);
   }
 
@@ -40,7 +47,7 @@ export class ScanCodePage implements OnInit {
     this.qrScanner.hide();
     this.qrScanner.destroy();
     this.menu.swipeEnable(false);
-   // this.menu.enable(true)
+    // this.menu.enable(true)
   }
 
   ngOnInit(): void {
@@ -63,17 +70,35 @@ export class ScanCodePage implements OnInit {
                 let scanSub = this.qrScanner.scan().subscribe((text: string) => {
                   this.reservationModel.qrStr = text;
 
+                  this._alertsService.showLoader();
                   this._VehiclsProvider.reserve(this.reservationModel).subscribe(returnData => {
                     console.log(returnData);
 
+                    this._alertsService.hideLoader();
                     if (returnData.IsDone) {
+
+                      this.reservationModel.tripId = returnData.ResponseIdStr;
+                      this._userState.setRideStatus(this.reservationModel);
+
                       this.qrScanner.hide(); // hide camera preview
                       scanSub.unsubscribe(); // stop scanning
-
-                       this.reservVechil();
+                      this.navCtrl.setRoot("MapsapiPage");
+                    } else {
+                      this._alertsService.showWarningToaster(returnData.ErrorMessegesStr);
                     }
-
                   });
+
+                  // this._VehiclsProvider.reserve(this.reservationModel).subscribe(returnData => {
+                  //   console.log(returnData);
+
+                  //   if (returnData.IsDone) {
+                  //     this.qrScanner.hide(); // hide camera preview
+                  //     scanSub.unsubscribe(); // stop scanning
+
+                  //     this.reservVechil();
+                  //   }
+
+                  // });
                 });
 
               } else if (status.denied) {
@@ -165,9 +190,9 @@ export class ScanCodePage implements OnInit {
   }
 
 
-  cancelScan(){
-    this.v.dismiss();
-   // this.menu.enable(true);
-    //this.navCtrl.setRoot("MapsapiPage");
+  cancelScan() {
+    //this.v.dismiss();
+    // this.menu.enable(true);
+    this.navCtrl.setRoot("MapsapiPage");
   }
 }

@@ -31,7 +31,7 @@ export class MyApp {
 
     this.pages = [
       { title: 'FIND RABBIT', component: 'MapsapiPage' },
-      { title: 'PAYMENT', component: 'PaymentPage' },
+      // { title: 'PAYMENT', component: 'ScanCodePage' },//PaymentPage
       { title: 'HISTORY', component: 'HistoryPage' },
       { title: 'HOW TO RIDE', component: 'HowtoridePage' },
       { title: 'HELP', component: 'HelprabbitPage' },
