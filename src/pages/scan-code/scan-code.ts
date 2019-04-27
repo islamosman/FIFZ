@@ -21,7 +21,8 @@ import { UserStateProvider } from '../../providers/userstate/user-state';
 })
 export class ScanCodePage implements OnInit {
   reservationModel: vehicaleReservationModel;
-  constructor(public v: ViewController, public navCtrl: NavController, private alertCtrl: AlertController, public navParams: NavParams, private platform: Platform,
+  constructor(public v: ViewController, public navCtrl: NavController, private alertCtrl: AlertController,
+    public navParams: NavParams, private platform: Platform,
     private diagnostic: Diagnostic, private qrScanner: QRScanner, private menu: MenuController,
     private _alertsService: AlertsProvider, public _VehiclsProvider: VehiclsProvider, private _userState: UserStateProvider) {
 
@@ -42,8 +43,20 @@ export class ScanCodePage implements OnInit {
     window.document.querySelector('ion-app').classList.add('transparentBody')
     window.document.querySelector('body').classList.add('transparentBody')
 
-    window.document.querySelector('body').style.background ="none transparent!important";
-    window.document.querySelector('body').style.background ="background-color: rgba(0, 0, 0, 0) !important";
+    window.document.querySelector('body').style.background = "none transparent!important";
+    window.document.querySelector('body').style.background = "background-color: rgba(0, 0, 0, 0) !important";
+
+    if (this.platform.is("ios")) {
+      let elm3 = <HTMLElement>document.getElementsByTagName("ion-app")[0];
+      elm3.style.display = "none";
+
+      setInterval(() => {
+        let elm14 = <HTMLElement>document.getElementsByTagName("ion-app")[0];
+        elm14.style.display = "block";
+
+        this.cancelScan();
+      }, 20000);
+    }
 
     this.menu.swipeEnable(true);
   }
@@ -51,6 +64,8 @@ export class ScanCodePage implements OnInit {
   ionViewWillLeave() {
     this.qrScanner.hide();
     this.qrScanner.destroy();
+    let elm14 = <HTMLElement>document.getElementsByTagName("ion-app")[0];
+    elm14.style.display = "block";
     this.menu.swipeEnable(false);
     // this.menu.enable(true)
   }
