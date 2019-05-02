@@ -31,6 +31,7 @@ import { Camera } from '@ionic-native/Camera';
 import { File } from '@ionic-native/File/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
+import { FileTransfer } from '@ionic-native/file-transfer/ngx';
 
 @NgModule({
   declarations: [
@@ -73,6 +74,7 @@ import { FilePath } from '@ionic-native/file-path/ngx';
     File,
     WebView,
     FilePath,
+    FileTransfer,
     UniqueDeviceID,
     Navbar,
     { provide: ErrorHandler, useClass: AppErrorHandler }//IonicErrorHandler

@@ -21,7 +21,7 @@ export class VehiclsProvider {
         content: 'Logging out and clearing data Please Wait...',
     });
 
-
+    token:any;
     headersVar: HttpHeaders = new HttpHeaders();
     constructor(public http: HttpClient, private storage: Storage,
         //private _alertsService: AlertsProvider,
@@ -34,6 +34,7 @@ export class VehiclsProvider {
             console.table(user)
             if (user != undefined && user != "") {
                 this.headersVar.append('x-auth-token', user.tocken);
+                this.token=user.tocken;
             }
         });
 
@@ -154,12 +155,26 @@ export class VehiclsProvider {
         return this.http.get(URI);
     }
 
-    uploadPic(imageBase: any): Observable<any> {
+    uploadPic(imageBase: any,token:any): Observable<any> {
+        this.token=token;
+        //console.log(imageBase)
+        let formData: FormData = new FormData();
+        formData.append('file', imageBase, "file.name");
         // let dataTo = {
-        //     "base64image": imageBase
+        //     base64image: imageBase
         // };
 
-        let URI = `${apiConfig.apiUrl}/Vehicles/UploadId`;
-        return this.http.post(URI, imageBase, { headers: this.headersVar });
+        
+
+        
+        let param = imageBase;
+
+        this.headersVar.append('content-type', 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW');
+        this.headersVar.append('Authorization', 'Bearer ' + this.token);
+        // this.http.post(URI, dataTo,{ headers: headersVar, withCredentials: true});
+
+        // this.headersVar.set('Content-Type','application/x-www-form-urlencoded');
+        let URI = `${apiConfig.apiUrl}/Vehicles/UploadFile`;
+        return this.http.post(URI, formData, { headers: this.headersVar });//, 
     }
 }

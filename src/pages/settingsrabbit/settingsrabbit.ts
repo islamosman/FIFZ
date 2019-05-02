@@ -2,6 +2,9 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, ActionSheetController, Platform, ToastController, ModalController } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/Camera';
 import { VehiclsProvider } from '../../providers/Map/vechilsApi';
+import { FileTransfer, FileUploadOptions } from '@ionic-native/file-transfer/ngx';
+import { HttpClient } from '@angular/common/http';
+import { Storage } from "@ionic/storage";
 // import { FilePath } from '@ionic-native/file-path/ngx';
 // import { File, FileEntry } from '@ionic-native/File/ngx';
 // import { HttpClient } from '@angular/common/http';
@@ -24,8 +27,11 @@ export class SettingsrabbitPage implements OnInit {
 
 
   constructor(
+    private storage: Storage,
+    public http: HttpClient,
+    private transfer: FileTransfer,
     private actionSheetController: ActionSheetController,
-     private camera: Camera,
+    private camera: Camera,
     // private filePath: FilePath,
     // private plt: Platform,
     // private storage: Storage,
@@ -36,6 +42,7 @@ export class SettingsrabbitPage implements OnInit {
     // private webview: WebView, private diagnostic: Diagnostic,
     // private toastController: ToastController, private ref: ChangeDetectorRef,
     public navCtrl: NavController, public navParams: NavParams) {
+      this.transfer=new FileTransfer();
   }
 
   ionViewDidLoad() {
@@ -45,16 +52,18 @@ export class SettingsrabbitPage implements OnInit {
 
   images = [];
   ngOnInit() {
-    let formData: FormData = new FormData();
-    
-    //  headers.set('Content-Type','multipart/form-data');
+    // let formData: FormData = new FormData();
 
-    formData.append('image', 'assets/imgs/logo-green.png', "Name");
-    // let base64Image = 'data:image/jpeg;base64,' + 'assets/imgs/logo-green.png';
+    // //  headers.set('Content-Type','multipart/form-data');
 
-    this._VehiclsProvider.uploadPic(formData).subscribe(returnData => {
 
-    });
+
+    // formData.append('image', '/assets/imgs/logo-green.png', "Name");
+    // // let base64Image = 'data:image/jpeg;base64,' + 'assets/imgs/logo-green.png';
+
+    // this._VehiclsProvider.uploadPic(formData).subscribe(returnData => {
+
+    // });
 
     // this.plt.ready().then(() => {
     //   this.loadStoredImages();
@@ -70,7 +79,7 @@ export class SettingsrabbitPage implements OnInit {
           handler: () => {
             this.takePicture(this.camera.PictureSourceType.CAMERA);
           },
-//          icon: '../assets/imgs/guy.png'
+          //          icon: '../assets/imgs/guy.png'
         },
         {
           text: 'Cancel',
@@ -81,28 +90,48 @@ export class SettingsrabbitPage implements OnInit {
     actionSheet.present();
   }
 
-   takePicture(sourceType) {
+  takePicture(sourceType) {
     // Create options for the Camera Dialog
     var options: CameraOptions = {
       quality: 100,
-      destinationType: this.camera.DestinationType.DATA_URL,
+      destinationType: this.camera.DestinationType.FILE_URI,
       sourceType: sourceType,
       saveToPhotoAlbum: false,
       correctOrientation: true,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
     };
- 
+
     // Get the data of an image
     this.camera.getPicture(options).then((imagePath) => {
-      let base64Image = 'data:image/jpeg;base64,' + imagePath;
+      let base64Image =  imagePath;//'data:image/jpeg;base64,' +
+console.log(imagePath)
+      this.storage.get('UserState').then(user => {
+        console.log(user.tocken)
+        this._VehiclsProvider.uploadPic(base64Image,user.tocken).subscribe(returnData => {
 
-      this._VehiclsProvider.uploadPic(base64Image).subscribe(returnData => {
+          this.camera.cleanup();
+         });
+    });
+//console.log(base64Image);
+       
 
-      });
+      // let url = `${apiConfig.apiUrl}/Vehicles/UploadId`;
 
-      this.camera.cleanup();
-       // let modal = this.modalCtrl.create('UploadModalPage', { data: imagePath });
+      // var options: FileUploadOptions = {
+      //   fileKey: 'image',
+      //   chunkedMode: false,
+      //   mimeType: 'mutipart/form-data',
+      // };
+
+      // const FileTransfer = this.transfer.create();
+
+      // FileTransfer.upload(imagePath, url, options).then(x => {
+      //   console.log(x.response);
+      // });
+
+    
+      //  let modal = this.modalCtrl.create('UploadModalPage', { data: imagePath });
       // modal.present();
       // modal.onDidDismiss(data => {
       // //   if (data && data.res) {
@@ -116,9 +145,11 @@ export class SettingsrabbitPage implements OnInit {
       // //     .subscribe(res => {
       // //       this.ionViewDidLoad();
       //      });
-          
-        //}
-      //});
+
+      //   }
+      // });
+
+
     });
   }
 

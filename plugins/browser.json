@@ -67,6 +67,9 @@
     },
     "cordova-plugin-camera": {
       "PACKAGE_NAME": "fly.zapp.com"
+    },
+    "cordova-plugin-file-transfer": {
+      "PACKAGE_NAME": "fly.zapp.com"
     }
   },
   "dependent_plugins": {}
