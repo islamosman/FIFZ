@@ -102,7 +102,7 @@ export class ScanCodePage implements OnInit {
 
                       this.qrScanner.hide(); // hide camera preview
                       scanSub.unsubscribe(); // stop scanning
-                      this.navCtrl.setRoot("MapsapiPage");
+                      this.navCtrl.setRoot("MapsPage");
                     } else {
                       this._alertsService.showWarningToaster(returnData.ErrorMessegesStr);
                     }
@@ -159,7 +159,7 @@ export class ScanCodePage implements OnInit {
       if (returnData.IsDone) {
         this.reservationModel.tripId = returnData.ResponseIdStr;
         this._userState.setRideStatus(this.reservationModel);
-        this.navCtrl.setRoot("MapsapiPage");
+        this.navCtrl.setRoot("MapsPage");
       } else {
         this._alertsService.showWarningToaster(returnData.ErrorMessegesStr);
       }
@@ -213,6 +213,6 @@ export class ScanCodePage implements OnInit {
   cancelScan() {
     //this.v.dismiss();
     // this.menu.enable(true);
-    this.navCtrl.setRoot("MapsapiPage");
+    this.navCtrl.setRoot("MapsPage");
   }
 }

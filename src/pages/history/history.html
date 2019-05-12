@@ -7,9 +7,9 @@
 <ion-header>
 
   <ion-navbar>
-      <button ion-button menuToggle>
-          <ion-icon name="menu"></ion-icon>
-        </button>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
     <ion-title>history</ion-title>
   </ion-navbar>
 
@@ -18,25 +18,13 @@
 
 <ion-content padding>
   <ul class="list-items-icons list-unstyled">
-    <li>
+    <li *ngFor="let item of tripsList">
       <ion-icon name="checkmark-circle-outline"></ion-icon>
-      Lorem Ipsum is simply dummy text of the printing and typesetting industry . Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
+      {{item.Name}} ({{item.StartTime}}) 
+      <br> 
+      <ion-icon name="clock"></ion-icon>{{item.Duration}} 
+      : {{item.NetAmount}}$
     </li>
-    <li>
-      <ion-icon name="checkmark-circle-outline"></ion-icon>
-      Lorem Ipsum is simply dummy text of the printing and typesetting industry
-    </li>
-    <li>
-      <ion-icon name="checkmark-circle-outline"></ion-icon>
-      Lorem Ipsum is simply dummy text of the printing and typesetting industry, printing and typesetting industry
-    </li>
-    <li>
-      <ion-icon name="checkmark-circle-outline"></ion-icon>
-      Lorem Ipsum is simply dummy text.
-    </li>
-    <li>
-      <ion-icon name="checkmark-circle-outline"></ion-icon>
-      Lorem Ipsum is simply dummy text of the printing and typesetting industry
-    </li>
+
   </ul>
 </ion-content>

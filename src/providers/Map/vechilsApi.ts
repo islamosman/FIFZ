@@ -21,7 +21,7 @@ export class VehiclsProvider {
         content: 'Logging out and clearing data Please Wait...',
     });
 
-    token:any;
+    token: any;
     headersVar: HttpHeaders = new HttpHeaders();
     constructor(public http: HttpClient, private storage: Storage,
         //private _alertsService: AlertsProvider,
@@ -34,7 +34,7 @@ export class VehiclsProvider {
             console.table(user)
             if (user != undefined && user != "") {
                 this.headersVar.append('x-auth-token', user.tocken);
-                this.token=user.tocken;
+                this.token = user.tocken;
             }
         });
 
@@ -52,7 +52,7 @@ export class VehiclsProvider {
             , data, { headers: this.headersVar });
     }
 
-    payment2(authT: string, amount: number, tripId: number): Observable<any> {
+    payment2(authT: string, amount: number, tripId: string): Observable<any> {
         let data = {
             "auth_token": authT,
             "delivery_needed": "false",
@@ -99,7 +99,30 @@ export class VehiclsProvider {
             , data, { headers: this.headersVar });
     }
 
-    paymentOrderSave(tripId: number, orderId: number) {
+    paymentBackToBack(authT: string, userTB: string): Observable<any> {
+        let data = {
+            "source": {
+                "identifier": userTB,
+                "subtype": "TOKEN",
+            },
+            "payment_token": authT,
+        };
+
+        this.headersVar.append("Content-Type", "application/json")
+        return this.http.post<ResponseModel>("https://accept.paymobsolutions.com/api/acceptance/payments/pay"
+            , data, { headers: this.headersVar });
+    }
+
+    paymentUserOrderSave(userId: string, orderId: number) {
+        // let data = {
+        //     "tripId": tripId,
+        //     "orderId": orderId,
+        // };
+        let URI = `${apiConfig.apiUrl}/Vehicles/UserPaymentId`;
+        return this.http.post<ResponseModel>(URI + "?userId=" + userId + "&orderId=" + orderId, "", { headers: this.headersVar });
+    }
+
+    paymentOrderSave(tripId: string, orderId: number) {
         // let data = {
         //     "tripId": tripId,
         //     "orderId": orderId,
@@ -134,7 +157,7 @@ export class VehiclsProvider {
         let URI = `${apiConfig.apiUrl}/Vehicles/GetById?vId=` + idVar;
         //let dataTo = { vId: idVar };
 
-        return this.http.get(URI);
+        return this.http.post(URI, "");
     }
 
     reserve(data: vehicaleReservationModel): Observable<ResponseModel> {
@@ -145,9 +168,9 @@ export class VehiclsProvider {
 
 
     byTripId(idVar: any): Observable<any> {
-        let URI = `${apiConfig.apiUrl}/Vehicles/GetTripById?tripId=` + idVar;
+        let URI = `${apiConfig.apiUrl}/Vehicles/GetTripByIdPost?tripId=` + idVar;
 
-        return this.http.get(URI);
+        return this.http.post(URI, "");
     }
 
     doneByTripId(idVar: any, rate: number, inService: boolean): Observable<any> {
@@ -155,18 +178,19 @@ export class VehiclsProvider {
         return this.http.get(URI);
     }
 
-    uploadPic(imageBase: any,token:any): Observable<any> {
-        this.token=token;
+    tripHistory():Observable<ResponseModel>{
+        let URI = `${apiConfig.apiUrl}/Vehicles/TripHistoryPost` ;
+        return this.http.post<ResponseModel>(URI,"");
+    }
+
+    uploadPic(imageBase: any, token: any): Observable<any> {
+        this.token = token;
         //console.log(imageBase)
         let formData: FormData = new FormData();
         formData.append('file', imageBase, "file.name");
         // let dataTo = {
         //     base64image: imageBase
         // };
-
-        
-
-        
         let param = imageBase;
 
         this.headersVar.append('content-type', 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW');

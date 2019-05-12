@@ -67,7 +67,7 @@ export class EndridePage {
       this.statusDoneApi(false);
     } else {
       this.v.dismiss();
-      this.navCtrl.setRoot("PaymentPage", { rId: this.tripId, amount: this.rideCost });
+      //this.navCtrl.setRoot("PaymentPage", { rId: this.tripId, amount: this.rideCost });
       // this.navCtrl.setRoot("PaymentPage");
     }
   }
@@ -81,7 +81,7 @@ export class EndridePage {
       this._VehiclsProvider.doneByTripId(this.tripId, this.rating, inService).subscribe(returnData => {
         this._alertsService.hideLoader();
         this.v.dismiss();
-        this.navCtrl.setRoot("PaymentPage", { rId: this.tripId, amount: this.rideCost });
+       // this.navCtrl.setRoot("PaymentPage", { rId: this.tripId, amount: this.rideCost });
         // this.navCtrl.setRoot("PaymentPage");
       });
     }

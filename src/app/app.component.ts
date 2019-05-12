@@ -16,21 +16,26 @@ export class MyApp {
 
   pages: Array<{ title: string, component: any }>;
 
-  constructor(public events: Events,public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,
+  constructor(public events: Events, public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,
     private auth: AuthProvider,
     private storage: Storage,
     private userState: UserStateProvider,
   ) {
+
+    events.subscribe('unauthorized:requestError', () => {
+      this.nav.setRoot("LoginPage");
+    });
+
     events.subscribe('user:created', (user) => {
 
-      this.UserName=user.name;
+      this.UserName = user.name;
 
     });
 
     this.initializeApp();
 
     this.pages = [
-      { title: 'FIND RABBIT', component: 'MapsapiPage' },
+      { title: 'FIND RABBIT', component: 'MapsPage' },
       // { title: 'PAYMENT', component: 'ScanCodePage' },//PaymentPage
       { title: 'HISTORY', component: 'HistoryPage' },
       { title: 'HOW TO RIDE', component: 'HowtoridePage' },
@@ -55,7 +60,7 @@ export class MyApp {
           this.UserName = user.name;
         }
         this.userState.setUser(user);
-        this.rootPage = user ? 'MapsapiPage' : 'LoginPage';
+        this.rootPage = user ? 'MapsPage' : 'LoginPage';
       });
 
       this.statusBar.styleDefault();

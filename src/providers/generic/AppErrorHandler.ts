@@ -10,10 +10,10 @@ export class AppErrorHandler implements ErrorHandler {
         //let _alerts =AlertsProvider;
         //let _alerts  :AlertsProvider;
         if (errorModel.status == 0) {
-            this._alerts.showServiceError();
+           // this._alerts.showServiceError();
         } else {
             console.log(errorModel.message)
-            this._alerts.showErrorToaster(errorModel.message);
+            //this._alerts.showErrorToaster(errorModel.message);
         }
     }
 }

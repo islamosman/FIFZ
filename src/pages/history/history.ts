@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { VehiclsProvider } from '../../providers/Map/vechilsApi';
+import { TripHistory } from '../../models/vehicaleModel';
 
 /**
  * Generated class for the HistoryPage page.
@@ -15,11 +17,19 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class HistoryPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public _VehiclsProvider: VehiclsProvider) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad HistoryPage');
+    this.getHistory();
   }
 
+  tripsList;//: TripHistory[]=[];
+  getHistory() {
+    this._VehiclsProvider.tripHistory().subscribe(returnData => {
+      this.tripsList = <TripHistory[]>returnData.ReturnedObject.$values;
+      //  console.log(ff)
+      console.table(returnData.ReturnedObject);
+    });
+  }
 }

@@ -15,6 +15,24 @@
 
 </ion-header>
 <ion-content padding>
+    <!-- <ion-list>
+        <ion-item>
+          <ion-input imagetitle="" ngmodel="" placeholder="Image Title" type="text"></ion-input>
+        </ion-item>
+       
+        <ion-item>
+          <ion-card>
+            <div class="uploadWrap" ngif="!isImageSelected; else selectedImage">
+      <ion-icon choosefile="" (click)="chooseFile()" name="cloud-upload"></ion-icon>
+            </div>
+      <ng-template selectedimage="">
+                    <img alt="uploaded Image" ngif="imageURI" src="{{imageURI}}">
+                  </ng-template>
+          </ion-card>
+        </ion-item>
+        <button click="" (click)="doImageUpload()" color="dark" disabled="" doimageupload="" full="" imagetitle="" ion-button="" isimageselected="">Upload</button>
+       </ion-list> -->
+
     <ion-item>
     <button ion-button color="secondary" class="submit-btn" full (click)="presentActionSheet()">Get ID</button>
     </ion-item>

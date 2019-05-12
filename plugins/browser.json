@@ -70,6 +70,9 @@
     },
     "cordova-plugin-file-transfer": {
       "PACKAGE_NAME": "fly.zapp.com"
+    },
+    "cordova-plugin-googlemaps": {
+      "PACKAGE_NAME": "fly.zapp.com"
     }
   },
   "dependent_plugins": {}

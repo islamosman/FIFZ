@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IonicPage, ModalController, NavController, MenuController, NavParams, Platform } from 'ionic-angular';
+import { IonicPage, ModalController, NavController, MenuController, NavParams, Platform, Events } from 'ionic-angular';
 import {
   GoogleMaps,
   GoogleMap,
@@ -65,6 +65,7 @@ export class MapsPage implements OnInit {
 
   constructor(public navCtrl: NavController, private platform: Platform, private diagnostic: Diagnostic,
     private menu: MenuController, private _location: LocationsProvider, private storage: Storage,
+    public events: Events,
     public navParams: NavParams, private geolocation: Geolocation, private _userState: UserStateProvider,
     private locationAccuracy: LocationAccuracy, public modalController: ModalController, public _VehiclsProvider: VehiclsProvider
     //  ,private ModalCtrl: ModalController, private _alertsService: AlertsProvider,
@@ -72,7 +73,6 @@ export class MapsPage implements OnInit {
   ) {
     // Begin Constractor
     this.geoModelVar = new GeoModel();
-
   }
 
   vehicles;
@@ -80,13 +80,22 @@ export class MapsPage implements OnInit {
   map2: any;
   ngOnInit() {
 
+    this.storage.get('UserState').then(user => {
+      console.table(user)
+      if (user != undefined && user != "") {
+        this.events.publish('user:created', user);
+      } else {
+        this.events.publish("unauthorized:requestError");
+      }
+    });
+
     this.storage.get("RideStatus").then(d => {
 
       if (d != null) {
         let reservModel = <vehicaleReservationModel>d;
         console.table(reservModel)
         if (reservModel.reservationEnum == reservationEnum.Start) {
-          
+
           let modal = this.modalController.create(
             'InridestatusPage', null, { enableBackdropDismiss: false, cssClass: 'modal-bottom' }
           );
@@ -110,7 +119,7 @@ export class MapsPage implements OnInit {
     this.platform.ready().then(() => {
 
       this.locationAccuracy.canRequest().then((canRequest: boolean) => {
-        console.log("Can req : " + canRequest)
+        // console.log("Can req : " + canRequest)
         if (canRequest) {
           // the accuracy option will be ignored by iOS
           this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_LOW_POWER).then(
@@ -123,16 +132,16 @@ export class MapsPage implements OnInit {
 
       this.diagnostic.requestLocationAuthorization("always")
         .then((state) => {
-          console.log(JSON.stringify(state));
+          // console.log(JSON.stringify(state));
         }).catch(e => console.error(e));
 
       this._location.GetCurrent().then(((resp) => {
         this.geoModelVar.lat = resp.coords.latitude;
         this.geoModelVar.lng = resp.coords.longitude;
-        console.log("longLat : > " + resp.coords);
+        // console.log("longLat : > " + resp.coords);
         this.loadMap();
       })).catch(err => {
-        console.log(err);
+        // console.log(err);
         this.geoModelVar.lat = "30.0371824";
         this.geoModelVar.lng = "31.2145495";
         this.loadMap();
@@ -164,7 +173,7 @@ export class MapsPage implements OnInit {
   }
 
   loadMap() {
-    console.log("load map 1")
+    // console.log("lkoad map 1")
     Environment.setEnv({
       'API_KEY_FOR_BROWSER_DEBUG': 'AIzaSyBLKRh7JfikPylbNdGfTiDbe6zut1yabxo',
       'API_KEY_FOR_BROWSER_RELEASE': 'AIzaSyBLKRh7JfikPylbNdGfTiDbe6zut1yabxo'
@@ -195,14 +204,17 @@ export class MapsPage implements OnInit {
 
     this.map.one(GoogleMapsEvent.MAP_READY)
       .then((readyData) => {
-        console.log("Map ready")
-        this.getVehicles(this.map.getVisibleRegion());
+
+        setTimeout(() => {
+          this.getVehicles(this.map.getVisibleRegion());
+        }, 3000);
+
 
         //console.log(" <<<  " + JSON.stringify(readyData));
         // Get area codinates
         this.map.addEventListener(GoogleMapsEvent.CAMERA_MOVE_END).subscribe((e) => {
           //console.log("d " + JSON.stringify(e));
-          this.getVehicles(this.map.getVisibleRegion());
+          // this.getVehicles(this.map.getVisibleRegion());
         });
       });
   }
@@ -215,7 +227,7 @@ export class MapsPage implements OnInit {
     // pointsPoly.push(new LatLng(data.southwest.lat, data.southwest.lng));
     pointsPoly.push(new LatLng(data.nearRight.lat, data.nearRight.lng));
     pointsPoly.push(new LatLng(data.nearLeft.lat, data.nearLeft.lng));
-//data
+    //data
     this._VehiclsProvider.byArea().subscribe(returnData => {
       let ResultData = <ResponseModel>returnData;
       this.vehicles = [];
@@ -226,22 +238,22 @@ export class MapsPage implements OnInit {
         let vechilModel: vehicaleModel = item;
         tempPosition = new LatLng(vechilModel.Lat, vechilModel.Lng);
 
-       // console.log(Poly.containsLocation(tempPosition, pointsPoly) + "    " + tempPosition);
+        // console.log(Poly.containsLocation(tempPosition, pointsPoly) + "    " + tempPosition);
 
-        if (Poly.containsLocation(tempPosition, pointsPoly)) {
-          item.iconImageEnum = vehiclesIcons[item.iconImageEnum];
-          this.vehicles.push(item);
-          this.addMarker(item)
-        }
+        //if (Poly.containsLocation(tempPosition, pointsPoly)) {
+        item.iconImageEnum = vehiclesIcons[item.iconImageEnum];
+        this.vehicles.push(item);
+        this.addMarker(item)
+        //}
       }
     });
   }
 
   successFun(pos) {
-    console.log("Success is " + JSON.stringify(pos));
+    // console.log("Success is " + JSON.stringify(pos));
   }
   failurFun(pos) {
-    console.log("Error is" + JSON.stringify(pos));
+    // console.log("Error is" + JSON.stringify(pos));
   }
   myLocation() {
     this.backGroundGeo();
@@ -254,10 +266,10 @@ export class MapsPage implements OnInit {
 
     navigator.geolocation.getCurrentPosition(this.successFun, this.failurFun, options);
 
-    console.log("try to locate ");
+    // console.log("try to locate ");
     this.geolocation.watchPosition(options).subscribe((position: Geoposition) => {
       // loading.dismiss();
-      console.log("current location at login" + position.coords.latitude);
+      // console.log("current location at login" + position.coords.latitude);
 
       // Run update inside of Angular's zone
       // this.zone.run(() => {
@@ -268,7 +280,7 @@ export class MapsPage implements OnInit {
     });
 
     this.geolocation.getCurrentPosition(options).then((resp: Geoposition) => {
-      console.log("Ya Rab : " + JSON.stringify(resp));
+      // console.log("Ya Rab : " + JSON.stringify(resp));
       this.lat = resp.coords.latitude;
       this.lng = resp.coords.longitude;
       let mapOptions: GoogleMapOptions = {
@@ -293,13 +305,13 @@ export class MapsPage implements OnInit {
       //      this.loadMap();
 
     }).catch((error) => {
-      console.log('Error getting location', error);
+      // console.log('Error getting location', error);
     });
   }
 
   addMarker(vehicaleModel: vehicaleModel) {
     //var htmlInfoWindow = new HtmlInfoWindow();
-    var html =vehicaleModel.id;
+    var html = vehicaleModel.id;
     //   [
     //   'This is <b>Html</b> InfoWindow',
     //   '<br>',

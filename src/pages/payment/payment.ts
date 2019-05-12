@@ -3,6 +3,9 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
 import { VehiclsProvider } from '../../providers/Map/vechilsApi';
 import { AlertsProvider } from '../../providers/generic/AlertsProvider';
+import { Storage } from '@ionic/storage';
+import { UserStateModel } from '../../models/usermodel';
+
 /**
  * Generated class for the PaymentPage page.
  *
@@ -20,11 +23,12 @@ export class PaymentPage {
   tripId: number;
   tripAmount: number;
 
-  constructor(public navCtrl: NavController, public _alerts: AlertsProvider, public navParams: NavParams, public _VehiclsProvider: VehiclsProvider, public sanitizer: DomSanitizer) {
-    this.tripId = navParams.get('rId');
-    this.tripAmount = navParams.get('amount');
+  constructor(public navCtrl: NavController, public _alerts: AlertsProvider, public navParams: NavParams,
+    public _VehiclsProvider: VehiclsProvider, private storage: Storage, public sanitizer: DomSanitizer) {
+    //this.tripId = navParams.get('rId');
+    // this.tripAmount = navParams.get('amount');
   }
-  
+
   iframeSrc: SafeResourceUrl;
   ionViewDidLoad() {
     this.payment();
@@ -34,24 +38,32 @@ export class PaymentPage {
 
 
   payment() {
-    this._alerts.showLoader();
+    this.storage.get('UserIDVisaState').then(user => {
+      let result = <UserStateModel>user;
+      if (result.UserId != "") {
 
-    this._VehiclsProvider.payment1().subscribe(returnData1 => {
-      if (returnData1) {
+        this._alerts.showLoader();
 
-        this._VehiclsProvider.payment2(returnData1.token, this.tripAmount, this.tripId).subscribe(returnData2 => {
+        this._VehiclsProvider.payment1().subscribe(returnData1 => {
+          if (returnData1) {
+            this._VehiclsProvider.payment2(returnData1.token, 1,result.UserId).subscribe(returnData2 => {
 
-          this._VehiclsProvider.paymentOrderSave(this.tripId, returnData2.id).subscribe(returnDataIframe => {
+              this._VehiclsProvider.paymentUserOrderSave(result.UserId, returnData2.id).subscribe(returnDataIframe => {
 
-            this._VehiclsProvider.payment3(returnData1.token, this.tripAmount, returnData2.id).subscribe(returnData3 => {
+                this._VehiclsProvider.payment3(returnData1.token, 1, returnData2.id).subscribe(returnData3 => {
 
-              this.iframeSrc = this.sanitizer.bypassSecurityTrustResourceUrl("https://accept.paymobsolutions.com/api/acceptance/iframes/8155?payment_token=" + returnData3.token);
-              this._alerts.hideLoader();
+                  this.iframeSrc = this.sanitizer.bypassSecurityTrustResourceUrl("https://accept.paymobsolutions.com/api/acceptance/iframes/8155?payment_token=" + returnData3.token);
+                  this._alerts.hideLoader();
+                });
+
+              });
             });
-
-          });
+          }
         });
+      }else {
+        this.navCtrl.setRoot("LoginPage");
       }
+
     });
   }
 }

@@ -18,7 +18,18 @@ export class vehicaleReservationModel {
     vehicleId: string;
     qrStr: string;
     reservationEnum: reservationEnum;
-    returnObj:any;
-    needPrepare:boolean;
-    rateValue:number;
+    returnObj: any;
+    needPrepare: boolean;
+    rateValue: number;
+}
+
+export class TripHistory {
+    Amount: number;
+    Duration: string;
+    StartTime: string;
+    EndTime: string;
+    Name: string;
+    IsPaid: boolean;
+    IsDone: boolean;
+    NetAmount: number;
 }

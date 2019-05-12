@@ -6,6 +6,9 @@ import { VehiclsProvider } from '../../providers/Map/vechilsApi';
 // import { ResponseModel } from '../../models/ResponseModel';
 import { Observable } from 'rxjs/Observable';
 import { ScanCodePage } from '../scan-code/scan-code';
+import { Storage } from '@ionic/storage';
+import { AuthProvider } from '../../providers/auth/auth';
+import { UserStateModel } from '../../models/usermodel';
 
 /**
  * Generated class for the SelectedRabbitPage page.
@@ -25,7 +28,7 @@ export class SelectedRabbitPage {
   distanceDuration: string;
   constructor(public v: ViewController, private platform: Platform, public modalController: ModalController,
     public navCtrl: NavController, public navParams: NavParams, private _location: LocationsProvider,
-    public _VehiclsProvider: VehiclsProvider) {
+    public _VehiclsProvider: VehiclsProvider, private storage: Storage, public _authProvider: AuthProvider) {
     this.scoterId = this.navParams.data.vId;
   }
   geoModelVar: GeoModel = new GeoModel();
@@ -58,7 +61,7 @@ export class SelectedRabbitPage {
           console.log(response);
           this.distanceSpace = response.rows[0].elements[0].distance.text;
           this.distanceDuration = response.rows[0].elements[0].duration.text;
-         // this.changeValues();
+          // this.changeValues();
         });
 
       }
@@ -129,18 +132,47 @@ export class SelectedRabbitPage {
   }
 
   scan() {
-    this.v.dismiss().then(() => {
-      this.navCtrl.setRoot("ScanCodePage", { vId: this.scoterId });
-  });
-    // this.v.dismiss();
-    console.log(this.navParams.get('MapsapiPage'));
-    // console.clear();
-    // console.log(this.navCtrl.getActive().getZIndex());
-    // console.log(this.navCtrl.getAllChildNavs());
-    // console.log(this.navCtrl.getViews());
-    // //this.navCtrl.go({id:"ScanCodePage"})
-    //  this.navCtrl.push("ScanCodePage", { vId: this.scoterId });
+    this.storage.get('UserIDVisaState').then(user => {
+      
+      if (user) {
+        let result = <UserStateModel>user;
+        console.clear();
+        console.table(result)
+        
+        if (!result.IdStatus || !result.VisaStatus) {
+          this.getUserStatus();
+        } else if (result.IdStatus && result.VisaStatus) {
+          this.v.dismiss().then(() => {
+            this.navCtrl.setRoot("ScanCodePage", { vId: this.scoterId });
+          });
+        }
+      } else {
+        this.getUserStatus();
+      }
+    });
+
+
+
+    //    console.log(this.navParams.get('MapsapiPage'));
+
   }
+
+  getUserStatus() {
+    this._authProvider.userStates().subscribe(result => {
+      this.storage.set('UserIDVisaState', result.ReturnedObject);
+      if (!result.ReturnedObject.IdStatus) {
+        this.navCtrl.setRoot("SettingsrabbitPage");
+      } else if (!result.ReturnedObject.VisaStatus) {
+        this.navCtrl.setRoot("PaymentPage");
+      } else {
+        this.v.dismiss().then(() => {
+          this.navCtrl.setRoot("ScanCodePage", { vId: this.scoterId });
+        });
+      }
+
+    });
+  }
+
 
   direction() {
     let direction = "30.783314141910544,34.94217772246134";

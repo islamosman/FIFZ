@@ -150,7 +150,7 @@ export class MapsapiPage {
   }
 
   getVehicles() {
-    console.clear();
+   // console.clear();
     this._VehiclsProvider.byArea().subscribe(returnData => {
       let ResultData = <ResponseModel>returnData;
       //this.vehicles = [];
@@ -232,19 +232,19 @@ export class MapsapiPage {
     map.addListener('center_changed', function (e) {
       // 3 seconds after the center of the map has changed, pan back to the
       // marker.
-      console.clear();
-      console.log(map.getBounds())
+      //console.clear();
+      //console.log(map.getBounds())
 
       // console.log(map.getBounds().extend())
 
-      console.log(map.getBounds().getCenter())
-      console.log(map.getBounds().getNorthEast())
-      console.log(map.getBounds().getSouthWest())
+     // console.log(map.getBounds().getCenter())
+      //console.log(map.getBounds().getNorthEast())
+      //console.log(map.getBounds().getSouthWest())
       // console.log(map.getBounds().intersects())
 
       let poundsJson = map.getBounds().toJSON();
-      console.log(map.getCenter().lat())
-      console.log(map);
+      //console.log(map.getCenter().lat())
+      //console.log(map);
 
       let polygonArray = [];
 

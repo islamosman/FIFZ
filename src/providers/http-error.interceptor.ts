@@ -1,64 +1,42 @@
-// import {
-//     HttpRequest,
-//     HttpHandler,
-//     HttpEvent,
-//     HttpInterceptor,
-//     HttpResponse,
-//     HttpErrorResponse
-// } from '@angular/common/http';
-// import { Observable } from 'rxjs';
-// import { map, catchError } from 'rxjs/operators';
-// //   import {
-// //     Router
-// //   } from '@angular/router';
-// import { ToastController } from '@ionic/angular';
+import { HttpInterceptor, HttpRequest } from '@angular/common/http/';
+import { HttpEvent, HttpHandler } from '@angular/common/http';
+import { Injectable } from "@angular/core";
+import { Observable } from "rxjs/Observable";
+import { Storage } from "@ionic/storage";
+import { NavController, Events } from 'ionic-angular';
 
-// @Injectable()
-// export class TokenInterceptor implements HttpInterceptor {
-//     constructor(private router: Router,
-//         public toastController: ToastController) { }
 
-//     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+@Injectable()
+export class TokenInterceptor implements HttpInterceptor {
+    token: any = "";
+    constructor(private storage: Storage, public events: Events) {
+        this.storage.get('UserState').then(user => {
+            console.table(user)
+            if (user != undefined && user != "") {
+                this.token = user.tocken;
+            } else {
+                this.events.publish("unauthorized:requestError");
+            }
+        });
 
-//         const token = localStorage.getItem('token');
+        events.subscribe('user:created', (user) => {
+            console.log("from event at inter ")
+            this.storage.set("UserState", user);
+            this.token = user.tocken;
+        });
+    }
 
-//         if (token) {
-//             request = request.clone({
-//                 setHeaders: {
-//                     'Authorization': token
-//                 }
-//             });
-//         }
+    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        
+        if (req.url == "https://accept.paymobsolutions.com/api/ecommerce/orders"
+            || req.url == "https://accept.paymobsolutions.com/api/acceptance/payment_keys"
+            || req.url == "https://accept.paymobsolutions.com/api/acceptance/payments/pay") {
+            return next.handle(req);
+        } else {
+            console.log("tocken inter : " + this.token)
+            const changedReq = req.clone({ headers: req.headers.set('Authorization', 'Bearer ' + this.token) });
+            return next.handle(changedReq);
+        }
 
-//         if (!request.headers.has('Content-Type')) {
-//             request = request.clone({
-//                 setHeaders: {
-//                     'content-type': 'application/json'
-//                 }
-//             });
-//         }
-
-//         request = request.clone({
-//             headers: request.headers.set('Accept', 'application/json')
-//         });
-
-//         return next.handle(request).pipe(
-//             map((event: HttpEvent<any>) => {
-//                 if (event instanceof HttpResponse) {
-//                     console.log('event--->>>', event);
-//                 }
-//                 return event;
-//             }),
-//             catchError((error: HttpErrorResponse) => {
-//                 if (error.status === 401) {
-//                     if (error.error.success === false) {
-//                      //   this.presentToast('Login failed');
-//                     } else {
-//                         this.router.navigate(['login']);
-//                     }
-//                 }
-//                 return error;
-//                 //return throwError(error);
-//             }));
-//     }
-// }
+    }
+}

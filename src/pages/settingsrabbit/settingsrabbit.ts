@@ -1,10 +1,14 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { IonicPage, NavController, NavParams, ActionSheetController, Platform, ToastController, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ActionSheetController, Platform, ToastController, ModalController, Events } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/Camera';
 import { VehiclsProvider } from '../../providers/Map/vechilsApi';
-import { FileTransfer, FileUploadOptions } from '@ionic-native/file-transfer/ngx';
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 import { HttpClient } from '@angular/common/http';
 import { Storage } from "@ionic/storage";
+// import { File } from '@ionic-native/file';
+import { FilePath } from '@ionic-native/file-path/ngx';
+import { AlertsProvider } from '../../providers/generic/AlertsProvider';
+// import { FilePath } from '@ionic-native/file-path';
 // import { FilePath } from '@ionic-native/file-path/ngx';
 // import { File, FileEntry } from '@ionic-native/File/ngx';
 // import { HttpClient } from '@angular/common/http';
@@ -25,29 +29,41 @@ import { Storage } from "@ionic/storage";
 })
 export class SettingsrabbitPage implements OnInit {
 
-
+  token:any;
   constructor(
+    public _alerts: AlertsProvider,
     private storage: Storage,
     public http: HttpClient,
     private transfer: FileTransfer,
     private actionSheetController: ActionSheetController,
     private camera: Camera,
-    // private filePath: FilePath,
+    private filePath: FilePath,
     // private plt: Platform,
     // private storage: Storage,
     // private file: File,
-    private modalCtrl: ModalController,
+    // private modalCtrl: ModalController,
     public _VehiclsProvider: VehiclsProvider,
+    public events: Events,
     //  public toastCtrl: ToastController,
     // private webview: WebView, private diagnostic: Diagnostic,
     // private toastController: ToastController, private ref: ChangeDetectorRef,
     public navCtrl: NavController, public navParams: NavParams) {
-      this.transfer=new FileTransfer();
+    //this.transfer = new FileTransfer();
+
+
+    this.storage.get('UserState').then(user => {
+      if (user != undefined && user != "") {
+        this.token=user.tocken;
+console.log("at ssssetting     ttt    "  + this.token)
+        this.events.publish('user:created', user);
+      } else {
+          this.events.publish("unauthorized:requestError");
+      }
+  });
+
   }
 
   ionViewDidLoad() {
-
-    console.log('ionViewDidLoad SettingsrabbitPage');
   }
 
   images = [];
@@ -69,13 +85,58 @@ export class SettingsrabbitPage implements OnInit {
     //   this.loadStoredImages();
     // });
   }
+  imageURI: any;
+  imageFileName: any;
+  imageTitle: any;
+  isImageSelected: boolean = false;
+  chooseFile() {
+    let options: CameraOptions = {
+      quality: 50,
+      destinationType: this.camera.DestinationType.FILE_URI,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+      //allowEdit: true,
+      encodingType: this.camera.EncodingType.JPEG,
+      targetWidth: 500,
+      targetHeight: 500,
+      saveToPhotoAlbum: false
+    };
+
+
+    this.camera.getPicture(options).then((img) => {
+      this.imageURI = img;
+      this.isImageSelected = true;
+    }).catch((reason) => {
+      console.log(reason);
+    });
+  }
+  doImageUpload() {
+
+    let filename = this.imageURI.split('/').pop();
+    const fileTransfer: FileTransferObject = this.transfer.create();
+
+    let options: FileUploadOptions = {
+      fileKey: "file",
+      fileName: filename,
+      chunkedMode: false,
+      mimeType: "image/jpg",
+      params: { 'title': this.imageTitle }
+    };
+
+    fileTransfer.upload(this.imageURI, 'http://192.168.43.198:5000/api/Vehicles/UploadFile', options).then((res) => {
+
+
+    }, (err) => {
+
+    });
+
+  }
 
   presentActionSheet() {
     let actionSheet = this.actionSheetController.create({
       title: 'Select Image Source',
       buttons: [
         {
-          text: 'Load from Library',
+          text: 'Load from Camera',
           handler: () => {
             this.takePicture(this.camera.PictureSourceType.CAMERA);
           },
@@ -93,28 +154,63 @@ export class SettingsrabbitPage implements OnInit {
   takePicture(sourceType) {
     // Create options for the Camera Dialog
     var options: CameraOptions = {
-      quality: 100,
-      destinationType: this.camera.DestinationType.FILE_URI,
+      quality: 50,
+      destinationType: this.camera.DestinationType.NATIVE_URI,
       sourceType: sourceType,
-      saveToPhotoAlbum: false,
-      correctOrientation: true,
+      saveToPhotoAlbum: true,
+      //correctOrientation: true,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
     };
 
     // Get the data of an image
     this.camera.getPicture(options).then((imagePath) => {
-      let base64Image =  imagePath;//'data:image/jpeg;base64,' +
-console.log(imagePath)
+      let base64Image = imagePath;//'data:image/jpeg;base64,' +
+      console.log(imagePath)
       this.storage.get('UserState').then(user => {
         console.log(user.tocken)
-        this._VehiclsProvider.uploadPic(base64Image,user.tocken).subscribe(returnData => {
 
-          this.camera.cleanup();
-         });
-    });
-//console.log(base64Image);
-       
+
+        var currentName = imagePath.substr(imagePath.lastIndexOf('/') + 1);
+        var correctPath = imagePath.substr(0, imagePath.lastIndexOf('/') + 1);
+        //this.copyFileToLocalDir(imagePath);
+
+        this._alerts.showLoader();
+        // new one
+        const fileTransfer: FileTransferObject = this.transfer.create();
+        let options: FileUploadOptions = {
+          fileKey: 'file',
+          fileName: 'file',
+          chunkedMode: false,
+          mimeType: 'mutipart/form-data',
+          // mimeType: "image/jpeg",
+          headers: { Connection: "close" ,
+          'Authorization': 'Bearer ' + this.token
+        },
+          params: { 'title': "file" }
+        }
+
+        fileTransfer.upload(encodeURI(imagePath), encodeURI('http://meedub.com/api/Vehicles/UploadFile'), options)
+          //        fileTransfer.upload(encodeURI(imagePath), encodeURI('http://192.168.43.198:5000/api/FlyAuth/upload'), options)
+          // fileTransfer.upload(imagePath, encodeURI('http://192.168.43.198:5001/api/Vehicles/UploadFile'), options)
+          .then((data) => {
+            this._alerts.hideLoader();
+            this._alerts.showWarningToaster("Uploaded Successfully");
+            
+          }, (err) => {
+            this._alerts.hideLoader();
+            this._alerts.showWarningToaster("Uploaded Successfully");
+            console.log(err);
+          });
+        //end 
+
+        // this._VehiclsProvider.uploadPic(base64Image, user.tocken).subscribe(returnData => {
+
+        this.camera.cleanup();
+        // });
+      });
+      //console.log(base64Image);
+
 
       // let url = `${apiConfig.apiUrl}/Vehicles/UploadId`;
 
@@ -130,7 +226,7 @@ console.log(imagePath)
       //   console.log(x.response);
       // });
 
-    
+
       //  let modal = this.modalCtrl.create('UploadModalPage', { data: imagePath });
       // modal.present();
       // modal.onDidDismiss(data => {
@@ -153,9 +249,14 @@ console.log(imagePath)
     });
   }
 
-  imageURI: any;
-  imageFileName: any;
 
+  copyFileToLocalDir(namePath) {
+    this.filePath.resolveNativePath(namePath).then(x => {
+
+      console.log("ssssssssssssssssssss " + x)
+    });
+
+  }
   // getImage() {
   //   this.plt.ready().then(() => {
 

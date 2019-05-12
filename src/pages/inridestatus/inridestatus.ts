@@ -7,6 +7,7 @@ import { UserStateProvider } from '../../providers/userstate/user-state';
 import { Storage } from '@ionic/storage';
 import { reservationEnum } from '../../providers/Enums/reservationEnum';
 import { ResponseModel } from '../../models/ResponseModel';
+import { UserStateModel } from '../../models/usermodel';
 
 /**
  * Generated class for the InridestatusPage page.
@@ -112,6 +113,9 @@ export class InridestatusPage implements OnInit {
               this.reservationModel.returnObj = returnData.ReturnedObject;
               this._userState.setRideStatus(this.reservationModel);
 
+
+              // Payment
+
               let modal = this.modalController.create(
                 'EndridePage', null, { enableBackdropDismiss: false, cssClass: 'modal-bottom' }
               );
@@ -129,6 +133,54 @@ export class InridestatusPage implements OnInit {
     });
   }
 
+  payTrip(tripId: any, amount: any) {
+    this.storage.get("RideStatus").then(d => {
+      if (d != null) {
+        let reservModel = <vehicaleReservationModel>d;
+        console.table(reservModel)
+        if (reservModel.reservationEnum == reservationEnum.End) {
+          this._VehiclsProvider.byTripId(reservModel.tripId).subscribe(returnData => {
+            let ResultData = <ResponseModel>returnData;
+
+            this._VehiclsProvider.payment1().subscribe(returnData1 => {
+              if (returnData1) {
+                this._VehiclsProvider.payment2(returnData1.token, ResultData.ReturnedObject.Amount, reservModel.tripId).subscribe(returnData2 => {
+
+                  this._VehiclsProvider.payment3(returnData1.token, ResultData.ReturnedObject.Amount, returnData2.id).subscribe(returnData3 => {
+
+                    // Back to back
+                    this.storage.get('UserIDVisaState').then(user => {
+                      if (user) {
+                        let result = <UserStateModel>user;
+                        if (result.Tocken != "") {
+                          this._VehiclsProvider.paymentBackToBack(returnData1.token, result.Tocken).subscribe(returnDataBack => {
+                            if (returnDataBack.obj.success) {
+                              // update our data
+                              this._VehiclsProvider.paymentOrderSave(reservModel.tripId, returnData2.id).subscribe(returnDataIframe => {
+                              });
+                            }
+                          });
+                        }
+                      }
+                    });
+
+
+                  });
+                });
+
+              }
+            });
+            // console.log(ResultData)
+            // this.rideDateTime = ResultData.ReturnedObject.StartDate;
+
+            // this.rideDateTime = ResultData.ReturnedObject.StartDate;
+            // this.rideDuration = ResultData.ReturnedObject.Duration;
+            // this.rideCost = ResultData.ReturnedObject.Amount;
+          });
+        }
+      }
+    });
+  }
 
   initTripData() {
     console.log(this.totalSeconds);
@@ -149,10 +201,10 @@ export class InridestatusPage implements OnInit {
 
             this.rideDateTime = ResultData.ReturnedObject.StartDate;
             this.feesValue = ResultData.ReturnedObject.Amount;
-            if(this.feesValue.length > 5){
-              this.feesValue = this.feesValue.substr(0,5);
+            if (this.feesValue.length > 5) {
+              this.feesValue = this.feesValue.substr(0, 5);
             }
-            this.totalSeconds= ResultData.ReturnedObject.totalSecounds;
+            this.totalSeconds = ResultData.ReturnedObject.totalSecounds;
           });
 
           this.vId = reservModel.vehicleId;

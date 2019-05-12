@@ -14,6 +14,9 @@
     "cordova-open-native-settings": {
       "PACKAGE_NAME": "fly.zapp.com"
     },
+    "cordova-plugin-camera": {
+      "PACKAGE_NAME": "fly.zapp.com"
+    },
     "cordova-plugin-device": {
       "PACKAGE_NAME": "fly.zapp.com"
     },
@@ -22,6 +25,15 @@
       "APP_NAME": "Rabbit",
       "FACEBOOK_HYBRID_APP_EVENTS": "false",
       "FACEBOOK_ANDROID_SDK_VERSION": "4.40.0",
+      "PACKAGE_NAME": "fly.zapp.com"
+    },
+    "cordova-plugin-file": {
+      "PACKAGE_NAME": "fly.zapp.com"
+    },
+    "cordova-plugin-file-transfer": {
+      "PACKAGE_NAME": "fly.zapp.com"
+    },
+    "cordova-plugin-filepath": {
       "PACKAGE_NAME": "fly.zapp.com"
     },
     "cordova-plugin-geolocation": {
@@ -65,16 +77,9 @@
     "cordova.plugins.diagnostic": {
       "PACKAGE_NAME": "fly.zapp.com"
     },
-    "cordova-plugin-file": {
-      "PACKAGE_NAME": "fly.zapp.com"
-    },
-    "cordova-plugin-filepath": {
-      "PACKAGE_NAME": "fly.zapp.com"
-    },
-    "cordova-plugin-camera": {
-      "PACKAGE_NAME": "fly.zapp.com"
-    },
-    "cordova-plugin-file-transfer": {
+    "cordova-plugin-googlemaps": {
+      "PLAY_SERVICES_VERSION": "15.0.1",
+      "ANDROID_SUPPORT_V4_VERSION": "27.+",
       "PACKAGE_NAME": "fly.zapp.com"
     }
   },

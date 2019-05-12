@@ -40,7 +40,10 @@ export class UserStateProvider {
   }
 
   setUserStatus(loginModel: UserModel): any {
+    this.storage.remove("UserState");
+    this.storage.clear();
     this.storage.set("UserState", loginModel);
+    console.table(loginModel)
   }
   clearUSerState(){
     this.storage.remove("UserState");

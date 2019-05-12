@@ -30,7 +30,9 @@ export class LoginPage implements OnInit {
 
   constructor(public events: Events, public navCtrl: NavController, public loadingCtrl: LoadingController,
     public toastCtrl: ToastController, private menu: MenuController,
-    private storage: Storage, private _app: MyApp, public navParams: NavParams,
+    //private storage: Storage,
+     //private _app: MyApp,
+      public navParams: NavParams,
     public _auth: AuthProvider, private userState: UserStateProvider, public _alerts: AlertsProvider
   ) {
     this.messageStr = navParams.get('messageStr');
@@ -54,11 +56,15 @@ export class LoginPage implements OnInit {
         this.userModel = new UserModel();
         this.userModel.name = this.loginModel.username;
         this.userModel.tocken = registerResult.access_token;
+        this.userModel.TockenToB=registerResult.Tocken;
+        this.userModel.UserIdToB=registerResult.UserId;
+
+        console.table(registerResult)
         this.userState.setUserStatus(this.userModel);
 
         this.events.publish('user:created', this.userModel);
 
-        this.navCtrl.setRoot('MapsapiPage');
+        this.navCtrl.setRoot('MapsPage');
 
       } else {
         this._alerts.showWarningToaster("Invalid User or password");

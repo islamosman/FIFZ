@@ -7,6 +7,8 @@ export class UserModel {
   name?: string;
   userCode?: string;
   tocken?:any;
+  UserIdToB?:string;
+  TockenToB?:string;
 }
 
 export class RegisterModel {
@@ -29,4 +31,12 @@ export class LoginModel {
   urlStr:string ="http://localhost:30823/";
   username: string;
   password: string;
+}
+
+export class UserStateModel {
+  IdStatus:boolean;
+  VisaStatus: boolean;
+  RefundOrderId: string;
+  Tocken:string;
+  UserId:string;
 }

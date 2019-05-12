@@ -1,7 +1,7 @@
 export class ResponseModel {
   IsDone: any;
   ResponseId: any;
-  ResponseIdStr:any;
+  ResponseIdStr: any;
   MessegesStr: any;
   ErrorMessegesStr: any;
   Messages: any;
@@ -15,4 +15,6 @@ export class LoginResponseModel {
   token_type: string;
   expires_in: number;
   refresh_token: string;
+  UserId: string;
+  Tocken: string;
 }

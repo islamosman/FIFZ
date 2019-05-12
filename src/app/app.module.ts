@@ -13,7 +13,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { AuthProvider } from '../providers/auth/auth';
 import { UserStateProvider } from "../providers/userstate/user-state";
 import { AlertsProvider } from '../providers/generic/AlertsProvider';
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { Geolocation } from '@ionic-native/geolocation'
 import { autocompletePageModule } from '../pages/autocomplete/autocomplete.module';
 import { LocationAccuracy } from '@ionic-native/location-accuracy';
@@ -31,7 +31,8 @@ import { Camera } from '@ionic-native/Camera';
 import { File } from '@ionic-native/File/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
-import { FileTransfer } from '@ionic-native/file-transfer/ngx';
+import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
+import { TokenInterceptor } from '../providers/http-error.interceptor';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { FileTransfer } from '@ionic-native/file-transfer/ngx';
     IonicStorageModule.forRoot({
       name: '__mydb',
       driverOrder: ['indexeddb', 'sqlite', 'websql', 'localStorage']    //,localStorage
+     //driverOrder: ['websql','localStorage','indexeddb', 'sqlite']    //,localStorage
     })
   ],
   bootstrap: [IonicApp],
@@ -75,9 +77,11 @@ import { FileTransfer } from '@ionic-native/file-transfer/ngx';
     WebView,
     FilePath,
     FileTransfer,
+    FileTransferObject,
     UniqueDeviceID,
     Navbar,
-    { provide: ErrorHandler, useClass: AppErrorHandler }//IonicErrorHandler
+    { provide: ErrorHandler, useClass: AppErrorHandler },//IonicErrorHandler
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
   ]
 })
 export class AppModule { }
