@@ -5,7 +5,7 @@ import { GeoModel } from '../../models/MapModel';
 import { VehiclsProvider } from '../../providers/Map/vechilsApi';
 // import { ResponseModel } from '../../models/ResponseModel';
 import { Observable } from 'rxjs/Observable';
-import { ScanCodePage } from '../scan-code/scan-code';
+//import { ScanCodePage } from '../scan-code/scan-code';
 import { Storage } from '@ionic/storage';
 import { AuthProvider } from '../../providers/auth/auth';
 import { UserStateModel } from '../../models/usermodel';
@@ -133,12 +133,14 @@ export class SelectedRabbitPage {
 
   scan() {
     this.storage.get('UserIDVisaState').then(user => {
-      
+
       if (user) {
         let result = <UserStateModel>user;
-        console.clear();
-        console.table(result)
-        
+
+        if (result.VisaStatus && !result.IsRefunded && result.RefundOrderId != "") {
+          this.refundFirstPay(result.RefundOrderId);
+        }
+
         if (!result.IdStatus || !result.VisaStatus) {
           this.getUserStatus();
         } else if (result.IdStatus && result.VisaStatus) {
@@ -146,20 +148,23 @@ export class SelectedRabbitPage {
             this.navCtrl.setRoot("ScanCodePage", { vId: this.scoterId });
           });
         }
+
+
       } else {
         this.getUserStatus();
       }
     });
-
-
-
     //    console.log(this.navParams.get('MapsapiPage'));
-
   }
 
   getUserStatus() {
     this._authProvider.userStates().subscribe(result => {
       this.storage.set('UserIDVisaState', result.ReturnedObject);
+
+      if (result.ReturnedObject.VisaStatus && !result.ReturnedObject.IsRefunded && result.ReturnedObject.RefundOrderId != "") {
+        this.refundFirstPay(result.ReturnedObject.RefundOrderId);
+      }
+
       if (!result.ReturnedObject.IdStatus) {
         this.navCtrl.setRoot("SettingsrabbitPage");
       } else if (!result.ReturnedObject.VisaStatus) {
@@ -173,6 +178,20 @@ export class SelectedRabbitPage {
     });
   }
 
+
+  refundFirstPay(refundedId) {
+    this._VehiclsProvider.payment1().subscribe(returnData1 => {
+      if (returnData1) {
+        this._VehiclsProvider.refundOrderPayment(returnData1.token, refundedId).subscribe(returnData2 => {
+          console.log(returnData2)
+          if (returnData2["success"] == true) {
+            this._VehiclsProvider.paymentRefundSave().subscribe(returnData => {
+            });
+          }
+        });
+      }
+    });
+  }
 
   direction() {
     let direction = "30.783314141910544,34.94217772246134";

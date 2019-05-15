@@ -6,9 +6,9 @@ export class UserModel {
   password?: string;
   name?: string;
   userCode?: string;
-  tocken?:any;
-  UserIdToB?:string;
-  TockenToB?:string;
+  tocken?: any;
+  UserIdToB?: string;
+  TockenToB?: string;
 }
 
 export class RegisterModel {
@@ -25,18 +25,33 @@ export class VerifyModel {
   mobileNumber: Number;
   messageStr: string;
   passCode: string;
-  email:string;
+  email: string;
 }
 export class LoginModel {
-  urlStr:string ="http://localhost:30823/";
+  urlStr: string = "http://localhost:30823/";
   username: string;
   password: string;
 }
 
 export class UserStateModel {
-  IdStatus:boolean;
+  IdStatus: boolean;
   VisaStatus: boolean;
   RefundOrderId: string;
-  Tocken:string;
-  UserId:string;
+  Tocken: string;
+  UserId: string;
+  IsRefunded:boolean;
+}
+
+
+export class SubscriptionModel {
+  PhoneNumber: number;
+  Location: string;
+  Lng: number;
+  Lat: number;
+  DaysCount: number;
+  DateTimeStr: string;
+  DateStr: string;
+  TimeStr: string;
+  PromoCodeName?: string;
+  tocken: string;
 }

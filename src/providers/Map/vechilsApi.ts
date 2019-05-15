@@ -4,14 +4,15 @@ import 'rxjs/add/observable/of';
 import { UserStateProvider } from "../userstate/user-state";
 import { apiConfig } from "../../globalconfig";
 // import { Storage } from '@ionic/storage';
-import { LoadingController, NavController } from "ionic-angular";
+import { LoadingController } from "ionic-angular";
 // import { AlertsProvider } from "../../providers/generic/AlertsProvider";
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import { ResponseModel } from '../../models/ResponseModel';
-import { VisibleRegion } from '@ionic-native/google-maps';
+//import { VisibleRegion } from '@ionic-native/google-maps';
 import { vehicaleReservationModel } from '../../models/vehicaleModel';
 import { Storage } from "@ionic/storage";
+import { SubscriptionModel } from '../../models/usermodel';
 
 @Injectable()
 export class VehiclsProvider {
@@ -33,7 +34,7 @@ export class VehiclsProvider {
         this.storage.get('UserState').then(user => {
             console.table(user)
             if (user != undefined && user != "") {
-                this.headersVar.append('x-auth-token', user.tocken);
+                // this.headersVar.append('x-auth-token', user.tocken);
                 this.token = user.tocken;
             }
         });
@@ -113,11 +114,23 @@ export class VehiclsProvider {
             , data, { headers: this.headersVar });
     }
 
+    refundOrderPayment(authT: string, refundedId: any) {
+        let data = {
+            "auth_token": authT,
+            "transaction_id": refundedId,
+        };
+
+        this.headersVar.append("Content-Type", "application/json")
+        return this.http.post("https://accept.paymobsolutions.com/api/acceptance/void_refund/void"
+            , data, { headers: this.headersVar });
+    }
+
+    paymentRefundSave() {
+        let URI = `${apiConfig.apiUrl}/Vehicles/UserPaymentRefund`;
+        return this.http.post<ResponseModel>(URI + "", { headers: this.headersVar });
+    }
+
     paymentUserOrderSave(userId: string, orderId: number) {
-        // let data = {
-        //     "tripId": tripId,
-        //     "orderId": orderId,
-        // };
         let URI = `${apiConfig.apiUrl}/Vehicles/UserPaymentId`;
         return this.http.post<ResponseModel>(URI + "?userId=" + userId + "&orderId=" + orderId, "", { headers: this.headersVar });
     }
@@ -130,6 +143,8 @@ export class VehiclsProvider {
         let URI = `${apiConfig.apiUrl}/Vehicles/TripPaymentId`;
         return this.http.post<ResponseModel>(URI + "?tripId=" + tripId + "&orderId=" + orderId, "", { headers: this.headersVar });
     }
+
+
 
     paymentIframe(authT: string): Observable<any> {
         let data = {
@@ -173,14 +188,32 @@ export class VehiclsProvider {
         return this.http.post(URI, "");
     }
 
+    checkPromo(idVar: any): Observable<any> {
+        let URI = `${apiConfig.apiUrl}/Vehicles/PromoCodeStatusPost?promoName=` + idVar;
+
+        return this.http.post(URI, "");
+    }
+
     doneByTripId(idVar: any, rate: number, inService: boolean): Observable<any> {
         let URI = `${apiConfig.apiUrl}/Vehicles/RateTripById?tripId=` + idVar + '&rate=' + rate + '&isRepair=' + inService;
         return this.http.get(URI);
     }
 
-    tripHistory():Observable<ResponseModel>{
-        let URI = `${apiConfig.apiUrl}/Vehicles/TripHistoryPost` ;
-        return this.http.post<ResponseModel>(URI,"");
+    tripHistory(): Observable<ResponseModel> {
+        let URI = `${apiConfig.apiUrl}/Vehicles/TripHistoryPost`;
+        return this.http.post<ResponseModel>(URI, "");
+    }
+
+    subscription(modelTo: SubscriptionModel): Observable<ResponseModel> {
+
+        // let tt : HttpHeaders = new HttpHeaders();
+        // let headers = new Headers();
+        // headers.append('Authorization', 'Bearer ' + modelTo.tocken);
+        // let URI = `${apiConfig.apiUrl}/Vehicles/Subscription`;
+        // return this.http.post<ResponseModel>(URI, modelTo, { headers: { 'Authorization': 'Bearer ' + modelTo.tocken } });
+        let URI = `${apiConfig.apiUrl}/Vehicles/Subscription`;
+        return this.http.post<ResponseModel>(URI, modelTo);
+
     }
 
     uploadPic(imageBase: any, token: any): Observable<any> {
@@ -191,7 +224,7 @@ export class VehiclsProvider {
         // let dataTo = {
         //     base64image: imageBase
         // };
-        let param = imageBase;
+        //let param = imageBase;
 
         this.headersVar.append('content-type', 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW');
         this.headersVar.append('Authorization', 'Bearer ' + this.token);

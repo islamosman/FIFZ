@@ -36,6 +36,7 @@ export class MyApp {
 
     this.pages = [
       { title: 'FIND RABBIT', component: 'MapsPage' },
+      { title: "Subscription", component: 'SubscriptionPage' },
       // { title: 'PAYMENT', component: 'ScanCodePage' },//PaymentPage
       { title: 'HISTORY', component: 'HistoryPage' },
       { title: 'HOW TO RIDE', component: 'HowtoridePage' },
@@ -60,7 +61,7 @@ export class MyApp {
           this.UserName = user.name;
         }
         this.userState.setUser(user);
-        this.rootPage = user ? 'MapsPage' : 'LoginPage';
+        this.rootPage = user ? 'Subscription' : 'LoginPage';
       });
 
       this.statusBar.styleDefault();

@@ -5,7 +5,7 @@ import { UserStateProvider } from "../userstate/user-state";
 import { apiConfig } from "../../globalconfig";
 import { Storage } from '@ionic/storage';
 import { LoadingController, NavController } from "ionic-angular";
-import { RegisterModel, LoginModel, VerifyModel, UserStateModel } from '../../models/usermodel';
+import { RegisterModel, LoginModel, VerifyModel } from '../../models/usermodel';
 import { AlertsProvider } from "../../providers/generic/AlertsProvider";
 import { Observable } from 'rxjs/Observable';
 // import {Observable} from "rxjs/Observable";
@@ -49,6 +49,8 @@ export class AuthProvider {
     return this.http.post<ResponseModel>(URI, user);
   }
 
+
+
   verifyPassCode(passCodeModel: VerifyModel): Observable<ResponseModel> {
     let URI = `${apiConfig.apiUrl}/FlyAuth/VerfiyPass`;
     return this.http.post<ResponseModel>(URI, passCodeModel);
@@ -61,7 +63,7 @@ export class AuthProvider {
 
   userStates(): Observable<ResponseModel> {
     let URI = `${apiConfig.apiUrl}/Vehicles/UserStatusPost`;
-    return this.http.post<ResponseModel>(URI,"");
+    return this.http.post<ResponseModel>(URI, "");
   }
 
   loginUser2(data: LoginModel) {
