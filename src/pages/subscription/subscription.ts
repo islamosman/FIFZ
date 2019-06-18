@@ -48,6 +48,7 @@ export class SubscriptionPage {
   subscription() {
 
     this._alerts.showLoader();
+    
     if (this.subscriptionModel.PromoCodeName != "") {
       this.checkPromoCode();
     } else {
@@ -121,7 +122,7 @@ export class SubscriptionPage {
         this._VehiclsProvider.payment1().subscribe(returnData1 => {
           if (returnData1) {
             this._VehiclsProvider.payment2(returnData1.token, amountTpPay, "S" + this.subscriptionModel.DaysCount.toString() + new Date().getMinutes().toString() + result.UserId).subscribe(returnData2 => {
-              this._VehiclsProvider.payment3(returnData1.token, amountTpPay, returnData2.id).subscribe(returnData3 => {
+              this._VehiclsProvider.payment3(returnData1.token, amountTpPay, returnData2.id,5046).subscribe(returnData3 => {
                 console.log(returnData1.token)
                 this._VehiclsProvider.paymentBackToBack(returnData3.token, result.Tocken).subscribe(returnData3 => {
 
@@ -148,6 +149,7 @@ export class SubscriptionPage {
   }
 
   saveData() {
+    this.subscriptionModel.DateTimeStr= this.subscriptionModel.DateStr + " "  + this.subscriptionModel.TimeStr;
     this._VehiclsProvider.subscription(this.subscriptionModel).subscribe(data => {
       this._alerts.hideLoader();
       let registerResult = <ResponseModel>data;

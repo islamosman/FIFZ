@@ -69,14 +69,14 @@ export class VehiclsProvider {
             , data, { headers: this.headersVar });
     }
 
-    payment3(authT: string, amount: number, orderId: number): Observable<any> {
+    payment3(authT: string, amount: number, orderId: number,integrationId :number): Observable<any> {
         let data = {
             "auth_token": authT,
             "amount_cents": amount * 100,
             "expiration": 3600,
             "order_id": orderId,
             "currency": "EGP",
-            "integration_id": 5046,
+            "integration_id": integrationId,
             "lock_order_when_paid": "false",
             "billing_data": {
                 "apartment": "803",
@@ -195,8 +195,8 @@ export class VehiclsProvider {
     }
 
     doneByTripId(idVar: any, rate: number, inService: boolean): Observable<any> {
-        let URI = `${apiConfig.apiUrl}/Vehicles/RateTripById?tripId=` + idVar + '&rate=' + rate + '&isRepair=' + inService;
-        return this.http.get(URI);
+        let URI = `${apiConfig.apiUrl}/Vehicles/RateTripByIdPost?tripId=` + idVar + '&rate=' + rate + '&isRepair=' + inService;
+        return this.http.post(URI,"");
     }
 
     tripHistory(): Observable<ResponseModel> {

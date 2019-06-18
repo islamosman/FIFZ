@@ -50,7 +50,7 @@ export class SubscriptionModel {
   Lat: number;
   DaysCount: number;
   DateTimeStr: string;
-  DateStr: string;
+  DateStr: Date;
   TimeStr: string;
   PromoCodeName?: string;
   tocken: string;

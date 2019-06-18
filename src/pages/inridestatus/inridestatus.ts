@@ -115,6 +115,7 @@ export class InridestatusPage implements OnInit {
 
 
               // Payment
+              this.payTrip();
 
               let modal = this.modalController.create(
                 'EndridePage', null, { enableBackdropDismiss: false, cssClass: 'modal-bottom' }
@@ -133,8 +134,10 @@ export class InridestatusPage implements OnInit {
     });
   }
 
-  payTrip(tripId: any, amount: any) {
+  payTrip() {//tripId: any, amount: any
     this.storage.get("RideStatus").then(d => {
+      console.clear();
+      console.table(d);
       if (d != null) {
         let reservModel = <vehicaleReservationModel>d;
         console.table(reservModel)
@@ -146,7 +149,7 @@ export class InridestatusPage implements OnInit {
               if (returnData1) {
                 this._VehiclsProvider.payment2(returnData1.token, ResultData.ReturnedObject.Amount, reservModel.tripId).subscribe(returnData2 => {
 
-                  this._VehiclsProvider.payment3(returnData1.token, ResultData.ReturnedObject.Amount, returnData2.id).subscribe(returnData3 => {
+                  this._VehiclsProvider.payment3(returnData1.token, ResultData.ReturnedObject.Amount, returnData2.id, 5046).subscribe(returnData3 => {
 
                     // Back to back
                     this.storage.get('UserIDVisaState').then(user => {
