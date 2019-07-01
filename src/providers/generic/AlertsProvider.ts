@@ -35,7 +35,7 @@ export class AlertsProvider {
   showErrorToaster(message: string) {
     let toast = this.toastCtrl.create({
       message: message,
-      duration: 5000,
+      duration: 10000,
       position: 'top'
     });
 

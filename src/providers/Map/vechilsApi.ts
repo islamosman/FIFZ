@@ -45,7 +45,7 @@ export class VehiclsProvider {
 
     payment1(): Observable<any> {
         let data = {
-            "api_key": "ZXlKaGJHY2lPaUpJVXpVeE1pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SnVZVzFsSWpvaWFXNXBkR2xoYkNJc0luQnliMlpwYkdWZmNHc2lPak15T0RFc0ltTnNZWE56SWpvaVRXVnlZMmhoYm5RaWZRLmt6UHZFTV9pc1RINkZWWVJGWUJ2ZDBIVDFtMWlISXZoRGJ0ckZwaWJDdHF4QmduY2xvb2dUZ3dzMG1FMlJaYmM0MFdBbHJwM0lhRGk2dkZHbW1PblVB"
+            "api_key": "ZXlKaGJHY2lPaUpJVXpVeE1pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SnVZVzFsSWpvaWFXNXBkR2xoYkNJc0luQnliMlpwYkdWZmNHc2lPak15TlRrc0ltTnNZWE56SWpvaVRXVnlZMmhoYm5RaWZRLk44cWZOclBablVHbUxfZTkyOWtLUG5sQXVNQXhqY0VKcUJSZWhUOHZRcTNySVdHMW5XQ0Nnd2g5aG8za19nZVgwT09TN01uUlFQYlJBUU52eTVxMVpn"
         };
 
         this.headersVar.append("Content-Type", "application/json")
@@ -53,12 +53,12 @@ export class VehiclsProvider {
             , data, { headers: this.headersVar });
     }
 
-    payment2(authT: string, amount: number, tripId: string): Observable<any> {
+    payment2(authT: string, amount: any, tripId: string): Observable<any> {
         let data = {
             "auth_token": authT,
             "delivery_needed": "false",
-            "merchant_id": "3281",
-            "amount_cents": amount * 100,
+            "merchant_id": "3259",
+            "amount_cents": parseFloat((amount * 100).toString()).toFixed(2) ,
             "currency": "EGP",
             "merchant_order_id": tripId,
             "items": []
@@ -69,10 +69,10 @@ export class VehiclsProvider {
             , data, { headers: this.headersVar });
     }
 
-    payment3(authT: string, amount: number, orderId: number,integrationId :number): Observable<any> {
+    payment3(authT: string, amount: any, orderId: number,integrationId :number): Observable<any> {
         let data = {
             "auth_token": authT,
-            "amount_cents": amount * 100,
+            "amount_cents": parseFloat((amount * 100).toString()).toFixed(2),
             "expiration": 3600,
             "order_id": orderId,
             "currency": "EGP",

@@ -73,6 +73,10 @@ export class MapsPage implements OnInit {
   ) {
     // Begin Constractor
     this.geoModelVar = new GeoModel();
+
+    this.storage.get('UserIDVisaState').then(user => {
+   
+    });
   }
 
   vehicles;

@@ -12,6 +12,8 @@ import { LocationsProvider } from '../../providers/Map/locations';
 import { GeoModel } from '../../models/MapModel';
 import { LatLng, Poly } from '@ionic-native/google-maps';
 import { vehiclesIcons } from '../../providers/Enums/vehiclesIcons';
+import { UserStateModel } from '../../models/usermodel';
+import { AuthProvider } from '../../providers/auth/auth';
 /**
  * Generated class for the MapsapiPage page.
  *
@@ -38,7 +40,7 @@ export class MapsapiPage {
   geoModelVar: GeoModel;
   //vehicles;
 
-  constructor(public navCtrl: NavController, private platform: Platform, public _VehiclsProvider: VehiclsProvider, private storage: Storage
+  constructor(public _authProvider: AuthProvider, public navCtrl: NavController, private platform: Platform, public _VehiclsProvider: VehiclsProvider, private storage: Storage
     , private geolocation: Geolocation, private menu: MenuController, public navParams: NavParams, private diagnostic: Diagnostic,
     public modalController: ModalController, private locationAccuracy: LocationAccuracy, private _location: LocationsProvider) {
     this.geoModelVar = new GeoModel();
@@ -49,11 +51,37 @@ export class MapsapiPage {
     this.menu.swipeEnable(true);
     this.menu.enable(true);
   }
+
+  getUserStatus() {
+    console.clear();
+    console.log("Dddddddddddddddddddd")
+    this._authProvider.userStates().subscribe(result => {
+      this.storage.set('UserIDVisaState', result.ReturnedObject);
+      if (!result.ReturnedObject.IdStatus) {
+        this.navCtrl.setRoot("SettingsrabbitPage");
+      }
+    });
+  }
+
   ionViewWillEnter() { this.menu.enable(true) }
   ionViewWillLeave() {
     this.menu.swipeEnable(false);
   }
   ionViewDidLoad() {
+    
+    this.storage.get('UserIDVisaState').then(user => {
+      if (user) {
+        let result = <UserStateModel>user;
+        console.clear();
+         console.log(result)
+        if (!result.IdStatus || !result.VisaStatus) {
+          this.getUserStatus();
+        }
+      } else {
+        this.getUserStatus();
+      }
+    });
+    
     this.storage.get("RideStatus").then(d => {
 
       if (d != null) {
@@ -150,7 +178,7 @@ export class MapsapiPage {
   }
 
   getVehicles() {
-   // console.clear();
+    // console.clear();
     this._VehiclsProvider.byArea().subscribe(returnData => {
       let ResultData = <ResponseModel>returnData;
       //this.vehicles = [];
@@ -237,7 +265,7 @@ export class MapsapiPage {
 
       // console.log(map.getBounds().extend())
 
-     // console.log(map.getBounds().getCenter())
+      // console.log(map.getBounds().getCenter())
       //console.log(map.getBounds().getNorthEast())
       //console.log(map.getBounds().getSouthWest())
       // console.log(map.getBounds().intersects())

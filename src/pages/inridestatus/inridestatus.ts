@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ModalController ,ViewController} from 'ionic-angular';
 import { AlertsProvider } from '../../providers/generic/AlertsProvider';
 import { VehiclsProvider } from '../../providers/Map/vechilsApi';
 import { vehicaleReservationModel } from '../../models/vehicaleModel';
@@ -30,7 +30,7 @@ export class InridestatusPage implements OnInit {
   Minutes: any;
   hourss: any;
   Seconds: number = 0;
-  constructor(private alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams,
+  constructor(public v: ViewController,private alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams,
     private _userState: UserStateProvider, private storage: Storage, public modalController: ModalController,
     private _alertsService: AlertsProvider, public _VehiclsProvider: VehiclsProvider) {
   }
@@ -105,7 +105,7 @@ export class InridestatusPage implements OnInit {
           this._alertsService.showLoader();
 
           this._VehiclsProvider.reserve(this.reservationModel).subscribe(returnData => {
-            console.log(returnData);
+            //console.log(returnData);
 
             this._alertsService.hideLoader();
             if (returnData.IsDone) {
@@ -116,7 +116,7 @@ export class InridestatusPage implements OnInit {
 
               // Payment
               this.payTrip();
-
+              this.v.dismiss();
               let modal = this.modalController.create(
                 'EndridePage', null, { enableBackdropDismiss: false, cssClass: 'modal-bottom' }
               );
@@ -136,31 +136,34 @@ export class InridestatusPage implements OnInit {
 
   payTrip() {//tripId: any, amount: any
     this.storage.get("RideStatus").then(d => {
-      console.clear();
-      console.table(d);
+
       if (d != null) {
         let reservModel = <vehicaleReservationModel>d;
-        console.table(reservModel)
-        if (reservModel.reservationEnum == reservationEnum.End) {
+       
+        //if (reservModel.reservationEnum == reservationEnum.End) {
           this._VehiclsProvider.byTripId(reservModel.tripId).subscribe(returnData => {
             let ResultData = <ResponseModel>returnData;
 
             this._VehiclsProvider.payment1().subscribe(returnData1 => {
               if (returnData1) {
-                this._VehiclsProvider.payment2(returnData1.token, ResultData.ReturnedObject.Amount, reservModel.tripId).subscribe(returnData2 => {
+                this._VehiclsProvider.payment2(returnData1.token,parseFloat((ResultData.ReturnedObject.Amount).toString()).toFixed(2), reservModel.tripId).subscribe(returnData2 => {
 
-                  this._VehiclsProvider.payment3(returnData1.token, ResultData.ReturnedObject.Amount, returnData2.id, 5046).subscribe(returnData3 => {
+                  this._VehiclsProvider.payment3(returnData1.token, parseFloat((ResultData.ReturnedObject.Amount).toString()).toFixed(2), returnData2.id, 5568).subscribe(returnData3 => {
 
                     // Back to back
                     this.storage.get('UserIDVisaState').then(user => {
                       if (user) {
                         let result = <UserStateModel>user;
                         if (result.Tocken != "") {
-                          this._VehiclsProvider.paymentBackToBack(returnData1.token, result.Tocken).subscribe(returnDataBack => {
+                          console.clear();
+                          console.log(result.Tocken)
+                          this._VehiclsProvider.paymentBackToBack(returnData3.token, result.Tocken).subscribe(returnDataBack => {
                             if (returnDataBack.obj.success) {
                               // update our data
                               this._VehiclsProvider.paymentOrderSave(reservModel.tripId, returnData2.id).subscribe(returnDataIframe => {
                               });
+                            }else{
+                              this._alertsService.showErrorToaster("Failure occurred in payment !!")
                             }
                           });
                         }
@@ -180,13 +183,13 @@ export class InridestatusPage implements OnInit {
             // this.rideDuration = ResultData.ReturnedObject.Duration;
             // this.rideCost = ResultData.ReturnedObject.Amount;
           });
-        }
+       // }
       }
     });
   }
 
   initTripData() {
-    console.log(this.totalSeconds);
+    //console.log(this.totalSeconds);
     setInterval(() => {
       this.setTime();
     }, 1000);

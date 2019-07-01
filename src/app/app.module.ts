@@ -45,9 +45,9 @@ import { TokenInterceptor } from '../providers/http-error.interceptor';
     IonicModule.forRoot(MyApp),
     autocompletePageModule,
     IonicStorageModule.forRoot({
-      name: '__mydb',
-      driverOrder: ['indexeddb', 'sqlite', 'websql', 'localStorage']    //,localStorage
-     //driverOrder: ['websql','localStorage','indexeddb', 'sqlite']    //,localStorage
+      name: '__mydbra',
+      //driverOrder: ['indexeddb', 'sqlite', 'websql', 'localStorage']    //,localStorage
+      driverOrder: ['sqlite','indexeddb', 'websql','localStorage']    //,localStorage
     })
   ],
   bootstrap: [IonicApp],

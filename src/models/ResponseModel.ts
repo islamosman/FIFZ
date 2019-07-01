@@ -17,4 +17,5 @@ export class LoginResponseModel {
   refresh_token: string;
   UserId: string;
   Tocken: string;
+  UserName:string;
 }

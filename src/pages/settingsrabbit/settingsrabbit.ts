@@ -190,7 +190,7 @@ console.log("at ssssetting     ttt    "  + this.token)
           params: { 'title': "file" }
         }
 
-        fileTransfer.upload(encodeURI(imagePath), encodeURI('http://meedub.com/api/Vehicles/UploadFile'), options)
+        fileTransfer.upload(encodeURI(imagePath), encodeURI('https://rabbit-app.com/api/Vehicles/UploadFile'), options)
           //        fileTransfer.upload(encodeURI(imagePath), encodeURI('http://192.168.43.198:5000/api/FlyAuth/upload'), options)
           // fileTransfer.upload(imagePath, encodeURI('http://192.168.43.198:5001/api/Vehicles/UploadFile'), options)
           .then((data) => {

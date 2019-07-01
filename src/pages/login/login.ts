@@ -54,7 +54,7 @@ export class LoginPage implements OnInit {
       this._alerts.hideLoader();
       if (registerResult.access_token != "" && registerResult.access_token != null) {
         this.userModel = new UserModel();
-        this.userModel.name = this.loginModel.username;
+        this.userModel.name = registerResult.UserName;
         this.userModel.tocken = registerResult.access_token;
         this.userModel.TockenToB=registerResult.Tocken;
         this.userModel.UserIdToB=registerResult.UserId;

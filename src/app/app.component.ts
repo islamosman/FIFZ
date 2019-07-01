@@ -36,12 +36,12 @@ export class MyApp {
 
     this.pages = [
       { title: 'FIND RABBIT', component: 'MapsPage' },
-      { title: "Subscription", component: 'SubscriptionPage' },
+      { title: "SUBSCRIBE", component: 'SubscriptionPage' },
       // { title: 'PAYMENT', component: 'ScanCodePage' },//PaymentPage
       { title: 'HISTORY', component: 'HistoryPage' },
       { title: 'HOW TO RIDE', component: 'HowtoridePage' },
       { title: 'HELP', component: 'HelprabbitPage' },
-      { title: 'SETTINGS', component: 'SettingsrabbitPage' },
+      { title: 'Uload ID', component: 'SettingsrabbitPage' },
       //  { title: 'Maps 2', component: 'MapsapiPage' },
       //{ title: 'Scan QR', component: 'ScanCodePage' },
       { title: 'Logout', component: '' }
@@ -61,7 +61,7 @@ export class MyApp {
           this.UserName = user.name;
         }
         this.userState.setUser(user);
-        this.rootPage = user ? 'Subscription' : 'LoginPage';
+        this.rootPage = user ? 'MapsPage' : 'LoginPage';
       });
 
       this.statusBar.styleDefault();
